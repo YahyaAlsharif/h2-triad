@@ -8,6 +8,8 @@ node_modules/
 frontend/dist/
 frontend/.vite/
 npm-debug.log*
+frontend/test-results/
+frontend/playwright-report/
 
 # Backend / Python
 __pycache__/
@@ -32,4 +34,3 @@ venv/
 .DS_Store
 Thumbs.db
 Desktop.ini
-

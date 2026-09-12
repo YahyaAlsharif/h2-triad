@@ -1,6 +1,6 @@
 # H2-TRIAD
 
-Phase 1 technical foundation for an AI-assisted hydrogen/materials digital twin. This scaffold proves that a React frontend, FastAPI backend, and SQLite database can work together. It intentionally contains no dashboard, domain, or AI functionality yet.
+Hydrogen materials digital-twin workspace. Phase 2 adds a responsive React dashboard with an interactive mock Digital Twin, condition-aware experiment comparison, Recharts visualization, and a searchable dataset. The Phase 1 FastAPI → SQLite health integration remains intact. Domain records and prediction results are synthetic fixtures; no domain backend or trained model exists yet.
 
 ## Stack
 
@@ -13,7 +13,7 @@ Phase 1 technical foundation for an AI-assisted hydrogen/materials digital twin.
 
 ```text
 .
-├── frontend/          # Temporary React system-check page and Vite proxy
+├── frontend/          # React dashboard, isolated mock adapter, and Vite proxy
 ├── backend/
 │   ├── app/           # FastAPI application and SQLite connectivity helper
 │   ├── tests/         # API health test
@@ -25,6 +25,10 @@ Phase 1 technical foundation for an AI-assisted hydrogen/materials digital twin.
 ```
 
 The browser calls only `/api/health`. Vite proxies that path to FastAPI, using `localhost:8000` locally and the Compose service name inside Docker.
+
+Dashboard records, prediction fixtures, and chart cohort metadata live in `frontend/src/data/mockExperiments.js`. `dashboardService.js` exposes abortable asynchronous operations shaped for future API replacement. A prediction is returned only for an exact saved configuration; custom inputs without a fixture show an explicit unavailable state. Nothing is persisted except the theme preference.
+
+See [Phase 2 delivery and QA](docs/phase-2-frontend.md) for architecture, mock contracts, browser coverage, limitations, and the Phase 3 handoff. The existing HTML prototype, research report, and `STYLE.md` are preserved as historical reference material; Phase 2 follows the requested light/teal visual direction.
 
 ## Prerequisites
 
@@ -88,6 +92,17 @@ Build the frontend:
 cd frontend
 npm run build
 ```
+
+Lint, format, and run the real-browser suite (with the backend running):
+
+```bash
+cd frontend
+npm run lint
+npm run format:check
+npm test
+```
+
+The browser suite uses installed Google Chrome and starts a separate Vite instance on port 5174, so it can coexist with Compose on 5173. To use Playwright Chromium instead, run `npx playwright install chromium` and set `PLAYWRIGHT_CHANNEL=chromium`. Set `PLAYWRIGHT_BASE_URL=http://localhost:5173` to test the Compose frontend. On PowerShell, set environment variables with `$env:NAME='value'`. Browser screenshots and failure traces are written to the ignored `frontend/test-results/` directory. `npm run test:ui` opens Playwright's interactive runner.
 
 Validate the Compose file and build both images:
 
