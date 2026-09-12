@@ -1,0 +1,314 @@
+[
+  {
+    "id": "EXP-001",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "Ni",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 250,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 4.8,
+    "outcome": "Moderate",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-001",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-002",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "Ni",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 275,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 5.5,
+    "outcome": "Promising",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-002",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-003",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "Ni",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 300,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 6.1,
+    "outcome": "Promising",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-003",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-004",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "Fe–Ni / N-C",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 250,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 5.2,
+    "outcome": "Moderate",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-004",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-005",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "Fe–Ni / N-C",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 275,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 5.9,
+    "outcome": "Promising",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-005",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-006",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "Fe–Ni / N-C",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 300,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 6.4,
+    "outcome": "Promising",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-006",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-007",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "TiF₃",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 250,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 4.4,
+    "outcome": "Moderate",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-007",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-008",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "TiF₃",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 275,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 5.1,
+    "outcome": "Moderate",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-008",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-009",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "TiF₃",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 300,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 5.8,
+    "outcome": "Promising",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-009",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-010",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "None",
+      "concentration_wt_pct": 0,
+      "preparation_method": "Ball milling",
+      "milling_hours": 4,
+      "particle_size_nm": 100,
+      "temperature_c": 300,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 3.2,
+    "outcome": "Limited",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-010",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-011",
+    "inputs": {
+      "material": "MgH₂",
+      "additive": "Ni",
+      "concentration_wt_pct": 5,
+      "preparation_method": "Ball milling",
+      "milling_hours": 8,
+      "particle_size_nm": 80,
+      "temperature_c": 300,
+      "pressure_bar": 20
+    },
+    "hydrogen_capacity_wt_pct": 6.3,
+    "outcome": "Promising",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-011",
+      "is_demo": true
+    }
+  },
+  {
+    "id": "EXP-012",
+    "inputs": {
+      "material": "NaAlH₄",
+      "additive": "TiF₃",
+      "concentration_wt_pct": 3,
+      "preparation_method": "Solution mixing",
+      "milling_hours": 0,
+      "particle_size_nm": 150,
+      "temperature_c": 280,
+      "pressure_bar": 10
+    },
+    "hydrogen_capacity_wt_pct": 3.8,
+    "outcome": "Moderate",
+    "measurement": {
+      "mode": "Hydrogen absorption",
+      "duration_minutes": 20,
+      "capacity_basis": "Total composite mass"
+    },
+    "source": {
+      "kind": "synthetic_demo",
+      "label": "Synthetic demo fixture",
+      "reference": "Phase 2 / EXP-012",
+      "is_demo": true
+    }
+  }
+]

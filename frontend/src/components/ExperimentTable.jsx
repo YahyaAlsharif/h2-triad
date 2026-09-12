@@ -1,10 +1,16 @@
-﻿import { useState } from 'react'
-import { Conditions, materialLabel, Outcome } from './ExperimentDetails'
+import { useState } from 'react'
+import {
+  Conditions,
+  materialLabel,
+  Outcome,
+  MeasurementDetails,
+} from './ExperimentDetails'
 export default function ExperimentTable({
   experiments,
   selectedIds,
   toggleComparison,
   loadConfiguration,
+  optionsReady,
 }) {
   const [query, setQuery] = useState('')
   const [outcome, setOutcome] = useState('All outcomes')
@@ -64,11 +70,12 @@ export default function ExperimentTable({
               value={outcome}
               onChange={(e) => setOutcome(e.target.value)}
             >
-              {['All outcomes', 'Promising', 'Moderate', 'Limited'].map(
-                (item) => (
-                  <option key={item}>{item}</option>
-                ),
-              )}
+              {[
+                'All outcomes',
+                ...new Set(experiments.map((item) => item.outcome)),
+              ].map((item) => (
+                <option key={item}>{item}</option>
+              ))}
             </select>
           </label>
           <label>
@@ -80,14 +87,14 @@ export default function ExperimentTable({
           </label>
         </div>
         <p className="dataset-hint">
-          Select up to 3 to compare. Capacity is per total composite mass; all
-          records are synthetic.
+          Select up to 3 to compare. Review measurement basis and provenance in
+          each record. Outcome labels are stored categories.
         </p>
         {visible.length ? (
           <table className="experiment-table">
             <caption className="sr-only">
-              Synthetic hydrogen absorption experiments. Open each record for
-              complete measurement conditions and provenance.
+              Stored experiments. Open each record for complete measurement
+              conditions and provenance.
             </caption>
             <thead>
               <tr>
@@ -116,6 +123,7 @@ export default function ExperimentTable({
                     setExpanded(expanded === item.id ? null : item.id)
                   }
                   loadConfiguration={loadConfiguration}
+                  optionsReady={optionsReady}
                 />
               ))}
             </tbody>
@@ -136,7 +144,10 @@ export default function ExperimentTable({
           </div>
         )}
         <div className="dataset-footer">
-          <span>Synthetic demo fixture set · {experiments.length} records</span>
+          <span>
+            {experiments.filter((item) => item.source.is_demo).length}{' '}
+            synthetic/demo records · {experiments.length} total
+          </span>
           <span>{selectedIds.length} selected for comparison</span>
         </div>
       </div>
@@ -151,6 +162,7 @@ function ExperimentRows({
   expanded,
   onExpand,
   loadConfiguration,
+  optionsReady,
 }) {
   return (
     <>
@@ -180,10 +192,8 @@ function ExperimentRows({
         <td className="test-cell">
           <Conditions inputs={item.inputs} />
           <span className="preparation-meta">
-            {item.inputs.preparation_method === 'Ball milling'
-              ? item.inputs.milling_hours + ' h ball milling'
-              : item.inputs.preparation_method}{' '}
-            · {item.inputs.particle_size_nm} nm
+            {item.inputs.preparation_method} · {item.inputs.milling_hours} h
+            milling · {item.inputs.particle_size_nm} nm
           </span>
         </td>
         <td className="capacity-cell">
@@ -211,29 +221,10 @@ function ExperimentRows({
         <tr className="expanded-row" id={'detail-' + item.id}>
           <td colSpan={6}>
             <div className="experiment-detail">
-              <dl>
-                <div>
-                  <dt>Measurement</dt>
-                  <dd>
-                    {item.measurement.mode} ·{' '}
-                    {item.measurement.duration_minutes} min
-                  </dd>
-                </div>
-                <div>
-                  <dt>Capacity basis</dt>
-                  <dd>{item.measurement.capacity_basis}</dd>
-                </div>
-                <div>
-                  <dt>Source</dt>
-                  <dd>
-                    {item.source.label}
-                    <br />
-                    {item.source.reference}
-                  </dd>
-                </div>
-              </dl>
+              <MeasurementDetails item={item} />
               <button
                 className="button secondary"
+                disabled={!optionsReady}
                 onClick={() => loadConfiguration(item)}
               >
                 Use in Digital Twin <span aria-hidden="true">↑</span>

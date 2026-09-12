@@ -1,39 +1,47 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import {
   CartesianGrid,
-  Line,
-  LineChart,
+  Scatter,
+  ScatterChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts'
-import { Conditions, materialLabel, Outcome } from './ExperimentDetails'
+import {
+  Conditions,
+  materialLabel,
+  Outcome,
+  MeasurementDetails,
+} from './ExperimentDetails'
+import { deriveCohorts, cohortLabel } from '../data/analysis'
 
 const seriesStyles = [
-  { color: 'var(--accent)', dash: undefined },
-  { color: 'var(--chart-blue)', dash: '6 3' },
-  { color: 'var(--chart-amber)', dash: '2 4' },
+  { color: 'var(--accent)', shape: 'circle' },
+  { color: 'var(--chart-blue)', shape: 'triangle' },
+  { color: 'var(--chart-amber)', shape: 'square' },
 ]
-function ChartTip({ active, payload, label, cohort }) {
+function ChartTip({ active, payload }) {
   if (!active || !payload?.length) return null
+  const record = payload[0].payload.record
   return (
     <div className="chart-tooltip">
-      <strong>{label} °C</strong>
-      {payload.map((item) => (
-        <div key={item.dataKey}>
-          {item.name}
-          <b>{item.value} wt%</b>
-        </div>
-      ))}
-      <p>
-        {cohort.inputs.pressure_bar} bar · {cohort.inputs.milling_hours} h
-        milling · {cohort.inputs.particle_size_nm} nm
-      </p>
+      <strong>
+        {record.id} · {materialLabel(record.inputs)}
+      </strong>
+      <div>
+        {record.inputs.temperature_c} °C{' '}
+        <b>{record.hydrogen_capacity_wt_pct} wt%</b>
+      </div>
+      <Conditions inputs={record.inputs} preparation />
+      <MeasurementDetails item={record} />
     </div>
   )
 }
 const compareFields = [
+  ['Base material', (e) => e.inputs.material],
+  ['Additive', (e) => e.inputs.additive],
+  ['Loading', (e) => e.inputs.concentration_wt_pct + ' wt%'],
   ['Temperature', (e) => e.inputs.temperature_c + ' °C'],
   ['Hydrogen pressure', (e) => e.inputs.pressure_bar + ' bar'],
   ['Preparation', (e) => e.inputs.preparation_method],
@@ -43,44 +51,192 @@ const compareFields = [
   ['Duration', (e) => e.measurement.duration_minutes + ' min'],
   ['Capacity basis', (e) => e.measurement.capacity_basis],
 ]
+function CohortChart({ cohort }) {
+  const [hiddenSeries, setHiddenSeries] = useState([])
+  const series = [...new Set(cohort.items.map((item) => item.inputs.additive))]
+    .sort()
+    .map((name, index) => ({
+      name,
+      ...seriesStyles[index % seriesStyles.length],
+    }))
+  const visible = cohort.items.filter(
+    (item) => !hiddenSeries.includes(item.inputs.additive),
+  )
+  const temperatures = [
+    ...new Set(cohort.items.map((item) => item.inputs.temperature_c)),
+  ].sort((a, b) => a - b)
+  return (
+    <>
+      <p className="chart-context">{cohortLabel(cohort)}</p>
+      <div
+        className="series-controls"
+        role="group"
+        aria-label="Chart additives"
+      >
+        {series.map((item) => (
+          <button
+            key={item.name}
+            type="button"
+            aria-pressed={!hiddenSeries.includes(item.name)}
+            onClick={() =>
+              setHiddenSeries((current) =>
+                current.includes(item.name)
+                  ? current.filter((name) => name !== item.name)
+                  : [...current, item.name],
+              )
+            }
+          >
+            <span style={{ color: item.color }} aria-hidden="true">
+              {item.shape === 'circle'
+                ? '●'
+                : item.shape === 'triangle'
+                  ? '▲'
+                  : '■'}
+            </span>
+            {item.name}
+          </button>
+        ))}
+      </div>
+      {temperatures.length < 2 && (
+        <p className="chart-footnote">
+          Only one temperature is available in this group. Points show
+          individual stored observations.
+        </p>
+      )}
+      <div className="chart-axis-label">Hydrogen capacity (wt%)</div>
+      <div
+        className="capacity-chart"
+        role="group"
+        aria-label="Stored capacity by temperature. Each point is an observation. Values and sources are available in View chart data."
+      >
+        {visible.length ? (
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+            <ScatterChart
+              margin={{ top: 16, right: 22, bottom: 8, left: -18 }}
+              accessibilityLayer
+            >
+              <CartesianGrid
+                vertical={false}
+                stroke="var(--border)"
+                strokeDasharray="3 4"
+              />
+              <XAxis
+                dataKey="temperature"
+                name="Temperature"
+                unit=" °C"
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                ticks={temperatures}
+                tickLine={false}
+                axisLine={false}
+                tick={{ fill: 'var(--muted)', fontSize: 13 }}
+                tickMargin={12}
+              />
+              <YAxis
+                dataKey="capacity"
+                name="Hydrogen capacity"
+                unit=" wt%"
+                type="number"
+                domain={[0, 'auto']}
+                tickLine={false}
+                axisLine={false}
+                tick={{ fill: 'var(--muted)', fontSize: 13 }}
+              />
+              <Tooltip
+                content={<ChartTip />}
+                cursor={{ stroke: 'var(--control-border)' }}
+              />
+              {series
+                .filter((item) => !hiddenSeries.includes(item.name))
+                .map((item) => (
+                  <Scatter
+                    key={item.name}
+                    name={item.name}
+                    fill={item.color}
+                    shape={item.shape}
+                    isAnimationActive={false}
+                    data={cohort.items
+                      .filter((record) => record.inputs.additive === item.name)
+                      .map((record) => ({
+                        temperature: record.inputs.temperature_c,
+                        capacity: record.hydrogen_capacity_wt_pct,
+                        record,
+                      }))}
+                  />
+                ))}
+            </ScatterChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="chart-empty">
+            Select an additive to show its series.
+          </div>
+        )}
+      </div>
+      <p className="chart-x-label">Temperature (°C)</p>
+      <details className="chart-data">
+        <summary>View chart data</summary>
+        <div
+          className="table-scroll"
+          tabIndex={0}
+          role="region"
+          aria-label="Chart observations and provenance"
+        >
+          <table>
+            <caption>{cohortLabel(cohort)}</caption>
+            <thead>
+              <tr>
+                <th>Experiment</th>
+                <th>Additive</th>
+                <th>Temperature</th>
+                <th>Capacity</th>
+                <th>Provenance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visible
+                .slice()
+                .sort(
+                  (a, b) =>
+                    a.inputs.temperature_c - b.inputs.temperature_c ||
+                    a.id.localeCompare(b.id),
+                )
+                .map((record) => (
+                  <tr key={record.id}>
+                    <th>{record.id}</th>
+                    <td>{record.inputs.additive}</td>
+                    <td>{record.inputs.temperature_c} °C</td>
+                    <td>{record.hydrogen_capacity_wt_pct} wt%</td>
+                    <td>
+                      {record.source.is_demo ? 'Synthetic/demo · ' : ''}
+                      {record.source.label}
+                      <br />
+                      {record.source.reference}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+      <p className="chart-footnote">
+        Matched preparation, pressure, loading, and measurement metadata.
+        Sources may differ. No fitted curve, interpolation, or prediction.
+        Overlapping points remain separate records in the data table.
+      </p>
+    </>
+  )
+}
 export default function Analysis({
   experiments,
   selectedIds,
   toggleComparison,
-  cohort,
 }) {
-  const series = cohort.additives.map((name, index) => ({
-    name,
-    ...seriesStyles[index % seriesStyles.length],
-  }))
-  const [visibleSeries, setVisibleSeries] = useState(
-    series.map((item) => item.name),
-  )
+  const cohorts = deriveCohorts(experiments)
+  const [cohortKey, setCohortKey] = useState(null)
+  const cohort = cohorts.find((item) => item.key === cohortKey) || cohorts[0]
   const selected = selectedIds
     .map((id) => experiments.find((item) => item.id === id))
     .filter(Boolean)
-  // Keep every condition except temperature matched; never combine unmatched records into a trend.
-  const matched = experiments.filter(
-    ({ inputs, measurement }) =>
-      Object.entries(cohort.inputs).every(
-        ([key, value]) => inputs[key] === value,
-      ) &&
-      Object.entries(cohort.measurement).every(
-        ([key, value]) => measurement[key] === value,
-      ),
-  )
-  const chartData = [
-    ...new Set(matched.map((item) => item.inputs.temperature_c)),
-  ]
-    .sort((a, b) => a - b)
-    .map((temperature) => ({
-      temperature,
-      ...Object.fromEntries(
-        matched
-          .filter((item) => item.inputs.temperature_c === temperature)
-          .map((item) => [item.inputs.additive, item.hydrogen_capacity_wt_pct]),
-      ),
-    }))
   const differences = compareFields
     .filter(([, value]) => new Set(selected.map(value)).size > 1)
     .map(([name]) => name.toLowerCase())
@@ -88,155 +244,32 @@ export default function Analysis({
     <section id="analysis" aria-labelledby="analysis-title">
       <div className="section-heading">
         <h2 id="analysis-title">Comparison & analysis</h2>
-        <span className="secondary-text">Synthetic experiments</span>
+        <span className="secondary-text">Stored observations</span>
       </div>
       <div className="analysis-layout">
         <div className="chart-panel">
           <h3>Capacity vs temperature</h3>
-          <p className="chart-context">
-            {cohort.inputs.material} + {cohort.inputs.concentration_wt_pct} wt%
-            additive · {cohort.inputs.pressure_bar} bar
-            <br />
-            {cohort.inputs.milling_hours} h ball milling ·{' '}
-            {cohort.inputs.particle_size_nm} nm ·{' '}
-            {cohort.measurement.duration_minutes} min absorption
-          </p>
-          <div
-            className="series-controls"
-            role="group"
-            aria-label="Chart additives"
-          >
-            {series.map((item) => (
-              <button
-                key={item.name}
-                type="button"
-                aria-pressed={visibleSeries.includes(item.name)}
-                onClick={() =>
-                  setVisibleSeries((current) =>
-                    current.includes(item.name)
-                      ? current.filter((name) => name !== item.name)
-                      : [...current, item.name],
-                  )
-                }
-              >
-                <span
-                  style={{
-                    borderColor: item.color,
-                    borderTopStyle: item.dash ? 'dashed' : 'solid',
-                  }}
-                  className="series-symbol"
-                  aria-hidden="true"
-                />
-                {item.name}
-              </button>
-            ))}
-          </div>
-          <div className="chart-axis-label">Hydrogen capacity (wt%)</div>
-          <div
-            className="capacity-chart"
-            role="group"
-            aria-label="Mock capacity by temperature. Exact values are available in View chart data."
-          >
-            {visibleSeries.length ? (
-              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                <LineChart
-                  data={chartData}
-                  margin={{ top: 16, right: 22, bottom: 8, left: -18 }}
-                  accessibilityLayer
-                >
-                  <CartesianGrid
-                    vertical={false}
-                    stroke="var(--border)"
-                    strokeDasharray="3 4"
-                  />
-                  <XAxis
-                    dataKey="temperature"
-                    type="number"
-                    domain={['dataMin', 'dataMax']}
-                    ticks={chartData.map((item) => item.temperature)}
-                    tickLine={false}
-                    axisLine={false}
-                    tick={{ fill: 'var(--muted)', fontSize: 13 }}
-                    tickMargin={12}
-                  />
-                  <YAxis
-                    domain={[0, 8]}
-                    ticks={[0, 2, 4, 6, 8]}
-                    tickLine={false}
-                    axisLine={false}
-                    tick={{ fill: 'var(--muted)', fontSize: 13 }}
-                  />
-                  <Tooltip
-                    content={<ChartTip cohort={cohort} />}
-                    cursor={{ stroke: 'var(--control-border)' }}
-                  />
-                  {series
-                    .filter((item) => visibleSeries.includes(item.name))
-                    .map((item) => (
-                      <Line
-                        key={item.name}
-                        type="linear"
-                        name={item.name}
-                        dataKey={item.name}
-                        stroke={item.color}
-                        strokeWidth={2.5}
-                        strokeDasharray={item.dash}
-                        dot={{ r: 4, strokeWidth: 2, fill: 'var(--surface)' }}
-                        activeDot={{ r: 6 }}
-                        isAnimationActive={false}
-                      />
-                    ))}
-                </LineChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="chart-empty">
-                Select an additive to show its series.
-              </div>
-            )}
-          </div>
-          <p className="chart-x-label">Temperature (°C)</p>
-          <details className="chart-data">
-            <summary>View chart data</summary>
-            <table>
-              <caption className="sr-only">
-                Matched mock experiments; capacity in wt% of total composite
-                mass
-              </caption>
-              <thead>
-                <tr>
-                  <th>Temperature</th>
-                  {series
-                    .filter((s) => visibleSeries.includes(s.name))
-                    .map((s) => (
-                      <th key={s.name}>{s.name}</th>
-                    ))}
-                </tr>
-              </thead>
-              <tbody>
-                {chartData.map((row) => (
-                  <tr key={row.temperature}>
-                    <th>{row.temperature} °C</th>
-                    {series
-                      .filter((s) => visibleSeries.includes(s.name))
-                      .map((s) => (
-                        <td key={s.name}>{row[s.name]} wt%</td>
-                      ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </details>
-          <p className="chart-footnote">
-            Matched preparation and pressure. Lines connect mock observations;
-            they are not a fitted model.
-          </p>
+          <label className="cohort-selector">
+            <span>Compatible conditions</span>
+            <select
+              value={cohort.key}
+              onChange={(event) => setCohortKey(event.target.value)}
+            >
+              {cohorts.map((item) => (
+                <option key={item.key} value={item.key}>
+                  {cohortLabel(item)} · {item.items.length} records
+                </option>
+              ))}
+            </select>
+          </label>
+          <CohortChart key={cohort.key} cohort={cohort} />
         </div>
         <div className="comparison-panel">
           <div className="panel-heading">
             <h3>Selected experiments</h3>
             <span className="secondary-text">{selected.length} / 3</span>
           </div>
-          {selected.length > 0 ? (
+          {selected.length ? (
             <>
               <p
                 className={
@@ -249,7 +282,7 @@ export default function Analysis({
                   ? 'Different conditions: ' +
                     differences.join(', ') +
                     '. Compare with care.'
-                  : 'Matched preparation and test conditions.'}
+                  : 'Matched preparation, material, and measurement conditions.'}
               </p>
               <div className="selected-list">
                 {selected.map((item) => (
@@ -258,6 +291,15 @@ export default function Analysis({
                       <span className="record-id">{item.id}</span>
                       <strong>{materialLabel(item.inputs)}</strong>
                       <Conditions inputs={item.inputs} preparation />
+                      <span className="secondary-text">
+                        {item.measurement.mode} ·{' '}
+                        {item.measurement.duration_minutes} min ·{' '}
+                        {item.measurement.capacity_basis}
+                      </span>
+                      <span className="secondary-text">
+                        {item.source.is_demo ? 'Synthetic/demo · ' : ''}
+                        {item.source.label} · {item.source.reference}
+                      </span>
                     </div>
                     <div className="selected-value">
                       <strong>
@@ -295,12 +337,12 @@ export default function Analysis({
                     <tbody>
                       {compareFields.map(([name, value]) => (
                         <tr
+                          key={name}
                           className={
                             new Set(selected.map(value)).size > 1
                               ? 'different-condition'
                               : ''
                           }
-                          key={name}
                         >
                           <th>{name}</th>
                           {selected.map((item) => (
@@ -313,6 +355,15 @@ export default function Analysis({
                         {selected.map((item) => (
                           <td key={item.id}>
                             <Outcome value={item.outcome} />
+                          </td>
+                        ))}
+                      </tr>
+                      <tr>
+                        <th>Provenance</th>
+                        {selected.map((item) => (
+                          <td key={item.id}>
+                            {item.source.is_demo ? 'Synthetic/demo · ' : ''}
+                            {item.source.label} · {item.source.reference}
                           </td>
                         ))}
                       </tr>

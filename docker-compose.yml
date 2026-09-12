@@ -4,6 +4,7 @@ services:
       context: ./backend
     environment:
       DATABASE_PATH: ${DATABASE_PATH:-/app/data/app.db}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
     ports:
       - "8000:8000"
     volumes:

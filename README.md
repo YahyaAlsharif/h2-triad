@@ -1,40 +1,51 @@
 # H2-TRIAD
 
-Hydrogen materials digital-twin workspace. Phase 2 adds a responsive React dashboard with an interactive mock Digital Twin, condition-aware experiment comparison, Recharts visualization, and a searchable dataset. The Phase 1 FastAPI → SQLite health integration remains intact. Domain records and prediction results are synthetic fixtures; no domain backend or trained model exists yet.
+Hydrogen materials workspace. Phase 3 connects the React dashboard to a FastAPI domain API and persistent SQLite records.
 
-## Stack
+**All current records are synthetic/demo data. No trained model exists.** The Digital Twin performs an exact lookup of stored experiments. Unsupported configurations return no invented values. No interpolation, extrapolation, chemistry formulas, training, or inference is implemented.
 
-- React 19, Vite, JavaScript, and Tailwind CSS
-- Python, FastAPI, and Uvicorn
-- SQLite
-- Docker and Docker Compose
+## Architecture
+
+```text
+React dashboard → /api HTTP requests → Vite proxy → FastAPI → SQLite
+```
+
+The backend owns experiment records, selectable domain options, numeric constraints, defaults, validation, and provenance. The frontend owns presentation and transient interaction state. Charts, comparisons, and overview statistics use API-returned records. Only theme preference uses localStorage.
+
+The twelve Phase 2 experiment records are preserved in the backend seed file. The four conflicting prediction fixtures, synthetic confidence, and unsubstantiated desorption outputs have been retired. The default Ni configuration now consistently returns the stored capacity of 6.1 wt%.
 
 ## Structure
 
 ```text
-.
-├── frontend/          # React dashboard, isolated mock adapter, and Vite proxy
-├── backend/
-│   ├── app/           # FastAPI application and SQLite connectivity helper
-│   ├── tests/         # API health test
-│   ├── data/          # Runtime SQLite file (created automatically, ignored)
-│   └── Dockerfile
-├── docker-compose.yml
-├── .env.example
-└── README.md
+backend/
+  app/
+    main.py          # Application lifecycle, health and safe errors
+    database.py      # Connections and transactional schema/seed initialization
+    schemas.py       # Pydantic contracts
+    repository.py    # Database reads and option discovery
+    domain.py        # Domain routes and exact lookup validation
+    seed_data.json   # Canonical synthetic/demo seed records
+  tests/             # Isolated temporary SQLite tests
+  data/              # Ignored local runtime database
+frontend/
+  src/
+    data/dashboardService.js  # HTTP adapter and response validation
+    data/analysis.js          # Condition-aware display grouping
+    components/               # Dashboard UI
+  tests/                      # Playwright, contracts, axe, test backend launcher
+docs/
+  phase-2-frontend.md
+  phase-3-domain-backend.md
 ```
 
-The browser calls only `/api/health`. Vite proxies that path to FastAPI, using `localhost:8000` locally and the Compose service name inside Docker.
-
-Dashboard records, prediction fixtures, and chart cohort metadata live in `frontend/src/data/mockExperiments.js`. `dashboardService.js` exposes abortable asynchronous operations shaped for future API replacement. A prediction is returned only for an exact saved configuration; custom inputs without a fixture show an explicit unavailable state. Nothing is persisted except the theme preference.
-
-See [Phase 2 delivery and QA](docs/phase-2-frontend.md) for architecture, mock contracts, browser coverage, limitations, and the Phase 3 handoff. The existing HTML prototype, research report, and `STYLE.md` are preserved as historical reference material; Phase 2 follows the requested light/teal visual direction.
+See [Phase 3 implementation and validation](docs/phase-3-domain-backend.md) for the schema, full contracts, scientific limitations, and Phase 4 handoff. The standalone HTML prototype, research report, and STYLE.md remain historical references; the dashboard retains the Phase 2 teal design.
 
 ## Prerequisites
 
 - Node.js 24+ and npm
 - Python 3.11+
-- Docker Desktop with Docker Compose (for the container workflow)
+- Docker Desktop with Compose for the container workflow
+- Google Chrome for the default browser tests, or installed Playwright Chromium
 
 ## Local development
 
@@ -43,13 +54,16 @@ Start the backend:
 ```bash
 cd backend
 python -m venv .venv
-# Windows PowerShell: .\.venv\Scripts\Activate.ps1
-# macOS/Linux: source .venv/bin/activate
+# Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+# macOS/Linux instead: source .venv/bin/activate
 python -m pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-In a second terminal, start the frontend:
+If the Windows `python` command opens the Store, use your installed Python launcher to create the environment; thereafter use `.\.venv\Scripts\python.exe` explicitly.
+
+In a second terminal:
 
 ```bash
 cd frontend
@@ -57,7 +71,7 @@ npm install
 npm run dev
 ```
 
-No environment file is required for the defaults. In local development, a `DATABASE_PATH` shell variable can override the SQLite path; relative values resolve from `backend/`. `VITE_API_PROXY_TARGET` can override the Vite proxy target. On Windows systems that block PowerShell scripts, use `npm.cmd` in place of `npm`.
+Use `npm.cmd` on Windows if PowerShell blocks npm scripts. No environment file is required for defaults. Local `DATABASE_PATH` overrides the database path; relative paths resolve from `backend/`. `VITE_API_PROXY_TARGET` defaults to `http://localhost:8000`.
 
 ## Docker
 
@@ -67,46 +81,78 @@ From the repository root:
 docker compose up --build
 ```
 
-The optional root `.env` file is read by Compose; copy `.env.example` only if you need to override its defaults. Stop the services with `docker compose down`. SQLite data persists in the named `backend_data` volume. Use `docker compose down --volumes` only when you intentionally want to remove that Phase 1 database volume.
+Compose uses the existing `backend_data` volume at `/app/data`. Restarting or rebuilding services preserves SQLite records. `docker compose down` preserves the volume; `docker compose down --volumes` intentionally deletes it.
 
-## URLs
+The optional root `.env` file is read by Compose. Copy `.env.example` only to override defaults. Keep a Compose `DATABASE_PATH` override inside `/app/data` to retain volume persistence.
 
-- Frontend: <http://localhost:5173>
-- Backend API docs: <http://localhost:8000/docs>
-- Health endpoint: <http://localhost:8000/api/health>
+## Initialization and demo data
 
-The health endpoint returns `200` only after it opens SQLite and executes a connectivity query.
+Startup creates schema version 1 and, by default, inserts the twelve demo records in one transaction. An existing empty Phase 1 database upgrades automatically. Subsequent starts read SQLite and never overwrite or reseed existing records, even if all records have been removed.
+
+Set `SEED_DEMO_DATA=false` **before first initialization** to create an empty database. This does not remove seeds from an already initialized database. Changing `seed_data.json` does not modify existing runtime databases. A future data replacement must be explicit; no ingestion or editing system is included in Phase 3.
+
+## URLs and API
+
+| URL | Purpose |
+| --- | --- |
+| <http://localhost:5173> | Dashboard |
+| <http://localhost:8000> | Backend origin; domain routes are below |
+| <http://localhost:8000/docs> | Interactive API documentation |
+| <http://localhost:8000/api/health> | Existing API/SQLite connectivity contract |
+| <http://localhost:8000/api/experiments> | Stored dataset |
+| <http://localhost:8000/api/experiments/EXP-003> | One stored experiment |
+| <http://localhost:8000/api/domain/options> | Form options, constraints, and stored defaults |
+
+`POST /api/digital-twin/run` accepts `{ "inputs": { ... } }` with the eight configuration fields. It returns `status: "matched"` and all exact matching experiment records, or `status: "unavailable"`, `reason: "no_exact_match"`, and an empty `items` array.
+
+The health endpoint preserves its `200` connected / `503` disconnected responses and verifies a live SQLite connection. It is a connectivity check, not a domain-schema readiness assertion. Domain failures return safe errors independently.
 
 ## Validation
 
-Run the backend test:
+Backend, from `backend/`:
 
 ```bash
-cd backend
-pytest
+python -m pytest
+# Windows without activation:
+.\.venv\Scripts\python.exe -m pytest
 ```
 
-Build the frontend:
+Frontend, from `frontend/`:
 
 ```bash
-cd frontend
-npm run build
-```
-
-Lint, format, and run the real-browser suite (with the backend running):
-
-```bash
-cd frontend
 npm run lint
 npm run format:check
+npm run build
 npm test
 ```
 
-The browser suite uses installed Google Chrome and starts a separate Vite instance on port 5174, so it can coexist with Compose on 5173. To use Playwright Chromium instead, run `npx playwright install chromium` and set `PLAYWRIGHT_CHANNEL=chromium`. Set `PLAYWRIGHT_BASE_URL=http://localhost:5173` to test the Compose frontend. On PowerShell, set environment variables with `$env:NAME='value'`. Browser screenshots and failure traces are written to the ignored `frontend/test-results/` directory. `npm run test:ui` opens Playwright's interactive runner.
+Local `npm test` starts its own backend on **8001**, backed by a temporary SQLite database, and Vite on **5174**, which proxies to that backend. It does not require the development backend and never opens the developer's runtime database. Both ports must be available. The launcher uses `backend/.venv` when present; override with `PLAYWRIGHT_PYTHON` if needed.
 
-Validate the Compose file and build both images:
+The default browser is installed Google Chrome. To use Playwright Chromium, run `npx playwright install chromium` and set `PLAYWRIGHT_CHANNEL=chromium`.
+
+To run against the Compose demo application, in PowerShell:
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL='http://localhost:5173'
+npm.cmd test -- --output=test-results/compose
+Remove-Item Env:PLAYWRIGHT_BASE_URL
+```
+
+The Compose browser suite reads the application's demo database; it does not edit it. Corrupt responses and duplicate observations are injected only in tests. Screenshots/traces are under ignored `frontend/test-results/`. `npm run test:ui` starts the interactive runner.
+
+From the repository root:
 
 ```bash
 docker compose config --quiet
-docker compose build
+docker compose up --build -d
 ```
+
+Phase 3 verification covers backend persistence and validation, real HTTP integration, retry/empty/error states, condition-aware analysis, both themes, keyboard/reduced-motion behavior, axe checks, and six viewport widths. See the delivery report for exact results.
+
+## Scientific boundaries
+
+Cohorts match material, loading, pressure, preparation, milling, particle size, and measurement mode/duration/basis. Temperature varies on the axis; additives define series. Source identity does not split otherwise compatible observations. Every chart observation retains provenance, including duplicate points.
+
+Input bounds and form applicability flags are illustrative application conventions, not laboratory operating limits. Stored outcome labels are synthetic categories, not calculated judgments. No configuration or comparison establishes scientific superiority.
+
+Phase 4 owns future model development; Phase 5 owns model integration. Neither is implemented here.

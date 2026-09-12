@@ -1,6 +1,6 @@
 # Phase 2 frontend delivery
 
-Phase 2 implements the hydrogen-materials dashboard using synthetic data. No domain endpoints, database schema, persistence, authentication, chemistry calculations, AI, or training code were added. No commit or push was performed.
+Phase 2 implements the hydrogen-materials dashboard using synthetic data. No domain endpoints, database schema, persistence, authentication, chemistry calculations, AI, or training code were added. This delivery was subsequently committed as `34fda1f` and is the Phase 3 baseline.
 
 ## Experience
 
@@ -83,6 +83,6 @@ The final Compose run's screenshots are in `frontend/test-results/compose/`. Exa
 
 Only the four predefined configurations return a mock prediction. Dataset records and comparisons are in-memory and reset on refresh. There is no export, editing, upload, saving, pagination, or domain network integration. Browser verification uses desktop Chrome with emulated viewport widths, not physical mobile devices or Safari/Firefox. The existing Compose frontend remains a development server, as in Phase 1.
 
-Phase 3 should replace the mock adapter with domain API data, implement the complete non-AI dashboard and persistence, and maintain explicit units, measurement methods, denominator, conditions, and source provenance. Validate real response shapes at the API boundary and adapt chart cohorts to actual experimental records. Remove synthetic records from the shipped application when the real endpoints are ready. AI/model development belongs to Phase 4 and AI integration to Phase 5.
+Phase 3 should replace the mock adapter with domain API data, implement the complete non-AI dashboard and persistence, and maintain explicit units, measurement methods, denominator, conditions, and source provenance. Validate real response shapes at the API boundary and adapt chart cohorts to actual experimental records. Remove frontend-owned synthetic records when the domain endpoints are ready; explicitly labeled backend demo seeds may remain until real research records are available. AI/model development belongs to Phase 4 and AI integration to Phase 5.
 
-Phase 2 is ready for review and commit. Nothing has been staged, committed, or pushed by this task.
+Phase 2 was committed as `34fda1f`. At Phase 3 inspection, local main, origin/main, and origin/phase_3 referenced that commit. See [Phase 3 delivery](phase-3-domain-backend.md) for the subsequent backend migration.

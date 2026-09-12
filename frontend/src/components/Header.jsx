@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getHealth } from '../data/dashboardService'
 export default function Header({ theme, toggleTheme }) {
   const [health, setHealth] = useState('checking')
   const [attempt, setAttempt] = useState(0)
@@ -6,15 +7,8 @@ export default function Header({ theme, toggleTheme }) {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 5000)
     let mounted = true
-    fetch('/api/health', { signal: controller.signal })
-      .then(async (response) => {
-        const body = await response.json()
-        if (
-          !response.ok ||
-          body.api !== 'connected' ||
-          body.database !== 'connected'
-        )
-          throw new Error('Unavailable')
+    getHealth({ signal: controller.signal })
+      .then(() => {
         if (mounted) setHealth('connected')
       })
       .catch(() => {
@@ -60,7 +54,7 @@ export default function Header({ theme, toggleTheme }) {
                   ? 'FastAPI and SQLite are connected.'
                   : health === 'checking'
                     ? 'Checking FastAPI and SQLite…'
-                    : 'Could not verify FastAPI and SQLite. The mock workspace is still available.'}
+                    : 'Could not verify FastAPI and SQLite. Dataset loading and new lookups require the backend.'}
               </p>
               <button
                 className="button secondary"

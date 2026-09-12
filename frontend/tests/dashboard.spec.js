@@ -4,33 +4,43 @@ import AxeBuilder from '@axe-core/playwright'
 async function openDashboard(page) {
   await page.goto('/')
   await expect(page.getByText('12 of 12 experiments')).toBeVisible()
+  await expect(page.getByLabel('Base material')).toBeVisible()
 }
 
-test('Digital Twin keeps mock results tied to exact conditions', async ({
-  page,
-}) => {
+test('Digital Twin returns exact stored observations', async ({ page }) => {
   const errors = []
   page.on('pageerror', (error) => errors.push(error.message))
   await openDashboard(page)
   await expect(page.getByText('Your configuration, in context.')).toBeVisible()
+  let release
+  const held = new Promise((resolve) => {
+    release = resolve
+  })
+  await page.route('**/api/digital-twin/run', async (route) => {
+    await held
+    await route.continue()
+  })
   await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.getByText('Loading demo result')).toBeVisible()
+  await expect(page.getByText('Looking up stored experiments')).toBeVisible()
   await expect(page.getByLabel('Base material')).toBeDisabled()
-  await expect(page.locator('.capacity-result')).toContainText('6.2')
+  release()
+  await expect(page.locator('.capacity-result')).toContainText('6.1')
   await expect(page.locator('.result-configuration')).toContainText(
-    '300 °C · 10 bar · 4 h milling · 100 nm',
+    '300 °C · 10 bar · Ball milling · 4 h milling · 100 nm',
   )
   await page.getByLabel('Hydrogen pressure (bar)').fill('20')
   await expect(
     page.getByText('Inputs changed.', { exact: false }),
   ).toBeVisible()
   await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.getByText('No fixture for these conditions')).toBeVisible()
+  await expect(
+    page.getByText('No stored result for these conditions'),
+  ).toBeVisible()
   await expect(page.locator('.capacity-result')).toHaveCount(0)
   await page.getByRole('button', { name: 'Reset', exact: true }).click()
   await page.getByLabel('Additive / catalyst').selectOption('Fe–Ni / N-C')
   await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.locator('.capacity-result')).toContainText('6.5')
+  await expect(page.locator('.capacity-result')).toContainText('6.4')
   await page.getByLabel('Additive / catalyst').selectOption('None')
   await expect(page.getByLabel('Additive concentration (wt%)')).toHaveValue('0')
   await expect(page.getByLabel('Additive concentration (wt%)')).toBeDisabled()
@@ -61,6 +71,9 @@ test('dataset search, filters, sorting, details and configuration handoff', asyn
   await expect(page.getByLabel('Ball milling time (h)')).toHaveValue('8')
   await expect(page.getByLabel('Particle size (nm)')).toHaveValue('80')
   await expect(page.getByLabel('Base material')).toBeFocused()
+  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
+  await expect(page.locator('.capacity-result')).toContainText('6.3')
+  await expect(page.locator('.fixture-reference')).toContainText('EXP-011')
   await page.getByLabel('Search experiments').fill('not a material')
   await expect(page.getByText('No matching experiments')).toBeVisible()
   await page.getByRole('button', { name: 'Clear filters' }).click()
@@ -76,6 +89,9 @@ test('comparison enforces its limit and highlights mismatched conditions', async
   page,
 }) => {
   await openDashboard(page)
+  await expect(page.getByText('No experiments selected')).toBeVisible()
+  for (const id of ['EXP-003', 'EXP-006', 'EXP-009'])
+    await page.getByLabel('Compare ' + id, { exact: true }).check()
   await expect(
     page.getByLabel('Compare EXP-011', { exact: true }),
   ).toBeDisabled()
@@ -87,7 +103,7 @@ test('comparison enforces its limit and highlights mismatched conditions', async
     'hydrogen pressure, milling time, particle size',
   )
   await page.getByText('Compare all conditions', { exact: true }).click()
-  await expect(page.locator('.different-condition')).toHaveCount(3)
+  await expect(page.locator('.different-condition')).toHaveCount(4)
   for (const id of ['EXP-003', 'EXP-006', 'EXP-011'])
     await page
       .getByRole('button', { name: 'Remove ' + id + ' from comparison' })
@@ -100,8 +116,8 @@ test('chart supports tooltips, series selection and a text equivalent', async ({
 }) => {
   await openDashboard(page)
   await page.locator('.capacity-chart').scrollIntoViewIfNeeded()
-  await expect(page.locator('.recharts-line')).toHaveCount(3)
-  await page.locator('.recharts-line-dots circle').first().hover()
+  await expect(page.locator('.recharts-scatter')).toHaveCount(3)
+  await page.locator('.recharts-scatter-symbol').first().hover()
   await expect(page.locator('.chart-tooltip')).toBeVisible()
   await page.getByText('View chart data', { exact: true }).click()
   await expect(page.locator('.chart-data')).toContainText('6.4 wt%')
@@ -111,10 +127,10 @@ test('chart supports tooltips, series selection and a text equivalent', async ({
     page.getByText('Select an additive to show its series.'),
   ).toBeVisible()
   await page.getByRole('button', { name: 'Ni', exact: true }).click()
-  await expect(page.locator('.recharts-line')).toHaveCount(1)
+  await expect(page.locator('.recharts-scatter')).toHaveCount(1)
 })
 
-test('health errors and retry do not block mock interactions', async ({
+test('health errors and retry have accurate connection messaging', async ({
   page,
 }) => {
   await page.route('**/api/health', (route) =>
@@ -126,7 +142,9 @@ test('health errors and retry do not block mock interactions', async ({
   await openDashboard(page)
   await page.getByText('System offline', { exact: true }).click()
   await expect(
-    page.getByText('The mock workspace is still available.', { exact: false }),
+    page.getByText('Dataset loading and new lookups require the backend.', {
+      exact: false,
+    }),
   ).toBeVisible()
   await page.unroute('**/api/health')
   await page.getByRole('button', { name: 'Check again' }).click()
@@ -172,6 +190,8 @@ test('responsive screenshots and overflow checks in both themes', async ({
   page,
 }, testInfo) => {
   await openDashboard(page)
+  for (const id of ['EXP-003', 'EXP-006', 'EXP-009'])
+    await page.getByLabel('Compare ' + id, { exact: true }).check()
   await page.getByRole('button', { name: 'Run Digital Twin' }).click()
   await expect(page.locator('.capacity-result')).toBeVisible()
   for (const width of [1440, 1280, 1024, 768, 390, 320]) {
@@ -232,42 +252,151 @@ test('responsive screenshots and overflow checks in both themes', async ({
   expect(results.violations).toEqual([])
 })
 
-test('dataset and simulation failures have recoverable UI states', async ({
+test('dataset and lookup HTTP failures recover through retry', async ({
   page,
-}, testInfo) => {
-  // Fault injection stays in the browser test, never in the application adapter.
-  await page.route('**/src/data/dashboardService.js', async (route) => {
-    const response = await route.fetch()
-    let body = await response.text()
-    expect(body).toContain('await delay(450, signal)')
-    body = body.replace(
-      /await delay\(450, signal\);?/,
-      'await delay(800, signal); if (!window.__qaDatasetRecovered) throw new Error("Dataset test failure");',
-    )
-    body = body.replace(
-      /await delay\(850, signal\);?/,
-      'await delay(850, signal); if (!window.__qaPredictionRecovered) throw new Error("Prediction test failure");',
-    )
-    await route.fulfill({ response, body })
+}) => {
+  let release
+  const gate = new Promise((resolve) => {
+    release = resolve
+  })
+  await page.route('**/api/experiments', async (route) => {
+    await gate
+    await route.fulfill({ status: 503, json: { detail: 'Unavailable' } })
   })
   await page.goto('/')
-  await expect(page.getByText('Loading demo experiments…')).toBeVisible()
-  await page.screenshot({ path: testInfo.outputPath('dataset-loading.png') })
-  await expect(page.getByText('Could not load the demo dataset.')).toBeVisible()
-  await page.screenshot({ path: testInfo.outputPath('dataset-error.png') })
-  await page.evaluate(() => {
-    window.__qaDatasetRecovered = true
-  })
+  await expect(
+    page.getByText('Loading experiments…', { exact: true }),
+  ).toBeVisible()
+  release()
+  await expect(
+    page.getByText('Could not load the dataset.', { exact: false }),
+  ).toBeVisible()
+  await page.unroute('**/api/experiments')
   await page.getByRole('button', { name: 'Retry dataset' }).click()
   await expect(page.getByText('12 of 12 experiments')).toBeVisible()
+  await page.route('**/api/digital-twin/run', (route) => route.abort('failed'))
   await page.getByRole('button', { name: 'Run Digital Twin' }).click()
+  await expect(page.getByText('Could not retrieve a result')).toBeVisible()
+  await page.unroute('**/api/digital-twin/run')
+  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
+  await expect(page.locator('.capacity-result')).toContainText('6.1')
+})
+
+test('options failure is retryable without hiding the dataset', async ({
+  page,
+}) => {
+  await page.route('**/api/domain/options', (route) =>
+    route.fulfill({ status: 503, json: {} }),
+  )
+  await page.goto('/')
+  await expect(page.getByText('12 of 12 experiments')).toBeVisible()
   await expect(
-    page.getByText('Demo result unavailable', { exact: true }),
+    page.getByText('Could not load configuration options.', { exact: false }),
   ).toBeVisible()
-  await page.screenshot({ path: testInfo.outputPath('prediction-error.png') })
-  await page.evaluate(() => {
-    window.__qaPredictionRecovered = true
-  })
+  await page.getByRole('button', { name: 'Show details for EXP-003' }).click()
+  await expect(
+    page.getByRole('button', { name: 'Use in Digital Twin' }),
+  ).toBeDisabled()
+  await page.unroute('**/api/domain/options')
+  await page.getByRole('button', { name: 'Retry options' }).click()
+  await expect(page.getByLabel('Base material')).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Use in Digital Twin' }),
+  ).toBeEnabled()
+})
+
+test('empty database has explicit dataset and configuration states', async ({
+  page,
+  request,
+}) => {
+  const options = await (await request.get('/api/domain/options')).json()
+  await page.route('**/api/experiments', (route) =>
+    route.fulfill({ json: { items: [] } }),
+  )
+  await page.route('**/api/domain/options', (route) =>
+    route.fulfill({
+      json: {
+        ...options,
+        materials: [],
+        additives: [],
+        methods: [],
+        default_inputs: null,
+      },
+    }),
+  )
+  await page.goto('/')
+  await expect(page.getByText('No experiments available')).toBeVisible()
+  await expect(
+    page.getByText('No stored configurations are available.'),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Run Digital Twin' }),
+  ).toHaveCount(0)
+})
+
+test('malformed API responses produce controlled errors', async ({ page }) => {
+  await page.route('**/api/experiments', (route) =>
+    route.fulfill({ json: { items: [{ id: 'broken' }] } }),
+  )
+  await page.route('**/api/domain/options', (route) =>
+    route.fulfill({ json: { materials: ['bad'] } }),
+  )
+  await page.goto('/')
+  await expect(
+    page.getByText('Could not load the dataset.', { exact: false }),
+  ).toBeVisible()
+  await expect(
+    page.getByText('Could not load configuration options.', { exact: false }),
+  ).toBeVisible()
+  await page.unroute('**/api/experiments')
+  await page.unroute('**/api/domain/options')
+  await page.getByRole('button', { name: 'Retry dataset' }).click()
+  await page.getByRole('button', { name: 'Retry options' }).click()
+  await expect(page.getByLabel('Base material')).toBeVisible()
+  await page.route('**/api/digital-twin/run', (route) =>
+    route.fulfill({
+      json: {
+        status: 'matched',
+        items: [],
+      },
+    }),
+  )
   await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.locator('.capacity-result')).toContainText('6.2')
+  await expect(page.getByText('Could not retrieve a result')).toBeVisible()
+  await expect(page.locator('.capacity-result')).toHaveCount(0)
+})
+
+test('cohorts adapt to returned conditions and expose per-observation sources', async ({
+  page,
+}) => {
+  await openDashboard(page)
+  await expect(
+    page.getByLabel('Compatible conditions').locator('option'),
+  ).toHaveCount(4)
+  await page.getByText('View chart data', { exact: true }).click()
+  await expect(page.locator('.chart-data tbody tr')).toHaveCount(9)
+  await expect(page.locator('.chart-data')).toContainText('Phase 2 / EXP-003')
+  await page.getByLabel('Compatible conditions').selectOption({ index: 1 })
+  await expect(
+    page.getByText('Only one temperature is available', { exact: false }),
+  ).toBeVisible()
+  await page.getByText('View chart data', { exact: true }).click()
+  await expect(page.locator('.chart-data tbody tr')).toHaveCount(1)
+})
+
+test('refresh reloads records from the API and no domain data is stored locally', async ({
+  page,
+  request,
+}) => {
+  const records = await (await request.get('/api/experiments')).json()
+  await openDashboard(page)
+  const response = page.waitForResponse(
+    (r) => r.url().endsWith('/api/experiments') && r.status() === 200,
+  )
+  await page.reload()
+  expect(await (await response).json()).toEqual(records)
+  await expect(page.getByText('12 of 12 experiments')).toBeVisible()
+  expect(await page.evaluate(() => Object.keys(localStorage))).toEqual([
+    'h2-triad-theme',
+  ])
 })

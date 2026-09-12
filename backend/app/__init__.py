@@ -1,2 +1,1 @@
-"""H2-TRIAD Phase 1 backend package."""
-
+"""H2-TRIAD persistent domain backend."""
