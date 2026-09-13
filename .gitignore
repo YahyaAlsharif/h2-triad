@@ -34,3 +34,6 @@ venv/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Temporary Phase 4 acquisition work
+data/phase4_data_sources/acquisition/work/

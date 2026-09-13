@@ -4,6 +4,12 @@ Hydrogen materials workspace. Phase 3 connects the React dashboard to a FastAPI 
 
 **All current records are synthetic/demo data. No trained model exists.** The Digital Twin performs an exact lookup of stored experiments. Unsupported configurations return no invented values. No interpolation, extrapolation, chemistry formulas, training, or inference is implemented.
 
+## Phase 4 data preparation
+
+Literature acquisition was completed on 2026-09-13 for the currently identified public source pool. Verified papers live under [data/phase4_data_sources/](data/phase4_data_sources/), with core primary, extended reactive-composite, review/methodology, supplementary, and non-training project sources kept separate. Unavailable papers remain in the [active missing-paper queue](data/phase4_data_sources/acquisition/papers_no_pdf.txt).
+
+This is a literature source corpus, not a training dataset. Experimental extraction and cleaning have not begun, and no trained model exists. Phase 3 synthetic/demo SQLite records remain separate and must never be used as Phase 4 scientific training data.
+
 ## Architecture
 
 ```text

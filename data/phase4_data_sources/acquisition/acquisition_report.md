@@ -24,7 +24,7 @@ The active missing list now contains 34 unique URLs: 32 normalized DOI links and
 
 ## Acquired and retained sources
 
-New full articles: FREE-2, FREE-3, FREE-4, FREE-5, FREE-7, FREE-8, FREE-9, FREE-10, FREE-11, FREE-12, FREE-14, FREE-15, FREE-16, and review R3. The 13 primary articles and R3 were downloaded from the official SciOpen PDF assets exposed by the journal's own PDF viewers. Exact download URLs are retained in the acquisition log and work evidence.
+New full articles: FREE-2, FREE-3, FREE-4, FREE-5, FREE-7, FREE-8, FREE-9, FREE-10, FREE-11, FREE-12, FREE-14, FREE-15, FREE-16, and review R3. The 13 primary articles and R3 were downloaded from the official SciOpen PDF assets exposed by the journal's own PDF viewers. Exact download URLs are retained in the acquisition log.
 
 FREE-1 and R1 were already present and were not downloaded again. Existing-A (MgH2-FeNi2S4), Existing-B (MgH2-NaAlH4/CoTiO3), Existing-C (CaH2/MgB2/CaF2), and Existing-D (large magnesium review) were also retained. Existing-C is the supplied Helmholtz accepted manuscript, not the publisher version of record.
 
@@ -41,7 +41,7 @@ Two official ACS Figshare supplements were acquired: NOPDF-11, DOI 10.1021/acsam
 
 ## Access corrections and guide discrepancies
 
-The guide was preserved unchanged. All 52 listed DOI identities were checked against Crossref, with actual issue years retained. DOI-year and issue-year differences do not by themselves indicate incorrect identity.
+During acquisition the guide was preserved unchanged; the subsequent repository cleanup added only a completion banner. All 52 listed DOI identities were checked against Crossref, with actual issue years retained. DOI-year and issue-year differences do not by themselves indicate incorrect identity.
 
 1. The flat path `info/phase4_dataset_acquisition_guide.md` is the existing guide. The alternative nested path supplied in the initial request was absent.
 2. The acquisition inventory in the guide is out of date: FREE-1 and R1 were already local. The unrelated alloy-system link had already been removed before this task.
@@ -64,13 +64,13 @@ Among available papers, FREE-9 (NaH/TiO2 precursor-ratio comparisons), FREE-15 (
 
 All 25 organized PDFs (20 scholarly articles, 3 notes, 2 supplements) open at their final paths and match the saved, previously verified files by SHA-256 and page count. No duplicate PDF hash remains. Previously confirmed titles, DOIs, full-text completeness, and scientific relevance were reused under the requested lighter verification standard.
 
-All 52 guide DOI entries are represented exactly once in the log. Every unavailable identified paper occurs once in the active missing list, alongside the two unresolved original links. Core, extended, reference, and project-note folders are separate. Each supplement is linked to its parent DOI. No experimental dataset, cleaned data, synthetic record, or model was created. The application and acquisition guide were not edited; nothing was staged, committed, pushed, or switched to another branch.
+All 52 guide DOI entries are represented exactly once in the log. Every unavailable identified paper occurs once in the active missing list, alongside the two unresolved original links. Core, extended, reference, and project-note folders are separate. Each supplement is linked to its parent DOI. No experimental dataset, cleaned data, synthetic record, or model was created. During the acquisition session the application and acquisition guide were not edited; nothing was staged, committed, pushed, or switched to another branch.
 
 ## Files changed
 
-Nine original PDFs were moved and renamed into the source pool; `info/data/papers_no_pdf.txt` was modified. The 14 new full PDFs, 2 supplements, acquisition log, supplementary manifest, verification report, source-pool README, unresolved README, this report, original-list backup, and acquisition evidence files were created inside the project.
+Nine original PDFs were moved and renamed into the source pool; the missing-paper queue was updated and now lives at `data/phase4_data_sources/acquisition/papers_no_pdf.txt`. The 14 new full PDFs, 2 supplements, acquisition log, supplementary manifest, verification report, source-pool README, unresolved README, and this report remain in the project.
 
-`file_change_manifest.csv` is the exhaustive one-row-per-file list of created, moved/renamed, and modified files, including all supporting session evidence. Paths are relative to the project root. The following table lists every original-file move:
+The acquisition-session file manifest and original-list backup were removed during repository cleanup because Git history preserves them. The manifest contained only action/original-path/final-path bookkeeping; its nine original PDF moves are preserved below. Paths are relative to the project root.
 
 | Original path | Final path |
 |---|---|
@@ -83,3 +83,19 @@ Nine original PDFs were moved and renamed into the source pool; `info/data/paper
 | info/context/H2_TRIAD_Team_Decision_Map_AR.pdf | data/phase4_data_sources/notes_nontraining/NOTE-1__Team_Decision_Map_AR.pdf |
 | info/context/الهاكثون.pdf | data/phase4_data_sources/notes_nontraining/NOTE-2__Hackathon_Project_Proposal.pdf |
 | info/data/الهاكثون (البيانات).pdf | data/phase4_data_sources/notes_nontraining/NOTE-3__Hackathon_Scientific_Summary.pdf |
+
+## Repository cleanup on 2026-09-13
+
+Cleanup was prepared on `phase4_cleanup`, directly from acquisition commit `7ec85f4` on `main`. The starting working tree was clean. Removed 238 scratch files (about 20.3 MiB) from `acquisition/work/` and added that path to `.gitignore`. The redundant session manifest and original-list backup were also removed; the original queue is recoverable from commit `e253aa3`, and the original PDF move map remains above.
+
+The active queue moved unchanged to `acquisition/papers_no_pdf.txt`; the now-empty `info/data/` directory was removed. Its four priority/identity sections, 32 unique DOI URLs and two unresolved links remain intact. The root/source-pool READMEs and unresolved pointer were updated, and the historical guide received only a completion banner. [UQU access priorities](uqu_access_priorities.md) provide 5 MUST GET, 5 HIGH and 22 USEFUL recommendations, including two reference-only reviews, without changing the active queue's decisions.
+
+Metadata cleanup decoded the journal name for NOPDF-11 and NOPDF-23 and changed NOTE-1 through NOTE-3 from `methodology_only` to the non-training `project_note` scope. All 52 DOI fields and DOI URLs were already normalized. No other acquisition-log field changed. Before deleting cached Figshare responses, their supplement DOIs, repository versions and recorded license names/URLs were retained in `supplementary_manifest.csv`. Those licenses describe the supplement records, not the missing parent articles. Download URLs, article identities, source classifications, access limitations, PDF hashes, page counts and the mismatched EXISTING-A supplementary locator remain in durable records.
+
+Cleanup validation matched all 25 PDFs to the existing SHA-256 verification report, with no duplicate hashes or source PDFs outside this corpus. All 15 core and both extended article paths resolve; the 58 log records and 52 DOI identities remain unique. The queue content matches its pre-move Git blob. No application source, scientific measurements, source PDFs or verification results changed. No extraction or training was performed.
+
+At cleanup, the PDF corpus is approximately 136.5 MiB, `.git` is 140.6 MiB, and the source working tree plus `.git` is approximately 277.7 MiB (excluding ignored dependencies, runtime files and caches). Removing scratch files from the working tree does not remove historical Git objects. Normal Git remains reasonable for this corpus. As a practical review trigger, reconsider storage when the corpus or Git history approaches roughly 1 GiB, binary revisions accumulate rapidly, or clone/fetch times become inconvenient; this is not a Git limit. No Git LFS configuration, migration or history rewrite was performed. Installed Git LFS reported no tracked LFS files, and every PDF's Git filter is unspecified. No `.gitattributes` file was added.
+
+The repository is private; storing publisher PDFs here does not automatically grant redistribution rights if it later becomes public. Existing coverage remains concentrated in JMA (all 15 core papers), with seven core articles filed under oxides. The missing parents and unresolved identities remain acquisition gaps, not verified training sources.
+
+Changes are left uncommitted and unstaged for review. All 238 tracked scratch paths are absent on disk and appear as unstaged deletions; Git's index will retain their old entries until the deletions are staged. No scratch content remains in the working corpus, and future scratch work is ignored. Nothing was pushed.

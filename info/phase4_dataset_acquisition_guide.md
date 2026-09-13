@@ -1,5 +1,11 @@
 # H2-Triad Phase 4 — Dataset Acquisition and Extraction Guide
 
+> Acquisition status: completed on 2026-09-13 for the currently identified public source pool; some full articles remain unavailable.
+> This file is the original acquisition plan, not the current download queue.
+> Current source-of-truth acquisition status is recorded in
+> `data/phase4_data_sources/acquisition/acquisition_log.csv` and
+> `data/phase4_data_sources/acquisition/acquisition_report.md`.
+
 **Prepared:** 2026-09-12  
 **Purpose:** Build a high-quality literature source pool for a Phase 4 machine-learning dataset on Mg/MgH2 hydrogen-storage catalysts.  
 **Current stage:** Source acquisition and triage only. **Do not extract, merge, impute, or train yet.**
