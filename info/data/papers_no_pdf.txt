@@ -1,10 +1,113 @@
+# Phase 4 literature requiring full-text acquisition
+# Status checked 2026-09-13. Access-blocked does not necessarily mean paywalled.
+# DOI entries are unique. Supplements alone do not count as full articles.
+
+# HIGH PRIORITY
+
+# FREE-13 | Reduced graphene oxide/patronite composite as highly active catalyst precursors for enhancing the hydrogen desorption of MgH2
+https://doi.org/10.1016/j.jma.2025.03.014
+
+# FREE-17 | Vermiform Ni@CNT derived from one-pot calcination of Ni-MOF precursor for improving hydrogen storage of MgH2
+https://doi.org/10.1016/s1003-6326(24)66565-9
+
+# FREE-19 | Improved hydrogen storage properties of MgH2 by the addition of FeS2 micro-spheres
+https://doi.org/10.1039/c7dt04665k
+
+# FREE-20 | Porous Ni nanofibers with enhanced catalytic effect on the hydrogen storage performance of MgH2
+https://doi.org/10.1039/c5ta03721b
+
+# NOPDF-1 | MOF-derived carbon supported transition metal (Fe, Ni) and synergetic catalysis for hydrogen storage kinetics of MgH2
+https://doi.org/10.1016/j.ijhydene.2024.08.449
+
+# NOPDF-2 | Improve hydrogen sorption kinetics of MgH2 by doping carbon-encapsulated iron-nickel nanoparticles
+https://doi.org/10.1016/j.jallcom.2020.156035
+
+# NOPDF-3 | Hydrogen storage in MgH2 catalyzed by Fe nanoparticles and hollow silica spheres
+https://doi.org/10.1016/j.fuel.2025.135635
+
+# NOPDF-4 | Synergistic effect of MOF-derived carbon-supported CoNi and FeNi bimetallic catalysts on hydrogen storage kinetics of MgH2
+https://doi.org/10.1016/j.est.2025.116824
+
+# NOPDF-8 | Size-dependent activity modulation of supported Ni nanocatalysts for efficient solid-state hydrogen storage in magnesium
+https://doi.org/10.1016/j.cej.2024.155285
+
+# NOPDF-9 | Fabrication of V2O3-TiO2-rGO ternary heterojunction composite to enhance the hydrogen storage performance of MgH2
+https://doi.org/10.1016/j.cej.2024.155877
+
+# NOPDF-10 | Improved hydrogen storage properties of MgH2 using transition metal sulfides as catalyst
+https://doi.org/10.1016/j.ijhydene.2021.05.172
+
+# NOPDF-11 | Formation of Multiple-Phase Catalysts for the Hydrogen Storage of Mg Nanoparticles by Adding Flowerlike NiS
+https://doi.org/10.1021/acsami.6b13222
+
+# NOPDF-12 | Enhancing hydrogen sorption performances of MgH2 by in-situ introduction of molybdate derived FeMo nano catalysts
+https://doi.org/10.1016/j.est.2025.117418
+
+# NOPDF-13 | Improved MgH2 kinetics and cyclic stability by fibrous spherical NiMoO4 and rGO
+https://doi.org/10.1016/j.jtice.2022.104311
+
+# NOPDF-14 | Multivalent transition metal oxyfluorides as efficient catalysts for improving hydrogen cycling kinetics of MgH2
+https://doi.org/10.1016/j.ijhydene.2024.11.092
+
+# NOPDF-15 | Dual-cation K2TaF7 catalyst improves high-capacity hydrogen storage behavior of MgH2
+https://doi.org/10.1016/j.ijhydene.2022.11.191
+
+# NOPDF-16 | Catalytic activity of oxides and halides on hydrogen storage of MgH2
+https://doi.org/10.1016/j.jpowsour.2006.04.059
+
+# NOPDF-19 | Polymeric carbon nitride supported single-phase Ni with exceptional catalytic effect on MgH2 for hydrogen storage
+https://doi.org/10.1016/j.jallcom.2025.181259
+
+# NOPDF-21 | Leaf-carbon-supported FeCo nanocatalysts enable 200 °C desorption and high reversibility in MgH2 hydrogen storage
+https://doi.org/10.1016/j.ijhydene.2025.152589
+
+# NOPDF-22 | Carbon scaffold supporting Ni and Fe–Ni sulfides for boosting hydrogen storage in MgH2
+https://doi.org/10.1016/j.ijhydene.2026.156007
+
+# NOPDF-23 | Effect of Ti-EG-Ni Dual-Metal Organic Crystal-Derived TiO2/C/Ni on the Hydrogen Storage Performance of MgH2
+https://doi.org/10.1021/acsami.4c18239
+
+# NOPDF-24 | Construction of NiS/carbon fibers confined NiS composite: high catalytic activity for enhancing the hydrogen storage performances of MgH2
+https://doi.org/10.1007/s12598-025-03517-2
+
+# MEDIUM PRIORITY
+
+# FREE-6 | Improved hydrogen storage kinetics of MgH2 using TiFe0.92Mn0.04Co0.04 with in-situ generated α-Fe as catalyst
+https://doi.org/10.1016/j.matre.2023.100247
+
+# FREE-18 | Effect of Ce0.6Zr0.4O2 nanocrystals on boosting hydrogen storage performance of MgH2
+https://doi.org/10.1016/j.cej.2024.153203
+
+# NOPDF-5 | Research on the modification of magnesium hydride by two-dimensional layered Mo2Ti2C3 MXene
+https://doi.org/10.1016/j.est.2024.113843
+
+# NOPDF-6 | Enhanced catalysis of Pd single atoms on Sc2O3 nanoparticles for hydrogen storage of MgH2
+https://doi.org/10.1016/j.cej.2024.149434
+
+# NOPDF-7 | Nanosized SrTiO3 Catalyzes Hydrogen Sorption of MgH2
+https://doi.org/10.1021/acsaem.4c01892
+
+# NOPDF-17 | Catalytic alteration in hydrogen storage properties of MgH2 by adding CaTiO3
+https://doi.org/10.1016/j.est.2025.117958
+
+# NOPDF-18 | Synchronously upgrading of hydrogen storage thermodynamic, kinetics and cycling properties of MgH2 via VTiMn catalyst
+https://doi.org/10.1016/j.seppur.2024.129760
+
+# NOPDF-20 | Effect of porous nanosheet NiO on hydrogen storage performance of MgH2
+https://doi.org/10.1016/j.ijhydene.2025.05.017
+
+# REFERENCE ONLY
+
+# R2 | Hydrogen Storage Performance of Mg/MgH2 and Its Improvement Measures: Research Progress and Trends
+https://doi.org/10.3390/ma16041587
+
+# R4 | Fe-Based Catalysts in MgH2 Hydrogen Storage: Mechanistic Insights, Stability Challenges, and a Roadmap for Scalable Design
+https://doi.org/10.3390/coatings16010092
+
+# UNRESOLVED
+
+# UNRESOLVED-1 | Existing link; identity not positively established
 https://core.ac.uk/outputs/668738614/?source=oai
 
-https://www.sciencedirect.com/science/article/abs/pii/S0360319924036310
-
-https://www.sciencedirect.com/science/article/abs/pii/S0360319924036310?via%3Dihub
-
+# UNRESOLVED-2 | Existing link; identity not positively established
 https://www.sciencedirect.com/science/article/abs/pii/S0360319924000661
-
-https://www.sciencedirect.com/science/article/abs/pii/S0016236125013602
-

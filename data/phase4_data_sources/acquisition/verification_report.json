@@ -1,0 +1,247 @@
+{
+  "date": "2026-09-13",
+  "result": "PASS",
+  "unique_doi_papers": 52,
+  "log_records": 58,
+  "available_scholarly_articles": 20,
+  "core_articles": 15,
+  "extended_articles": 2,
+  "review_articles": 2,
+  "methodology_articles": 1,
+  "project_notes": 3,
+  "supplement_files": 2,
+  "new_full_article_pdfs": 14,
+  "missing_doi_papers": 32,
+  "unresolved_links": 2,
+  "missing_list_unique_urls": 34,
+  "duplicate_pdf_hashes": 0,
+  "guide_coverage": "52 DOI entries plus excluded alloy-system paper and all existing notes/unresolved links",
+  "verification_method": "Saved identity, full-text and relevance checks reused. Final paths opened with the same PDF reader and hashes matched against previously verified originals. No second-reader review or repeated detailed inspection.",
+  "pdfs": [
+    {
+      "paper_id": "FREE-1",
+      "local_filename": "data/phase4_data_sources/core_primary/carbon_supported/FREE-1__2024__Ni_at_C.pdf",
+      "sha256": "cb7f601481001cce5a28b4392d68cee08a1131bf4713111798b591356551d16c",
+      "pages": 11,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-2",
+      "local_filename": "data/phase4_data_sources/core_primary/carbon_supported/FREE-2__2024__Ni3ZnC_Ni_at_CNT.pdf",
+      "sha256": "f0d6d62754d05c32abf03fd806d0ba3d995e28ede79b891ffade7def9b1853aa",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-3",
+      "local_filename": "data/phase4_data_sources/core_primary/bimetallic_multimetallic/FREE-3__2024__Mg2Ni_TiH1p5.pdf",
+      "sha256": "8e90ab9257cc85ffcc9658589878d92f611d7e1c8cc5530486f53ea7d9b482ea",
+      "pages": 10,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-4",
+      "local_filename": "data/phase4_data_sources/core_primary/bimetallic_multimetallic/FREE-4__2024__NiCu_at_C.pdf",
+      "sha256": "dd2952e502b4dc48622f0d9e52d1a2c64edf888821fcc088856b0344f02a3388",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-5",
+      "local_filename": "data/phase4_data_sources/core_primary/nitrides_carbides_mxenes/FREE-5__2024__Ni_VN.pdf",
+      "sha256": "3b4bea41f45c0aef096b24e863c381fec081893bd4261d9585c24fdddc1703d4",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-7",
+      "local_filename": "data/phase4_data_sources/core_primary/oxides/FREE-7__2025__LaVO4.pdf",
+      "sha256": "9ad4164e8a5c5b079f6fe7ecafb6481df1f0ab2db8d067d21876b976a0687897",
+      "pages": 13,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-8",
+      "local_filename": "data/phase4_data_sources/core_primary/oxides/FREE-8__2024__VO_V2O3.pdf",
+      "sha256": "d6d6a9fbc767279cb65852d4e99bf5aed77e65e98b8731f213b31b0b4159fcce",
+      "pages": 10,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-9",
+      "local_filename": "data/phase4_data_sources/core_primary/oxides/FREE-9__2023__NaH_TiO2.pdf",
+      "sha256": "184e874eb29f9ab0e113d9fb7515faef29f0b964a4cb8140b61964426af9ce7b",
+      "pages": 10,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-10",
+      "local_filename": "data/phase4_data_sources/core_primary/bimetallic_multimetallic/FREE-10__2025__V_NiCo_MOF.pdf",
+      "sha256": "848e02d3a70e6ffa9312ad1a8bb5423b18cd625620822c95dce996391541846c",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-11",
+      "local_filename": "data/phase4_data_sources/core_primary/oxides/FREE-11__2026__Co3O4_Ni_GO.pdf",
+      "sha256": "e0e60665133ed5489b50e703037e62c919bbfacab431029f4a195113962cbe90",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-12",
+      "local_filename": "data/phase4_data_sources/core_primary/oxides/FREE-12__2025__Bi2Ti2O7.pdf",
+      "sha256": "812e05802362b9fd3a6ec6e3ed0290d3a2469741cd97ba129dab1855062e2acb",
+      "pages": 13,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-14",
+      "local_filename": "data/phase4_data_sources/core_primary/oxides/FREE-14__2025__Ni_Nb_oxide.pdf",
+      "sha256": "03ce2369e08aa6892bd301bdd5ebec05701d664d9a828b82bc551f1d39646334",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-15",
+      "local_filename": "data/phase4_data_sources/core_primary/oxides/FREE-15__2026__TMOx_Ti_MgO.pdf",
+      "sha256": "eb264b0304351fe7ec6edc160d8c0ea1575ff57d92184eefb6799e860e8c5262",
+      "pages": 9,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-16",
+      "local_filename": "data/phase4_data_sources/core_primary/sulfides/FREE-16__2026__FeNi_S_carbon.pdf",
+      "sha256": "2e1fa99cd8f58b827b7d65b25f8bf1cfa912437433269fd68b7e51ec5eb41e28",
+      "pages": 15,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "EXISTING-A",
+      "local_filename": "data/phase4_data_sources/core_primary/sulfides/EXISTING-A__2023__MgH2_FeNi2S4.pdf",
+      "sha256": "71e5bbccc80a2b6544dd389dd4ca280a45872915a1b063e750c45f204ba2943b",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "EXISTING-B",
+      "local_filename": "data/phase4_data_sources/extended_primary/reactive_hydride_composites/EXISTING-B__2024__MgH2_NaAlH4_CoTiO3.pdf",
+      "sha256": "262a9409e39012b67b1f81e09a00d61099808ea604f865fe72811d0deb80a53e",
+      "pages": 12,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "EXISTING-C",
+      "local_filename": "data/phase4_data_sources/extended_primary/reactive_hydride_composites/EXISTING-C__2011__CaH2_MgB2_CaF2.pdf",
+      "sha256": "2a512cd3c54bda7b3a71ff44973b81849aa72f4c378b0c2e2e9c4f6e448864f3",
+      "pages": 22,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "EXISTING-D",
+      "local_filename": "data/phase4_data_sources/reviews_indexes/EXISTING-D__2025__Magnesium_global_review.pdf",
+      "sha256": "ef41ed5e5bd40ca319a9517297d9e65c1d930d52e018cd4280798609c7b58910",
+      "pages": 44,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "R1",
+      "local_filename": "data/phase4_data_sources/reviews_indexes/R1__2026__LLM_Agent_methodology.pdf",
+      "sha256": "5675b2e10bcc971ba38a363109200b6c1062f9a86286fef5389d767d1c240f89",
+      "pages": 17,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "R3",
+      "local_filename": "data/phase4_data_sources/reviews_indexes/R3__2026__Single_atom_catalyst_review.pdf",
+      "sha256": "2a451c918823174b392a7d7bf73d0d9f3db2c37a73288bf3b246034968eb8332",
+      "pages": 22,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "NOTE-1",
+      "local_filename": "data/phase4_data_sources/notes_nontraining/NOTE-1__Team_Decision_Map_AR.pdf",
+      "sha256": "ae7df663fb2e0cae7810658ab74a036a6a27c5090d432a8c2e3dc3c35c0b0f39",
+      "pages": 4,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "NOTE-2",
+      "local_filename": "data/phase4_data_sources/notes_nontraining/NOTE-2__Hackathon_Project_Proposal.pdf",
+      "sha256": "4b5073ded5309bd251fddaee1913558f16b753916057b834447340e849f026b0",
+      "pages": 4,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "NOTE-3",
+      "local_filename": "data/phase4_data_sources/notes_nontraining/NOTE-3__Hackathon_Scientific_Summary.pdf",
+      "sha256": "77eede33588b709c4dea5361914888638edb9cee8e416acd34cf2de95637aa90",
+      "pages": 8,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "NOPDF-11",
+      "local_filename": "data/phase4_data_sources/supplementary/NOPDF-11/NOPDF-11__am6b13222_si_001.pdf",
+      "sha256": "983db1fab038e9e578c19794f71e17fead32b753cf74d4bce42c62ce806ab70d",
+      "pages": 7,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "NOPDF-23",
+      "local_filename": "data/phase4_data_sources/supplementary/NOPDF-23/NOPDF-23__am4c18239_si_001.pdf",
+      "sha256": "5b464cd098e43483b23e8d17f0f04036041b3b6d91f77e462a0b62fb4808b97c",
+      "pages": 7,
+      "opens": true,
+      "matches_previously_verified_pdf": true,
+      "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    }
+  ]
+}
