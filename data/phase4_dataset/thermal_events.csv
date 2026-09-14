@@ -1,0 +1,28 @@
+thermal_event_id,sample_id,source_id,reaction_direction,event_type,temperature_raw,temperature_c,heating_rate_raw,pressure_raw,source_pdf_page,source_locator,extraction_type,extraction_note
+TE-0001,S-F01-NIC10,SRC-0001,dehydrogenation,onset,157 C,157,5 C/min,,4,Section 3.2; Fig. 2,author_reported_text,
+TE-0002,S-F01-NIC10,SRC-0001,dehydrogenation,peak,235 C,235,5 C/min,,4,Section 3.2; Fig. 2,author_reported_text,
+TE-0003,S-F01-CTRL,SRC-0001,dehydrogenation,onset,333 C,333,5 C/min,,4,Section 3.2; Fig. 2,author_reported_text,
+TE-0004,S-F01-CTRL,SRC-0001,dehydrogenation,peak,375.5 C,375.5,5 C/min,,4,Section 3.2; Fig. 2,author_reported_text,
+TE-0005,S-F02-NZC5,SRC-0002,dehydrogenation,onset,around 110 C,110,,,1,Abstract,author_reported_text,Approximate onset; kept separate from isothermal temperature.
+TE-0006,S-F03-MMO41,SRC-0003,dehydrogenation,onset,212 C,212,5 C/min,,1,Abstract; Fig. 2,author_reported_text,
+TE-0007,S-F03-CTRL,SRC-0003,dehydrogenation,onset,345 C,345,5 C/min,,1,Abstract; Fig. 2,author_reported_text,
+TE-0008,S-F05-NIVN7,SRC-0005,dehydrogenation,onset,478 K,204.85,,,6,Section 3.2; Fig. 4a,author_reported_text,
+TE-0009,S-F06-LVO15,SRC-0006,dehydrogenation,onset,206 C,206,,,12,Conclusion,author_reported_text,Initial-cycle onset.
+TE-0010,S-F06-LVO15,SRC-0006,dehydrogenation,onset,183 C,183,,,12,Conclusion,author_reported_text,Second-cycle onset after activation.
+TE-0011,S-F06-LVO15,SRC-0006,dehydrogenation,peak,222 C,222,,,9,Section 3.2; Table 1,author_reported_text,
+TE-0012,S-F08-NATI5,SRC-0008,dehydrogenation,onset,about 185 C,185,2 C/min,,9,Conclusion; TPD-MS,author_reported_text,
+TE-0013,S-F08-CTRL,SRC-0008,dehydrogenation,onset,about 295 C,295,,,3,Section 3.1; Fig. 1b,author_reported_text,
+TE-0014,S-F09-NCM7,SRC-0009,dehydrogenation,onset,155 C,155,,,4,Section 3.2; Fig. 4a,author_reported_text,
+TE-0015,S-F10-NIOVC7,SRC-0010,dehydrogenation,onset,438 K,164.85,3 K/min,<0.0001 bar,4,Section 3.2; TPD,author_reported_text,
+TE-0016,S-F11-BTO10,SRC-0011,dehydrogenation,onset,194.3 C,194.3,,,6,Section 3.3; Fig. 3b,author_reported_text,
+TE-0017,S-F11-BTO10,SRC-0011,dehydrogenation,peak,245.6 C,245.6,3 C/min,,7,Section 3.4; Fig. 4,author_reported_text,
+TE-0018,S-F11-CTRL,SRC-0011,dehydrogenation,onset,335 C,335,,,6,Section 3.3; Fig. 3b,author_reported_text,
+TE-0019,S-F11-CTRL,SRC-0011,dehydrogenation,peak,about 339 C,339,3 C/min,,7,Section 3.4; Fig. 4,author_reported_text,
+TE-0020,S-F12-NINB73,SRC-0012,dehydrogenation,onset,198 C,198,5 C/min,0.001 MPa,5,Section 3.2; Fig. 3a,author_reported_text,
+TE-0021,S-F13-CTRL,SRC-0013,dehydrogenation,onset,396 C,396,,,5,Results; Fig. 2c,author_reported_text,
+TE-0022,S-EA-FENI2S4,SRC-0016,dehydrogenation,onset,about 540 K,266.85,,,5,Section 3.3; Fig. 4c,author_reported_text,
+TE-0023,S-EA-FENI2S4,SRC-0016,dehydrogenation,peak,about 622 K,348.85,,,5,Section 3.3; Fig. 4d,author_reported_text,
+TE-0024,S-EA-CTRL,SRC-0016,dehydrogenation,onset,about 620 K,346.85,,,5,Section 3.3; Fig. 4c,author_reported_text,
+TE-0025,S-EA-CTRL,SRC-0016,dehydrogenation,peak,672 K,398.85,,,5,Section 3.3; Fig. 4d,author_reported_text,
+TE-0026,S-EB-COTIO3,SRC-0017,dehydrogenation,onset,130 C,130,,1 bar,4,Section 3.2; Fig. 4,author_reported_text,First decomposition stage of the extended reactive-hydride system.
+TE-0027,S-EB-UNDOPED,SRC-0017,dehydrogenation,onset,170 C,170,,1 bar,4,Section 3.2; Fig. 4,author_reported_text,First decomposition stage of the extended reactive-hydride system.

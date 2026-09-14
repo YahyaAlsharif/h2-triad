@@ -1,6 +1,6 @@
 # Phase 4 literature acquisition report
 
-Completed public-source acquisition and organization on 2026-09-13. Inaccessible sources are recorded for future lawful access; completion does not mean every candidate PDF was obtainable.
+Completed public-source acquisition and organization on 2026-09-13. Inaccessible sources are recorded for future lawful access; completion does not mean every candidate PDF was obtainable. On 2026-09-14, FREE-17 was subsequently supplied through a legitimate route, verified, and added without erasing the failed publisher-route history below.
 
 ## Counts
 
@@ -10,23 +10,26 @@ Completed public-source acquisition and organization on 2026-09-13. Inaccessible
 | Additional originally present project-note PDFs | 3 |
 | New full-article PDFs downloaded | 14 |
 | New supplementary files downloaded | 2 |
-| Core experimental Mg/MgH2 papers available | 15 |
+| Subsequently supplied and verified full articles | 1 (FREE-17) |
+| Core experimental Mg/MgH2 papers available | 16 |
 | Extended primary papers available | 2 |
 | Review/reference scholarly papers available | 3 (2 reviews + 1 methodology) |
 | Newly added missing-paper entries | 30 (28 core candidates + 2 reviews) |
-| Total unavailable identified papers | 32 (30 core candidates + 2 reviews) |
+| Total unavailable identified papers | 31 (29 core candidates + 2 reviews) |
 | Unresolved existing sources | 2 links; no unidentified local PDFs |
 | Duplicate entries removed | 1 alternate ScienceDirect URL |
 | Duplicate PDFs removed | 0; no duplicate hashes found |
 | Unrelated papers excluded | 1; already absent, no file deleted |
 
-The active missing list now contains 34 unique URLs: 32 normalized DOI links and 2 preserved unresolved links. Two identified papers were already represented in the original list; therefore 30 papers are newly added. The log has 58 rows: 52 DOI papers, 3 project notes, 2 unresolved links, and 1 excluded alloy-system paper.
+The active missing list now contains 33 unique URLs: 31 normalized DOI links and 2 preserved unresolved links. The historical acquisition task added 30 entries; FREE-17 was later removed from the active queue after full-text verification. The log still has 58 rows: 52 DOI papers, 3 project notes, 2 unresolved links, and 1 excluded alloy-system paper.
 
 ## Acquired and retained sources
 
 New full articles: FREE-2, FREE-3, FREE-4, FREE-5, FREE-7, FREE-8, FREE-9, FREE-10, FREE-11, FREE-12, FREE-14, FREE-15, FREE-16, and review R3. The 13 primary articles and R3 were downloaded from the official SciOpen PDF assets exposed by the journal's own PDF viewers. Exact download URLs are retained in the acquisition log.
 
 FREE-1 and R1 were already present and were not downloaded again. Existing-A (MgH2-FeNi2S4), Existing-B (MgH2-NaAlH4/CoTiO3), Existing-C (CaH2/MgB2/CaF2), and Existing-D (large magnesium review) were also retained. Existing-C is the supplied Helmholtz accepted manuscript, not the publisher version of record.
+
+FREE-17 was later supplied locally and verified as a readable, complete 16-page version-of-record article. It is filed at `core_primary/carbon_supported/FREE-17__2024__Ni_at_CNT.pdf` with SHA-256 `8e693025638d461050a612d77909ad8591a5e815b5ed317b65a867bd51443ee6`.
 
 Two official ACS Figshare supplements were acquired: NOPDF-11, DOI 10.1021/acsami.6b13222, and NOPDF-23, DOI 10.1021/acsami.4c18239. Both parent identities and supplement titles match. The supplements contain supporting characterization/kinetic information. Their parent full articles remain missing; secondary comparison tables must not be treated as measurements from the parent experiment.
 
@@ -46,7 +49,7 @@ During acquisition the guide was preserved unchanged; the subsequent repository 
 1. The flat path `info/phase4_dataset_acquisition_guide.md` is the existing guide. The alternative nested path supplied in the initial request was absent.
 2. The acquisition inventory in the guide is out of date: FREE-1 and R1 were already local. The unrelated alloy-system link had already been removed before this task.
 3. FREE-6 and FREE-13 have OA metadata but their publisher routes did not deliver usable PDFs. FREE-13's SciOpen route returned 404. They remain access-blocked, not proven paywalled.
-4. FREE-17's official journal PDF handler returned HTTP 500. Its full-text availability could not be realized in this session.
+4. FREE-17's official journal PDF handler returned HTTP 500 during the original session and the ScienceDirect route was blocked. A legitimate copy was subsequently supplied and verified on 2026-09-14; it is no longer access-blocked or in the missing queue.
 5. FREE-18's claimed “View Open Manuscript” route could not be confirmed. No legitimate accessible manuscript was found in the reasonable routes checked.
 6. FREE-19 and FREE-20's guide-listed direct RSC PDFs were not freely reachable in this session. Publisher security/access responses prevented acquisition. The Adelaide repository candidate for FREE-20 did not load.
 7. R2 and R4 are genuinely OA review articles, but their PDF routes returned access errors or HTML challenge pages. No HTML response was counted as a PDF.
@@ -56,13 +59,13 @@ A source-level discrepancy was also noticed: Existing-A's printed supplementary 
 
 The remaining NOPDF candidates were checked using publisher information, focused legitimate-source searches, and OA repository metadata. No full article was obtained. The UMPSA copy for NOPDF-3 is explicitly staff restricted; that restriction was respected. The log distinguishes metadata/abstract screening from actual full-text verification. Failure to retrieve a file is not a universal claim that no free copy exists anywhere.
 
-## Suggested later extraction priorities
+## Phase 4A extraction status
 
-Among available papers, FREE-9 (NaH/TiO2 precursor-ratio comparisons), FREE-15 (Mn/Cu catalyst-family comparison), FREE-14 (Ni-Nb compositions/controls), and FREE-3 (LDH-derived catalyst compositions/controls) are strong starting points. Existing-A supplies the project's FeNi2S4 primary evidence. These priorities concern experimental design and source richness; no values were extracted or compared for a training table.
+The original extraction priorities were completed in Phase 4A together with the rest of the verified primary corpus. The normalized scientific tables and quality report are in `data/phase4_dataset/`. This current-status note does not rewrite the acquisition-only history later in this report.
 
 ## Final reconciliation
 
-All 25 organized PDFs (20 scholarly articles, 3 notes, 2 supplements) open at their final paths and match the saved, previously verified files by SHA-256 and page count. No duplicate PDF hash remains. Previously confirmed titles, DOIs, full-text completeness, and scientific relevance were reused under the requested lighter verification standard.
+All 26 organized PDFs (21 scholarly articles, 3 notes, 2 supplements) open at their final paths. FREE-17 was independently checked for title, DOI, readability, 16-page count, PDF signature/EOF, and SHA-256; the other 25 retain their saved verification. No duplicate PDF hash remains.
 
 All 52 guide DOI entries are represented exactly once in the log. Every unavailable identified paper occurs once in the active missing list, alongside the two unresolved original links. Core, extended, reference, and project-note folders are separate. Each supplement is linked to its parent DOI. No experimental dataset, cleaned data, synthetic record, or model was created. During the acquisition session the application and acquisition guide were not edited; nothing was staged, committed, pushed, or switched to another branch.
 
@@ -96,6 +99,6 @@ Cleanup validation matched all 25 PDFs to the existing SHA-256 verification repo
 
 At cleanup, the PDF corpus is approximately 136.5 MiB, `.git` is 140.6 MiB, and the source working tree plus `.git` is approximately 277.7 MiB (excluding ignored dependencies, runtime files and caches). Removing scratch files from the working tree does not remove historical Git objects. Normal Git remains reasonable for this corpus. As a practical review trigger, reconsider storage when the corpus or Git history approaches roughly 1 GiB, binary revisions accumulate rapidly, or clone/fetch times become inconvenient; this is not a Git limit. No Git LFS configuration, migration or history rewrite was performed. Installed Git LFS reported no tracked LFS files, and every PDF's Git filter is unspecified. No `.gitattributes` file was added.
 
-The repository is private; storing publisher PDFs here does not automatically grant redistribution rights if it later becomes public. Existing coverage remains concentrated in JMA (all 15 core papers), with seven core articles filed under oxides. The missing parents and unresolved identities remain acquisition gaps, not verified training sources.
+The repository is private; storing publisher PDFs here does not automatically grant redistribution rights if it later becomes public. Existing coverage remains concentrated in JMA (15 of 16 core papers), with seven core articles filed under oxides. FREE-17 adds one Transactions of Nonferrous Metals Society of China article. The missing parents and unresolved identities remain acquisition gaps, not verified training sources.
 
 Changes are left uncommitted and unstaged for review. All 238 tracked scratch paths are absent on disk and appear as unstaged deletions; Git's index will retain their old entries until the deletions are staged. No scratch content remains in the working corpus, and future scratch work is ignored. Nothing was pushed.

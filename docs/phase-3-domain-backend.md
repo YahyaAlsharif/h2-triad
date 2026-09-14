@@ -222,8 +222,8 @@ Screenshot/trace artifacts remain ignored under `frontend/test-results/`, with C
 - Browser verification uses Chrome with emulated viewport widths; it is not a full screen-reader, physical-device, or cross-browser audit.
 - Compose continues to serve the frontend with Vite’s development server, as in Phase 1.
 
-## Phase 4 handoff
+## Phase 4 handoff status
 
 The stable record structure and provenance fields provide a boundary for later research data. Replace demo records explicitly while preserving units, measurement duration/mode, capacity denominator, source references, and synthetic flags. Do not silently mix demo records into model training or represent their outcomes as evidence.
 
-Phase 4 owns model development and scientific evaluation after appropriate data exists. Phase 5 owns model integration. Neither training nor inference is implemented in Phase 3, and the exact-lookup result must remain distinguishable from any future model result.
+Phase 4A now provides the separate literature-derived canonical and ML-ready dataset documented in [phase-4a-scientific-dataset.md](phase-4a-scientific-dataset.md). It has not replaced or mixed with this Phase 3 SQLite dataset. Phase 4B owns model development and paper-grouped scientific evaluation; Phase 5 owns model integration. Neither training nor inference is implemented in Phase 3, and exact literature measurements must remain distinguishable from future model results.

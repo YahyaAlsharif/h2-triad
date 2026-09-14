@@ -1,14 +1,14 @@
 # H2-TRIAD
 
-Hydrogen materials workspace. Phase 3 connects the React dashboard to a FastAPI domain API and persistent SQLite records.
+Hydrogen materials workspace. Phase 4A provides a verified literature-derived scientific dataset; the running React/FastAPI/SQLite application remains the separate Phase 3 demonstration system.
 
 **All current records are synthetic/demo data. No trained model exists.** The Digital Twin performs an exact lookup of stored experiments. Unsupported configurations return no invented values. No interpolation, extrapolation, chemistry formulas, training, or inference is implemented.
 
-## Phase 4 data preparation
+## Phase 4A scientific dataset
 
-Literature acquisition was completed on 2026-09-13 for the currently identified public source pool. Verified papers live under [data/phase4_data_sources/](data/phase4_data_sources/), with core primary, extended reactive-composite, review/methodology, supplementary, and non-training project sources kept separate. Unavailable papers remain in the [active missing-paper queue](data/phase4_data_sources/acquisition/papers_no_pdf.txt).
+Literature acquisition was completed on 2026-09-13 and FREE-17 was subsequently supplied and verified on 2026-09-14. Verified papers live under [data/phase4_data_sources/](data/phase4_data_sources/), with core primary, extended reactive-composite, review/methodology, supplementary, and non-training project sources kept separate. Unavailable papers remain in the [active missing-paper queue](data/phase4_data_sources/acquisition/papers_no_pdf.txt).
 
-This is a literature source corpus, not a training dataset. Experimental extraction and cleaning have not begun, and no trained model exists. Phase 3 synthetic/demo SQLite records remain separate and must never be used as Phase 4 scientific training data.
+The normalized canonical tables and deterministic Model 1 input artifacts are under [data/phase4_dataset/](data/phase4_dataset/). The default capacity table has 109 author-reported observations from 16 core papers. Cycling and extended reactive-composite observations are excluded from it. No graph values were digitized and no model was trained. Phase 3 synthetic/demo SQLite records remain separate and must never be used as scientific training data.
 
 ## Architecture
 
@@ -42,9 +42,14 @@ frontend/
 docs/
   phase-2-frontend.md
   phase-3-domain-backend.md
+  phase-4a-scientific-dataset.md
+data/
+  phase4_data_sources/       # Verified literature corpus and acquisition records
+  phase4_dataset/            # Canonical scientific tables and derived capacity data
+scripts/phase4/              # Deterministic builder and validation suite
 ```
 
-See [Phase 3 implementation and validation](docs/phase-3-domain-backend.md) for the schema, full contracts, scientific limitations, and Phase 4 handoff. The standalone HTML prototype, research report, and STYLE.md remain historical references; the dashboard retains the Phase 2 teal design.
+See [Phase 4A scientific dataset](docs/phase-4a-scientific-dataset.md) for extraction scope, normalized schema, validation, limitations, and the Phase 4B handoff. [Phase 3 implementation and validation](docs/phase-3-domain-backend.md) remains the historical application delivery record. The standalone HTML prototype, research report, and STYLE.md remain historical references; the dashboard retains the Phase 2 teal design.
 
 ## Prerequisites
 
@@ -115,6 +120,16 @@ The health endpoint preserves its `200` connected / `503` disconnected responses
 
 ## Validation
 
+Phase 4A dataset, from the repository root:
+
+```bash
+npm install --prefix scripts/phase4
+npm run build --prefix scripts/phase4
+npm test --prefix scripts/phase4
+```
+
+This regenerates both processed formats from canonical tables and verifies IDs, foreign keys, provenance, source PDFs, synthetic-data exclusion, leakage metadata, deterministic output, and CSV/Parquet equivalence.
+
 Backend, from `backend/`:
 
 ```bash
@@ -161,4 +176,4 @@ Cohorts match material, loading, pressure, preparation, milling, particle size, 
 
 Input bounds and form applicability flags are illustrative application conventions, not laboratory operating limits. Stored outcome labels are synthetic categories, not calculated judgments. No configuration or comparison establishes scientific superiority.
 
-Phase 4 owns future model development; Phase 5 owns model integration. Neither is implemented here.
+Phase 4A is complete. Phase 4B owns model development: the mandatory H2 Capacity Predictor must benchmark suitable tabular regressors with paper-grouped validation, while the Activation Energy Predictor is deferred by the Phase 4A evidence. Phase 5 owns AI/application integration and the approved 3D prediction landscape plus educational material schematic. Phase 6 owns release, licensing, deployment, reproducibility/security audit, and submission packaging. None of Phase 4B through Phase 6 is implemented here.

@@ -1,8 +1,8 @@
 # Phase 4 literature source pool
 
-Literature acquisition only. This directory is not a training dataset.
+Verified literature source corpus. The normalized Phase 4A scientific dataset is maintained separately in `../phase4_dataset/`.
 
-- `core_primary/`: 15 verified experimental Mg/MgH2 catalyst/additive articles.
+- `core_primary/`: 16 verified experimental Mg/MgH2 catalyst/additive articles.
 - `extended_primary/reactive_hydride_composites/`: 2 verified reactive-composite articles; keep separate from core.
 - `reviews_indexes/`: 2 reviews and 1 machine-learning methodology article; reference only.
 - `notes_nontraining/`: 3 existing project documents; no measured training records may be inferred from them.
@@ -20,4 +20,4 @@ The single active missing-paper queue is `acquisition/papers_no_pdf.txt`. Supple
 
 Scratch acquisition work in `acquisition/work/` is ignored and is not part of the durable corpus. The acquisition log retains source URLs and access/identity decisions; the supplementary manifest retains parent links and recorded supplement provenance, and the verification report retains PDF hashes and page counts. Project documents use the non-training `project_note` scope.
 
-Each article has one primary folder, even when it spans several catalyst categories. Unrepresented catalyst/alloy categories may have no tracked directory. No experimental extraction, scientific-data cleaning, estimation, or model training has occurred yet.
+Each article has one primary folder, even when it spans several catalyst categories. Unrepresented catalyst/alloy categories may have no tracked directory. Phase 4A extracted only verified primary evidence into the separate normalized dataset; no model training has occurred.

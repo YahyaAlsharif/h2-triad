@@ -1,0 +1,51 @@
+activation_id,sample_id,source_id,reaction_direction,activation_energy_kj_mol,molar_basis,reported_uncertainty_kj_mol,calculation_method,temperature_range_raw,temperature_min_c,temperature_max_c,source_pdf_page,source_locator,extraction_type,extraction_note
+AE-0001,S-F01-NIC10,SRC-0001,dehydrogenation,79.3,not_explicit,11.2,Kissinger,,,,5,Section 3.2; Fig. 3c,author_reported_text,
+AE-0002,S-F01-CTRL,SRC-0001,dehydrogenation,176.9,not_explicit,28.6,Kissinger,,,,5,Section 3.2; Fig. 3c,author_reported_text,
+AE-0003,S-F02-NZC2P5,SRC-0002,hydrogenation,47.8,H2,,JMAK/Arrhenius,,,,7,Section 3.3; Fig. 6a,author_reported_text,
+AE-0004,S-F02-NZC5,SRC-0002,hydrogenation,37.28,H2,,JMAK/Arrhenius,,,,7,Section 3.3; Fig. 6a,author_reported_text,
+AE-0005,S-F02-NZC7P5,SRC-0002,hydrogenation,41.64,H2,,JMAK/Arrhenius,,,,7,Section 3.3; Fig. 6a,author_reported_text,
+AE-0006,S-F02-NZC2P5,SRC-0002,dehydrogenation,114.94,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8b,author_reported_text,
+AE-0007,S-F02-NZC5,SRC-0002,dehydrogenation,87.63,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8b,author_reported_text,
+AE-0008,S-F02-NZC7P5,SRC-0002,dehydrogenation,97.95,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8b,author_reported_text,
+AE-0009,S-F04-NICU11,SRC-0004,dehydrogenation,77.2,not_explicit,4.5,JMAK/Arrhenius,,,,8,Section 3.3; Arrhenius plot,author_reported_text,
+AE-0010,S-F05-NIVN7,SRC-0005,dehydrogenation,78.07,not_explicit,2.91,JMAK/Arrhenius,,,,7,Section 3.2; Fig. 5,author_reported_text,
+AE-0011,S-F05-CTRL,SRC-0005,dehydrogenation,120.89,not_explicit,5.74,JMAK/Arrhenius,,,,7,Section 3.2; Fig. 5,author_reported_text,
+AE-0012,S-F06-LVO15,SRC-0006,dehydrogenation,69.8,H2,,Kissinger,,,,8,Section 3.2; Fig. S3a/c,author_reported_text,
+AE-0013,S-F06-CTRL,SRC-0006,dehydrogenation,131.1,H2,,Kissinger,,,,8,Section 3.2; Fig. S3b/d,author_reported_text,
+AE-0014,S-F07-VOC6,SRC-0007,dehydrogenation,95.5,not_explicit,,Kissinger,,,,2,Results; Fig. S1,author_reported_text,
+AE-0015,S-F08-NATI5,SRC-0008,dehydrogenation,57,not_explicit,1,Kissinger,,,,5,Section 3.2; Fig. 5c,author_reported_text,Value is reported with an approximation qualifier in the source narrative.
+AE-0016,S-F08-CTRL,SRC-0008,dehydrogenation,101,not_explicit,4,Kissinger,,,,5,Section 3.2; Fig. 5c,author_reported_text,Value is reported with an approximation qualifier in the source narrative.
+AE-0017,S-F09-NCM7,SRC-0009,dehydrogenation,69.588,not_explicit,6.302,JMAK/Arrhenius,,,,5,Section 3.2; Fig. 5a/b,author_reported_text,
+AE-0018,S-F09-CTRL,SRC-0009,dehydrogenation,118.649,not_explicit,2.825,JMAK/Arrhenius,,,,5,Section 3.2; Fig. 5e/f,author_reported_text,
+AE-0019,S-F10-NIOVC7,SRC-0010,dehydrogenation,40.73,not_explicit,,JMAK/Arrhenius,,,,8,Section 3.3; Arrhenius plot,author_reported_text,Abstract and conclusion round this to 40.78 kJ/mol; the results-section value is retained.
+AE-0020,S-F10-NIC7,SRC-0010,dehydrogenation,54.56,not_explicit,,JMAK/Arrhenius,,,,8,Section 3.3; Arrhenius plot,author_reported_text,
+AE-0021,S-F10-OVC7,SRC-0010,dehydrogenation,135.93,not_explicit,,JMAK/Arrhenius,,,,8,Section 3.3; Arrhenius plot,author_reported_text,
+AE-0022,S-F10-CTRL,SRC-0010,dehydrogenation,140.58,not_explicit,,JMAK/Arrhenius,,,,8,Section 3.3; Arrhenius plot,author_reported_text,
+AE-0023,S-F11-BTO10,SRC-0011,dehydrogenation,82.14,not_explicit,,Kissinger,DSC at 3 5 7 and 10 C/min,,,7,Section 3.4; Fig. 4a-c,author_reported_text,
+AE-0024,S-F11-CTRL,SRC-0011,dehydrogenation,141.67,not_explicit,,Kissinger,DSC at 3 5 7 and 10 C/min,,,7,Section 3.4; Fig. 4a-c,author_reported_text,Source describes this value as approximate.
+AE-0025,S-F12-NINB73,SRC-0012,dehydrogenation,78.8,not_explicit,,isothermal Arrhenius,,,,11,Conclusion; Fig. 3f,author_reported_text,The paper has an internally inconsistent ordering of some results-section values; the unambiguous abstract/conclusion value is retained.
+AE-0026,S-F12-NINB73,SRC-0012,hydrogenation,36.1,not_explicit,,isothermal Arrhenius,,,,6,Section 3.2; Fig. 4e,author_reported_text,
+AE-0027,S-F12-NINB91,SRC-0012,hydrogenation,50.3,not_explicit,,isothermal Arrhenius,,,,6,Section 3.2; Fig. 4e,author_reported_text,
+AE-0028,S-F12-CTRL,SRC-0012,hydrogenation,81.3,not_explicit,,isothermal Arrhenius,,,,6,Section 3.2; Fig. 4e,author_reported_text,
+AE-0029,S-F13-MN,SRC-0013,dehydrogenation,92,not_explicit,,Sharp-Jones model/Arrhenius,,,,5,Results; Fig. 2f,author_reported_text,
+AE-0030,S-F13-CU,SRC-0013,dehydrogenation,104,not_explicit,,Sharp-Jones model/Arrhenius,,,,5,Results; Fig. 2f,author_reported_text,
+AE-0031,S-F14-FENIS,SRC-0014,dehydrogenation,97.09,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0032,S-F14-FENI,SRC-0014,dehydrogenation,102.23,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0033,S-F14-FEOS,SRC-0014,dehydrogenation,170.78,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0034,S-F14-CTRL,SRC-0014,dehydrogenation,143.19,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0035,S-F14-FENIS,SRC-0014,hydrogenation,24.72,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0036,S-F14-FENI,SRC-0014,hydrogenation,25.37,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0037,S-F14-FEOS,SRC-0014,hydrogenation,37.78,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0038,S-F14-CTRL,SRC-0014,hydrogenation,64.1,not_explicit,,isothermal kinetic model/Arrhenius,,,,7,Section 3.3; activation-energy table,author_reported_text,
+AE-0039,S-F15-NICNT2P5,SRC-0015,hydrogenation,51.83,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8a,author_reported_text,
+AE-0040,S-F15-NICNT5,SRC-0015,hydrogenation,45.28,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8a,author_reported_text,
+AE-0041,S-F15-NICNT7P5,SRC-0015,hydrogenation,62.26,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8a,author_reported_text,
+AE-0042,S-F15-NICNT2P5,SRC-0015,dehydrogenation,114.94,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8b,author_reported_text,
+AE-0043,S-F15-NICNT5,SRC-0015,dehydrogenation,87.63,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8b,author_reported_text,
+AE-0044,S-F15-NICNT7P5,SRC-0015,dehydrogenation,97.95,H2,,JMAK/Arrhenius,,,,10,Section 3.3; Fig. 8b,author_reported_text,
+AE-0045,S-F15-NICNT5,SRC-0015,dehydrogenation,91.18,H2,,Kissinger,,,,10,Section 3.3; Fig. 8d,author_reported_text,Same sample and direction as AE-0043 but a distinct calculation method; intentionally not merged.
+AE-0046,S-EA-FENI2S4,SRC-0016,dehydrogenation,90.9,not_explicit,,Kissinger,first desorption stage,,,9,Section 3.4; Fig. 6b,author_reported_text,First of two resolved desorption stages.
+AE-0047,S-EA-FENI2S4,SRC-0016,dehydrogenation,65.5,not_explicit,,Kissinger,second desorption stage,,,9,Section 3.4; Fig. 6b,author_reported_text,Second of two resolved desorption stages.
+AE-0048,S-EA-CTRL,SRC-0016,dehydrogenation,161.2,not_explicit,,Kissinger,,,,9,Section 3.4; Fig. 6b,author_reported_text,
+AE-0049,S-EB-UNDOPED,SRC-0017,dehydrogenation,129.1,not_explicit,,Kissinger,DSC at 15 20 and 25 C/min,,,6,Section 3.3; Fig. 7c,author_reported_text,Extended reactive-hydride system.
+AE-0050,S-EB-COTIO3,SRC-0017,dehydrogenation,93.2,not_explicit,,Kissinger,DSC at 15 20 and 25 C/min,,,11,Conclusion; Fig. 7c,author_reported_text,Extended reactive-hydride system.

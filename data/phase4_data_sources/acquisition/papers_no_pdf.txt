@@ -7,9 +7,6 @@
 # FREE-13 | Reduced graphene oxide/patronite composite as highly active catalyst precursors for enhancing the hydrogen desorption of MgH2
 https://doi.org/10.1016/j.jma.2025.03.014
 
-# FREE-17 | Vermiform Ni@CNT derived from one-pot calcination of Ni-MOF precursor for improving hydrogen storage of MgH2
-https://doi.org/10.1016/s1003-6326(24)66565-9
-
 # FREE-19 | Improved hydrogen storage properties of MgH2 by the addition of FeS2 micro-spheres
 https://doi.org/10.1039/c7dt04665k
 

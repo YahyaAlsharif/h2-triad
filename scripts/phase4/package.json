@@ -1,0 +1,12 @@
+{
+  "name": "h2-triad-phase4-dataset-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build_capacity_dataset.mjs",
+    "test": "node validate_phase4_dataset.mjs"
+  },
+  "dependencies": {
+    "parquetjs-lite": "0.8.7"
+  }
+}

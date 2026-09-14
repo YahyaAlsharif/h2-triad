@@ -1,0 +1,37 @@
+cycling_id,sample_id,source_id,cycle_number,measurement_mode,temperature_raw,temperature_c,pressure_raw,pressure_bar,pressure_relation,duration_raw,duration_seconds,hydrogen_capacity_wt_pct,capacity_retention_pct,retention_reference,source_pdf_page,source_locator,extraction_type,extraction_note
+CY-0001,S-F02-NZC5,SRC-0002,20,absorption,,,,,,,,,98.56,initial capacity,11,Section 3.4; Fig. 10c,author_reported_text,Capacity value was not stated in the narrative.
+CY-0002,S-F02-NZC5,SRC-0002,20,desorption,,,,,,,,,98.54,initial capacity,11,Section 3.4; Fig. 10c,author_reported_text,Capacity value was not stated in the narrative.
+CY-0003,S-F04-NICU11,SRC-0004,10,combined,275 C,275,,,,,,,98,initial capacity,6,Section 3.2; Fig. 5a-b,author_reported_text,Retention is reported for the cycling experiment without separate mode-specific values.
+CY-0004,S-F05-NIVN7,SRC-0005,2,absorption,573 K,299.85,1.5 MPa,15,,,,5.229,,,8,Section 3.2; Fig. 6a,author_reported_text,
+CY-0005,S-F05-NIVN7,SRC-0005,2,desorption,573 K,299.85,0.0004 MPa,0.004,,,,5.227,,,8,Section 3.2; Fig. 6b,author_reported_text,
+CY-0006,S-F05-NIVN7,SRC-0005,10,absorption,573 K,299.85,1.5 MPa,15,,,,5.254,,,8,Section 3.2; Fig. 6a,author_reported_text,
+CY-0007,S-F05-NIVN7,SRC-0005,10,desorption,573 K,299.85,0.0004 MPa,0.004,,,,5.229,,,8,Section 3.2; Fig. 6b,author_reported_text,
+CY-0008,S-F06-LVO15,SRC-0006,1,absorption,heated to 220 C,220,5 MPa,50,=,1 h dwell,3600,5.7,,,8,Section 3.2; Fig. 6b,author_reported_text,Non-isothermal heating followed by dwell; temperature is not an isothermal setpoint.
+CY-0009,S-F06-LVO15,SRC-0006,2,absorption,heated to 220 C,220,5 MPa,50,=,1 h dwell,3600,5.5,,,8,Section 3.2; Fig. 6b,author_reported_text,Non-isothermal heating followed by dwell; temperature is not an isothermal setpoint.
+CY-0010,S-F06-LVO15,SRC-0006,50,absorption,heated to 220 C,220,5 MPa,50,=,1 h dwell,3600,4.9,,,8,Section 3.2; Fig. 6b,author_reported_text,Non-isothermal heating followed by dwell; temperature is not an isothermal setpoint.
+CY-0011,S-F06-LVO15,SRC-0006,2,desorption,heated to 270 C,270,static vacuum,,,,,5.3,,,8,Section 3.2; Fig. 6a,author_reported_text,Non-isothermal protocol.
+CY-0012,S-F06-LVO15,SRC-0006,50,desorption,heated to 300 C,300,static vacuum,,,,,5,91,second-cycle capacity,8,Section 3.2; Fig. 6a,author_reported_text,Paper also describes 91% relative to a 5.5 wt% second-cycle reference.
+CY-0013,S-F07-VOC6,SRC-0007,1,absorption,300 C,300,,,,,,6.02,,,4,Section 3; cycling curve,author_reported_text,
+CY-0014,S-F07-VOC6,SRC-0007,46,absorption,300 C,300,,,,,,4.28,71.1,maximum capacity,4,Section 3; cycling curve,author_reported_text,
+CY-0015,S-F07-VOC6,SRC-0007,251,absorption,300 C,300,,,,,,5.45,90.5,maximum capacity,4,Section 3; cycling curve,author_reported_text,
+CY-0016,S-F08-NATI2P5,SRC-0008,100,desorption,300 C,300,0.001 bar,0.001,,,,6.1,84,initial capacity,4,Section 3.1; Fig. 4,author_reported_text,Total test duration reported as 475 h; per-cycle duration not assigned.
+CY-0017,S-F09-NCM7,SRC-0009,1,absorption,325 C,325,,,,,,7.597,,,5,Section 3.2; Fig. 6,author_reported_text,
+CY-0018,S-F09-NCM7,SRC-0009,1,desorption,325 C,325,,,,,,6.494,,,5,Section 3.2; Fig. 6,author_reported_text,
+CY-0019,S-F09-NCM7,SRC-0009,3,absorption,325 C,325,,,,,,7.589,,,5,Section 3.2; Fig. 6,author_reported_text,The paper describes the value after the subsequent two cycles; represented as cycle 3.
+CY-0020,S-F09-NCM7,SRC-0009,3,desorption,325 C,325,,,,,,6.451,,,5,Section 3.2; Fig. 6,author_reported_text,The paper describes the value after the subsequent two cycles; represented as cycle 3.
+CY-0021,S-F09-NCM7,SRC-0009,30,absorption,325 C,325,,,,,,7.239,,,5,Section 3.2; Fig. 6,author_reported_text,
+CY-0022,S-F09-NCM7,SRC-0009,30,desorption,325 C,325,,,,,,6.295,,,5,Section 3.2; Fig. 6,author_reported_text,
+CY-0023,S-F10-NIOVC7,SRC-0010,30,combined,,,,,,,,6.32,97.3,initial reversible capacity,6,Section 3.2; Fig. 5e-f,author_reported_text,Reported as reversible capacity without a separate mode-specific value.
+CY-0024,S-F11-BTO10,SRC-0011,1,desorption,300 C,300,,,,,,6.59,,,7,Section 3.5; Fig. 5a,author_reported_text,
+CY-0025,S-F11-BTO10,SRC-0011,4,desorption,300 C,300,,,,,,5.3,,,7,Section 3.5; Fig. 5a,author_reported_text,
+CY-0026,S-F11-BTO10,SRC-0011,50,desorption,300 C,300,,,,,,5.2,,,1,Abstract; Fig. 5a,author_reported_text,
+CY-0027,S-F12-NINB73,SRC-0012,50,combined,280 C,280,,,,,,6.17,,,6,Section 3.2; Fig. 4g-h,author_reported_text,Paper calls this hydrogen retention capacity without separating modes.
+CY-0028,S-F13-MN,SRC-0013,5,desorption,,,,,,,,6.03,,,6,Section 3; Fig. 4a-b,author_reported_text,
+CY-0029,S-F13-MN,SRC-0013,30,desorption,,,,,,,,5.67,94,cycle-5 capacity,6,Section 3; Fig. 4a-b,author_reported_text,
+CY-0030,S-F13-CU,SRC-0013,1,desorption,,,,,,,,6.14,,,6,Section 3; Fig. 4a-b,author_reported_text,
+CY-0031,S-F13-CU,SRC-0013,30,desorption,,,,,,,,6.12,99,initial capacity,6,Section 3; Fig. 4a-b,author_reported_text,
+CY-0032,S-F14-FENIS,SRC-0014,30,combined,325 C,325,0.001 MPa,0.01,=,120 min,7200,,99.5,initial capacity,8,Section 3.3; Fig. 5g-i,author_reported_text,Retention reported without a scalar capacity in the narrative.
+CY-0033,S-F15-NICNT5,SRC-0015,10,desorption,,,,,,,,,97,initial capacity,12,Section 3.4; Fig. 10c-d,author_reported_text,Source calls this hydrogen retention rate.
+CY-0034,S-F15-NICNT5,SRC-0015,10,absorption,,,,,,,,,95,initial capacity,12,Section 3.4; Fig. 10c-d,author_reported_text,
+CY-0035,S-EA-FENI2S4,SRC-0016,10,absorption,,,,,,,,,98.9,initial capacity,10,Conclusion; Fig. 6c,author_reported_text,
+CY-0036,S-EA-FENI2S4,SRC-0016,10,desorption,,,,,,,,,99.7,initial capacity,10,Conclusion; Fig. 6c,author_reported_text,

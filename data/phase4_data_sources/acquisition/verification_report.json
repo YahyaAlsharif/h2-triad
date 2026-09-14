@@ -1,22 +1,22 @@
 {
-  "date": "2026-09-13",
+  "date": "2026-09-14",
   "result": "PASS",
   "unique_doi_papers": 52,
   "log_records": 58,
-  "available_scholarly_articles": 20,
-  "core_articles": 15,
+  "available_scholarly_articles": 21,
+  "core_articles": 16,
   "extended_articles": 2,
   "review_articles": 2,
   "methodology_articles": 1,
   "project_notes": 3,
   "supplement_files": 2,
   "new_full_article_pdfs": 14,
-  "missing_doi_papers": 32,
+  "missing_doi_papers": 31,
   "unresolved_links": 2,
-  "missing_list_unique_urls": 34,
+  "missing_list_unique_urls": 33,
   "duplicate_pdf_hashes": 0,
   "guide_coverage": "52 DOI entries plus excluded alloy-system paper and all existing notes/unresolved links",
-  "verification_method": "Saved identity, full-text and relevance checks reused. Final paths opened with the same PDF reader and hashes matched against previously verified originals. No second-reader review or repeated detailed inspection.",
+  "verification_method": "Saved identity, full-text and relevance checks reused for the original 25 PDFs. FREE-17 was independently verified for PDF signature/EOF, readable text, exact title/DOI identity, 16-page count, local canonical path and SHA-256 on 2026-09-14.",
   "pdfs": [
     {
       "paper_id": "FREE-1",
@@ -143,6 +143,15 @@
       "opens": true,
       "matches_previously_verified_pdf": true,
       "identity_and_scope": "saved title/DOI/relevance verification reused; project notes and supplements identified separately"
+    },
+    {
+      "paper_id": "FREE-17",
+      "local_filename": "data/phase4_data_sources/core_primary/carbon_supported/FREE-17__2024__Ni_at_CNT.pdf",
+      "sha256": "8e693025638d461050a612d77909ad8591a5e815b5ed317b65a867bd51443ee6",
+      "pages": 16,
+      "opens": true,
+      "matches_previously_verified_pdf": false,
+      "identity_and_scope": "independently verified title, DOI 10.1016/S1003-6326(24)66565-9, readable complete full text, open-access primary MgH2 experiment; original publisher-route failure preserved in acquisition log"
     },
     {
       "paper_id": "EXISTING-A",
