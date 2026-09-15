@@ -1,112 +1,278 @@
 import { useEffect, useRef, useState } from 'react'
-import { inputsMatch, runDigitalTwin } from '../data/dashboardService'
 import {
-  Conditions,
-  materialLabel,
-  Outcome,
-  MeasurementDetails,
-} from './ExperimentDetails'
-
-function NumberField({
-  name,
+  getLiterature,
+  inputsMatch,
+  runDigitalTwin,
+} from '../data/scientificService'
+import {
+  conditionSummary,
   label,
-  inputs,
-  change,
-  constraints,
-  disabled = false,
-}) {
+  literatureValue,
+  supportMessage,
+} from '../data/scientificPresentation'
+import PredictionLandscape from './PredictionLandscape'
+
+function NumberField({ name, title, inputs, change, nullable = false, rule }) {
   return (
     <label className="field">
-      <span>{label}</span>
+      <span>{title}</span>
       <input
         name={name}
         type="number"
-        value={inputs[name]}
-        {...constraints[name]}
-        required
-        disabled={disabled}
+        step="any"
+        value={inputs[name] ?? ''}
+        required={!nullable}
         onChange={(event) =>
           change(
             name,
-            event.target.value === '' ? '' : Number(event.target.value),
+            event.target.value === '' ? null : Number(event.target.value),
           )
         }
       />
+      {rule && (
+        <small className="field-hint">
+          AI support: {rule.min}–{rule.max}
+          {nullable ? '; blank = unspecified' : ''}
+        </small>
+      )}
     </label>
   )
 }
-export default function DigitalTwin({ configuration, options }) {
+
+function LiteratureLoader({ onLoad }) {
+  const [state, setState] = useState({ status: 'idle', items: [] })
+  const [selected, setSelected] = useState('')
+  const controller = useRef(null)
+  useEffect(() => () => controller.current?.abort(), [])
+  async function load() {
+    controller.current?.abort()
+    const abort = new AbortController()
+    controller.current = abort
+    setState({ status: 'loading', items: [] })
+    try {
+      const body = await getLiterature({ signal: abort.signal })
+      if (!abort.signal.aborted)
+        setState({ status: 'ready', items: body.items })
+    } catch (error) {
+      if (!abort.signal.aborted)
+        setState({ status: 'error', items: [], error: error.message })
+    }
+  }
+  return (
+    <details
+      className="literature-loader"
+      onToggle={(event) => {
+        if (event.currentTarget.open && state.status === 'idle') load()
+      }}
+    >
+      <summary>Load a literature configuration</summary>
+      <p className="field-hint">
+        Optional. Load the reported sample, conditions, and provenance; edit
+        them to explore a new configuration.
+      </p>
+      {state.status === 'loading' && <p role="status">Loading literature…</p>}
+      {state.status === 'error' && (
+        <div role="alert">
+          <p>{state.error}</p>
+          <button type="button" className="text-button" onClick={load}>
+            Retry literature
+          </button>
+        </div>
+      )}
+      {state.status === 'ready' && (
+        <div className="preset-controls">
+          <label className="field">
+            <span>Literature observation</span>
+            <select
+              value={selected}
+              onChange={(event) => setSelected(event.target.value)}
+            >
+              <option value="">Select an observation</option>
+              {state.items.map((item) => (
+                <option key={item.measurement_id} value={item.measurement_id}>
+                  {item.measurement_id} · {item.sample_label} ·{' '}
+                  {item.inputs.measurement_mode} · {item.temperature_raw} ·{' '}
+                  {item.duration_raw} · {literatureValue(item)} wt.%
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            className="button secondary"
+            disabled={!selected}
+            onClick={() =>
+              onLoad(
+                state.items.find((item) => item.measurement_id === selected),
+              )
+            }
+          >
+            Load configuration
+          </button>
+        </div>
+      )}
+    </details>
+  )
+}
+
+function LiteratureDetails({ item }) {
+  return (
+    <article className="literature-observation">
+      <div className="capacity-result">
+        <span>Literature measurement</span>
+        <strong>
+          {literatureValue(item)} <small>wt.% H₂</small>
+        </strong>
+      </div>
+      <p className="secondary-text">
+        {label(item.value_qualifier)} · {item.capacity_basis} ·{' '}
+        {item.measurement_id}
+      </p>
+      {item.reported_uncertainty_wt_pct !== null && (
+        <p>Reported uncertainty: ±{item.reported_uncertainty_wt_pct} wt.% H₂</p>
+      )}
+      <p>{conditionSummary(item.inputs)}</p>
+      <p className="source-title">
+        {item.source.doi ? (
+          <a
+            href={`https://doi.org/${encodeURIComponent(item.source.doi)}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {item.source.title}
+          </a>
+        ) : (
+          item.source.title
+        )}
+      </p>
+      <p className="secondary-text">
+        {item.source.paper_id} · {item.source.year} · PDF page{' '}
+        {item.source.source_pdf_page} · {item.source.source_locator}
+      </p>
+      <details className="evidence-details">
+        <summary>Reported conditions and preparation</summary>
+        <p>
+          {item.temperature_raw} · {item.duration_raw} ·{' '}
+          {item.pressure_raw || 'Pressure not reported'}
+        </p>
+        <dl className="measurement-details">
+          {Object.entries(item.preparation)
+            .filter(([, value]) => value)
+            .map(([key, value]) => (
+              <div key={key}>
+                <dt>{label(key)}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+        </dl>
+        {item.sample_note && <p>{item.sample_note}</p>}
+        {item.source.extraction_note && <p>{item.source.extraction_note}</p>}
+      </details>
+    </article>
+  )
+}
+
+export default function DigitalTwin({ options, theme }) {
   const defaults = options.default_inputs
-  const [inputs, setInputs] = useState(configuration?.inputs || defaults)
+  const [inputs, setInputs] = useState({ ...defaults })
+  const [preset, setPreset] = useState(null)
   const [result, setResult] = useState(null)
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const controller = useRef(null)
   useEffect(() => () => controller.current?.abort(), [])
   const stale = result && !inputsMatch(inputs, result.inputs)
+  const profile = options.support_profile
+  const ranges =
+    profile.measurement_modes[inputs.measurement_mode]?.ranges || {}
   function change(name, value) {
     setInputs((current) => {
       const next = { ...current, [name]: value }
-      if (name === 'additive') {
-        const allowed = options.additives.find(
-          (item) => item.value === value,
-        ).allows_loading
-        if (!allowed) next.concentration_wt_pct = 0
-        else if (
-          !options.additives.find((item) => item.value === current.additive)
-            .allows_loading
-        )
-          next.concentration_wt_pct = defaults.concentration_wt_pct
+      if (name === 'temperature_c') next.temperature_reported = null
+      if (name === 'pressure_bar')
+        next.pressure_relation =
+          value === null ? null : current.pressure_relation || '='
+      if (
+        [
+          'catalyst_family',
+          'catalyst_elements',
+          'catalyst_components',
+          'support_material',
+        ].includes(name)
+      ) {
+        next.sample_id = null
+        next.preparation_method = null
       }
-      if (name === 'preparation_method')
-        next.milling_hours = options.methods.find(
-          (item) => item.value === value,
-        ).allows_milling
-          ? defaults.milling_hours
-          : 0
       return next
     })
+  }
+  function normalized() {
+    return {
+      ...inputs,
+      ...Object.fromEntries(
+        ['catalyst_elements', 'catalyst_components'].map((key) => [
+          key,
+          [
+            ...new Set(
+              inputs[key]
+                .split('|')
+                .map((s) => s.trim())
+                .filter(Boolean),
+            ),
+          ]
+            .sort()
+            .join('|'),
+        ]),
+      ),
+    }
   }
   async function run(event) {
     event.preventDefault()
     controller.current?.abort()
-    controller.current = new AbortController()
+    const abort = new AbortController()
+    controller.current = abort
+    const submitted = normalized()
+    setInputs(submitted)
     setStatus('running')
+    setError('')
     try {
-      const response = await runDigitalTwin(
-        { ...inputs },
-        { signal: controller.current.signal },
-      )
-      setResult(response)
-      setStatus('done')
+      const response = await runDigitalTwin(submitted, { signal: abort.signal })
+      if (!abort.signal.aborted) {
+        setResult(response)
+        setStatus('done')
+      }
     } catch (error) {
-      if (error.name !== 'AbortError') {
+      if (!abort.signal.aborted) {
         setError(error.message)
         setStatus('error')
       }
     }
   }
-  const numberProps = {
-    inputs,
-    change,
-    constraints: options.numeric_constraints,
-  }
+  const numberProps = { inputs, change }
   return (
     <section id="workspace" aria-labelledby="workspace-title">
       <div className="section-heading">
         <h2 id="workspace-title">Digital Twin</h2>
-        <span className="secondary-text">Exact dataset lookup</span>
+        <span className="secondary-text">
+          Literature → AI prediction → unavailable
+        </span>
       </div>
       <div className="twin-workspace">
         <form className="twin-form" onSubmit={run}>
           <div className="panel-heading">
-            <h3>Material & preparation</h3>
+            <div>
+              <h3>Configure an experiment</h3>
+              <p className="secondary-text">
+                MgH₂ · capacity on a sample-mass basis
+              </p>
+            </div>
             <button
-              className="text-button"
               type="button"
+              className="text-button"
               disabled={status === 'running'}
               onClick={() => {
                 setInputs({ ...defaults })
+                setPreset(null)
                 setResult(null)
                 setStatus('idle')
               }}
@@ -114,85 +280,159 @@ export default function DigitalTwin({ configuration, options }) {
               Reset
             </button>
           </div>
-          {configuration && inputsMatch(inputs, configuration.inputs) && (
-            <p className="loaded-note">Loaded from {configuration.id}</p>
-          )}
-          <fieldset disabled={status === 'running'} className="input-grid">
-            <legend className="sr-only">Material and preparation</legend>
-            <label className="field">
-              <span>Base material</span>
-              <select
-                value={inputs.material}
-                onChange={(event) => change('material', event.target.value)}
-              >
-                {options.materials.map((value) => (
-                  <option key={value}>{value}</option>
-                ))}
-              </select>
-            </label>
-            <label className="field">
-              <span>Additive / catalyst</span>
-              <select
-                value={inputs.additive}
-                onChange={(event) => change('additive', event.target.value)}
-              >
-                {options.additives.map(({ value }) => (
-                  <option key={value}>{value}</option>
-                ))}
-              </select>
-            </label>
-            <NumberField
-              {...numberProps}
-              name="concentration_wt_pct"
-              label="Additive concentration (wt%)"
-              disabled={
-                !options.additives.find(
-                  (item) => item.value === inputs.additive,
-                )?.allows_loading
-              }
+          <fieldset
+            disabled={status === 'running'}
+            className="scientific-fields"
+          >
+            <legend className="sr-only">Scientific configuration</legend>
+            <LiteratureLoader
+              onLoad={(item) => {
+                setInputs({ ...item.inputs })
+                setPreset(item)
+                setResult(null)
+                setStatus('idle')
+              }}
             />
-            <label className="field">
-              <span>Preparation method</span>
-              <select
-                value={inputs.preparation_method}
-                onChange={(event) =>
-                  change('preparation_method', event.target.value)
-                }
-              >
-                {options.methods.map(({ value }) => (
-                  <option key={value}>{value}</option>
-                ))}
-              </select>
-            </label>
-            <NumberField
-              {...numberProps}
-              name="milling_hours"
-              label="Ball milling time (h)"
-              disabled={
-                !options.methods.find(
-                  (item) => item.value === inputs.preparation_method,
-                )?.allows_milling
-              }
-            />
-            <NumberField
-              {...numberProps}
-              name="particle_size_nm"
-              label="Particle size (nm)"
-            />
-          </fieldset>
-          <h3 className="conditions-heading">Experimental conditions</h3>
-          <fieldset disabled={status === 'running'} className="input-grid">
-            <legend className="sr-only">Experimental conditions</legend>
-            <NumberField
-              {...numberProps}
-              name="temperature_c"
-              label="Temperature (°C)"
-            />
-            <NumberField
-              {...numberProps}
-              name="pressure_bar"
-              label="Hydrogen pressure (bar)"
-            />
+            {preset && (
+              <p className="loaded-note">
+                Based on {preset.measurement_id} · {preset.sample_label}.{' '}
+                {inputs.sample_id
+                  ? 'Reported sample context retained; conditions are checked on each run.'
+                  : 'Chemistry edited: custom sample.'}
+              </p>
+            )}
+            <div className="input-grid">
+              <label className="field">
+                <span>Measurement mode</span>
+                <select
+                  value={inputs.measurement_mode}
+                  onChange={(e) => change('measurement_mode', e.target.value)}
+                >
+                  {Object.keys(profile.measurement_modes).map((value) => (
+                    <option key={value} value={value}>
+                      {label(value)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <NumberField
+                {...numberProps}
+                name="duration_seconds"
+                title="Duration (s)"
+                rule={ranges.duration_seconds}
+              />
+              <NumberField
+                {...numberProps}
+                name="temperature_c"
+                title="Temperature (°C)"
+                rule={ranges.temperature_c}
+                nullable={!!inputs.temperature_reported}
+              />
+              <NumberField
+                {...numberProps}
+                name="catalyst_loading_wt_pct"
+                title="Catalyst loading (wt.%)"
+                rule={ranges.catalyst_loading_wt_pct}
+                nullable={ranges.catalyst_loading_wt_pct?.missing_allowed}
+              />
+            </div>
+            {inputs.temperature_reported && (
+              <p className="notice">
+                Reported temperature: {inputs.temperature_reported}. No numeric
+                temperature was reported. Entering one creates a new
+                configuration.
+              </p>
+            )}
+            <h3 className="conditions-heading">Catalyst chemistry</h3>
+            <div className="input-grid">
+              <label className="field">
+                <span>Catalyst family</span>
+                <select
+                  value={inputs.catalyst_family}
+                  onChange={(e) => change('catalyst_family', e.target.value)}
+                >
+                  {profile.catalyst_families.map((value) => (
+                    <option key={value} value={value}>
+                      {label(value)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="field">
+                <span>Support material</span>
+                <input
+                  list="support-materials"
+                  value={inputs.support_material ?? ''}
+                  onChange={(e) =>
+                    change('support_material', e.target.value || null)
+                  }
+                  placeholder="Unspecified"
+                  maxLength={300}
+                />
+                <datalist id="support-materials">
+                  {profile.support_materials.map((value) => (
+                    <option key={value} value={value} />
+                  ))}
+                </datalist>
+              </label>
+              <label className="field">
+                <span>Catalyst components</span>
+                <input
+                  value={inputs.catalyst_components}
+                  required={inputs.catalyst_family !== 'none'}
+                  maxLength={300}
+                  onChange={(e) =>
+                    change('catalyst_components', e.target.value)
+                  }
+                />
+                <small className="field-hint">
+                  Separate explicit components with |, e.g. NiO|ZnO.
+                </small>
+              </label>
+              <label className="field">
+                <span>Catalyst elements</span>
+                <input
+                  value={inputs.catalyst_elements}
+                  required
+                  maxLength={300}
+                  onChange={(e) => change('catalyst_elements', e.target.value)}
+                />
+                <small className="field-hint">
+                  Element symbols separated by |, e.g. Ni|Zn|O.
+                </small>
+              </label>
+            </div>
+            <h3 className="conditions-heading">Pressure context</h3>
+            <div className="input-grid">
+              <NumberField
+                {...numberProps}
+                name="pressure_bar"
+                title="Hydrogen pressure (bar)"
+                rule={ranges.pressure_bar}
+                nullable
+              />
+              <label className="field">
+                <span>Pressure relation</span>
+                <select
+                  value={inputs.pressure_relation ?? ''}
+                  disabled={inputs.pressure_bar === null}
+                  onChange={(e) => change('pressure_relation', e.target.value)}
+                >
+                  {inputs.pressure_bar === null && (
+                    <option value="">Unspecified</option>
+                  )}
+                  {['=', '<', '>', '<=', '>='].map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </select>
+                <small className="field-hint">
+                  Pressure affects model eligibility, not the fitted capacity
+                  response.
+                </small>
+              </label>
+            </div>
           </fieldset>
           <div className="form-footer">
             <button
@@ -201,23 +441,30 @@ export default function DigitalTwin({ configuration, options }) {
               disabled={status === 'running'}
             >
               {status === 'running'
-                ? 'Looking up records…'
-                : 'Run Digital Twin'}
+                ? 'Checking evidence and model…'
+                : 'Run Digital Twin'}{' '}
               <span aria-hidden="true">→</span>
             </button>
           </div>
         </form>
         <div className="twin-result" aria-busy={status === 'running'}>
           <div className="panel-heading">
-            <h3>Stored result</h3>
-            <span className="mock-tag">Dataset lookup</span>
+            <h3>Capacity result</h3>
+            <span className="science-tag">
+              {status === 'done'
+                ? {
+                    literature: 'Literature measurement',
+                    predicted: 'AI prediction',
+                    unavailable: 'Unavailable',
+                  }[result.status]
+                : 'Scientific evidence'}
+            </span>
           </div>
           <div className="result-live" role="status" aria-live="polite">
             {status === 'running' ? (
               <div className="result-empty">
-                <span className="loading-line" aria-hidden="true" />
-                <h4>Looking up stored experiments</h4>
-                <p>Matching the exact material and conditions.</p>
+                <h4>Checking literature and model support</h4>
+                <p>Using the submitted configuration.</p>
               </div>
             ) : status === 'error' ? (
               <div className="result-empty">
@@ -231,80 +478,103 @@ export default function DigitalTwin({ configuration, options }) {
                 </div>
                 <h4>Your configuration, in context.</h4>
                 <p>
-                  Set the material and conditions, then run the Digital Twin.
+                  Set the conditions, then run the Digital Twin. Verified
+                  literature takes precedence over supported model predictions.
                 </p>
-                <div className="result-placeholder">
-                  <span>
-                    Stored hydrogen capacity
-                    <strong>
-                      — <small>wt%</small>
-                    </strong>
-                  </span>
-                </div>
               </div>
             ) : (
               <div className="result-content">
-                <div className="result-configuration">
-                  <strong>{materialLabel(result.inputs)}</strong>
-                  <Conditions inputs={result.inputs} preparation />
-                </div>
                 {stale && (
                   <p className="notice">
                     Inputs changed. Run again to update this result.
                   </p>
                 )}
-                {result.status === 'unavailable' ? (
-                  <div className="unsupported">
-                    <h4>No stored result for these conditions</h4>
-                    <p>
-                      No experiment matches this exact configuration. No
-                      capacity is calculated or predicted.
-                    </p>
-                  </div>
-                ) : (
+                <p className="result-configuration">
+                  {conditionSummary(result.inputs)}
+                </p>
+                {result.status === 'literature' ? (
                   <>
                     {result.items.length > 1 && (
                       <p className="notice">
-                        {result.items.length} stored observations match.
-                        Measurement metadata may differ; results are shown
+                        {result.items.length} matching observations, shown
                         separately.
                       </p>
                     )}
-                    {result.items.map((record) => (
-                      <div className="stored-observation" key={record.id}>
-                        <div className="result-outcome">
-                          <Outcome value={record.outcome} />
-                          <span>
-                            {record.source.is_demo
-                              ? 'Synthetic/demo observation'
-                              : record.source.kind}
-                          </span>
-                        </div>
-                        <div className="capacity-result">
-                          <span>Stored hydrogen capacity</span>
-                          <strong>
-                            {record.hydrogen_capacity_wt_pct.toFixed(1)}{' '}
-                            <small>wt%</small>
-                          </strong>
-                        </div>
-                        <p className="fixture-reference">
-                          Experiment {record.id}
-                        </p>
-                        <MeasurementDetails item={record} />
-                      </div>
+                    {result.items.map((item) => (
+                      <LiteratureDetails
+                        key={item.measurement_id}
+                        item={item}
+                      />
                     ))}
                   </>
+                ) : result.status === 'predicted' ? (
+                  <>
+                    <div className="capacity-result">
+                      <span>AI prediction</span>
+                      <strong>
+                        {result.prediction.hydrogen_capacity_wt_pct.toFixed(2)}{' '}
+                        <small>wt.% H₂</small>
+                      </strong>
+                    </div>
+                    {result.prediction.empirical_interval_90_wt_pct ? (
+                      <div className="uncertainty">
+                        <strong>
+                          {result.prediction.empirical_interval_90_wt_pct
+                            .map((n) => n.toFixed(2))
+                            .join('–')}{' '}
+                          wt.% H₂
+                        </strong>
+                        <span>Empirical 90% interval</span>
+                      </div>
+                    ) : (
+                      <p>Empirical interval unavailable.</p>
+                    )}
+                    <p className="secondary-text">
+                      {result.model_id} · within the documented support rules
+                    </p>
+                    <p className="scientific-note">
+                      Intervals reflect literature-held-out errors, with{' '}
+                      {(
+                        options.model.uncertainty_evaluation.coverage * 100
+                      ).toFixed(1)}
+                      % observed coverage. They are not a confidence score or
+                      guarantee.
+                    </p>
+                  </>
+                ) : (
+                  <div className="unsupported">
+                    <h4>Prediction unavailable</h4>
+                    <p>
+                      No exact literature match and no supported AI prediction.
+                    </p>
+                    <ul>
+                      {result.support.reasons.map((code) => (
+                        <li key={code}>{supportMessage(code)}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {result.support?.warnings.length > 0 && (
+                  <div className="notice">
+                    <strong>Support warnings</strong>
+                    <ul>
+                      {result.support.warnings.map((code) => (
+                        <li key={code}>{supportMessage(code)}</li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             )}
           </div>
           <p className="result-disclaimer">
-            Exact lookup only. No trained model or scientific prediction engine
-            exists. Synthetic/demo records are illustrative, not experimental
-            evidence.
+            For research prioritization and educational exploration. AI
+            predictions are not certified laboratory results; laboratory
+            confirmation is required.
           </p>
         </div>
       </div>
+      <PredictionLandscape inputs={normalized()} theme={theme} />
     </section>
   )
 }

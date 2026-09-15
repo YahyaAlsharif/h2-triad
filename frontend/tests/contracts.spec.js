@@ -4,7 +4,6 @@ import {
   getExperiments,
   getExperiment,
   getDomainOptions,
-  runDigitalTwin,
   getHealth,
 } from '../src/data/dashboardService.js'
 
@@ -20,6 +19,23 @@ async function withResponse(body, action) {
     globalThis.fetch = original
   }
 }
+
+test('legacy demo options and health still reject corrupt responses', async ({
+  request,
+}) => {
+  const options = await (await request.get('/api/domain/options')).json()
+  await expect(withResponse(options, getDomainOptions)).resolves.toEqual(
+    options,
+  )
+  const broken = structuredClone(options)
+  broken.default_inputs.material = 'Not an option'
+  await expect(withResponse(broken, getDomainOptions)).rejects.toThrow(
+    'invalid response',
+  )
+  await expect(
+    withResponse({ api: 'connected', database: 'connected' }, getHealth),
+  ).rejects.toThrow('invalid response')
+})
 
 test('cohort compatibility ignores provenance but preserves every observation', async ({
   request,
@@ -126,55 +142,11 @@ test('API boundary rejects corrupt records, duplicate IDs, and malformed JSON', 
   }
 })
 
-test('API boundary validates option defaults, health and exact lookup semantics', async ({
-  request,
-}) => {
-  const options = await (await request.get('/api/domain/options')).json()
-  await expect(withResponse(options, getDomainOptions)).resolves.toEqual(
-    options,
-  )
-  const broken = structuredClone(options)
-  broken.default_inputs.material = 'Not an option'
-  await expect(withResponse(broken, getDomainOptions)).rejects.toThrow(
-    'invalid response',
-  )
-  await expect(
-    withResponse({ api: 'connected', database: 'connected' }, getHealth),
-  ).rejects.toThrow('invalid response')
-  const inputs = options.default_inputs
-  const response = await (
-    await request.post('/api/digital-twin/run', { data: { inputs } })
-  ).json()
-  await expect(
-    withResponse(response, () => runDigitalTwin(inputs)),
-  ).resolves.toEqual(response)
-  const incorrect = structuredClone(response)
-  incorrect.items[0].inputs.temperature_c += 1
-  await expect(
-    withResponse(incorrect, () => runDigitalTwin(inputs)),
-  ).rejects.toThrow('invalid response')
-  const unavailable = {
-    status: 'unavailable',
-    reason: 'no_exact_match',
-    inputs,
-    items: [],
-  }
-  await expect(
-    withResponse(unavailable, () => runDigitalTwin(inputs)),
-  ).resolves.toEqual(unavailable)
-  await expect(
-    withResponse({ ...unavailable, hydrogen_capacity_wt_pct: 1 }, () =>
-      runDigitalTwin(inputs),
-    ),
-  ).rejects.toThrow('invalid response')
-})
-
-test('duplicate observations from different sources remain visible in chart and lookup', async ({
+test('duplicate demo observations from different sources remain visible in chart', async ({
   page,
   request,
 }) => {
   const { items } = await (await request.get('/api/experiments')).json()
-  const options = await (await request.get('/api/domain/options')).json()
   const original = items.find((item) => item.id === 'EXP-003')
   const repeat = {
     ...structuredClone(original),
@@ -184,16 +156,6 @@ test('duplicate observations from different sources remain visible in chart and 
   await page.route('**/api/experiments', (route) =>
     route.fulfill({ json: { items: [...items, repeat] } }),
   )
-  await page.route('**/api/digital-twin/run', (route) =>
-    route.fulfill({
-      json: {
-        status: 'matched',
-        match_method: 'exact',
-        inputs: options.default_inputs,
-        items: [original, repeat],
-      },
-    }),
-  )
   await page.goto('/')
   await expect(page.getByText('13 of 13 experiments')).toBeVisible()
   await expect(
@@ -202,14 +164,6 @@ test('duplicate observations from different sources remain visible in chart and 
   await page.getByText('View chart data', { exact: true }).click()
   await expect(page.locator('.chart-data tbody tr')).toHaveCount(10)
   await expect(page.locator('.chart-data')).toContainText(
-    'Another source (test only)',
-  )
-  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.locator('.stored-observation')).toHaveCount(2)
-  await expect(page.locator('.stored-observation').last()).toContainText(
-    'TEST-REPEAT',
-  )
-  await expect(page.locator('.stored-observation').last()).toContainText(
     'Another source (test only)',
   )
 })

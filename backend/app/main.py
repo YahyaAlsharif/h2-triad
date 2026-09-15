@@ -13,6 +13,7 @@ from app.database import (
     initialize_database,
 )
 from app.domain import router
+from app.scientific import ScientificService, router as scientific_router
 
 logger = logging.getLogger(__name__)
 
@@ -23,9 +24,10 @@ class HealthResponse(BaseModel):
     database: Literal["connected", "disconnected"]
 
 
-def create_app(database_path=None, seed_demo=None):
+def create_app(database_path=None, seed_demo=None, scientific_factory=ScientificService):
     @asynccontextmanager
     async def lifespan(application):
+        application.state.scientific = scientific_factory()
         application.state.database_path = database_path or get_database_path()
         application.state.database_ready = False
         try:
@@ -44,11 +46,12 @@ def create_app(database_path=None, seed_demo=None):
 
     application = FastAPI(
         title="H2-TRIAD API",
-        version="0.3.0",
+        version="0.5.0",
         lifespan=lifespan,
-        description="Persistent synthetic/demo experiments and exact dataset lookup. No trained model.",
+        description="Literature evidence, supported capacity predictions, and a model response landscape. Separate synthetic/demo explorer.",
     )
     application.include_router(router)
+    application.include_router(scientific_router)
 
     @application.exception_handler(RequestValidationError)
     async def invalid_request(request, error):

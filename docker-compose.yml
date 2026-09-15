@@ -1,7 +1,8 @@
 services:
   backend:
     build:
-      context: ./backend
+      context: .
+      dockerfile: backend/Dockerfile
     environment:
       DATABASE_PATH: ${DATABASE_PATH:-/app/data/app.db}
       SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
@@ -14,11 +15,11 @@ services:
         - CMD
         - python
         - -c
-        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health'); urllib.request.urlopen('http://localhost:8000/api/scientific/readiness')"
       interval: 5s
       timeout: 3s
       retries: 10
-      start_period: 5s
+      start_period: 20s
 
   frontend:
     build:

@@ -61,7 +61,7 @@ function validateItems(items) {
   items.forEach(validateExperiment)
   requireShape(new Set(items.map((item) => item.id)).size === items.length)
 }
-async function request(path, { signal, ...options } = {}) {
+export async function request(path, { signal, ...options } = {}) {
   const controller = new AbortController()
   const abort = () => controller.abort()
   signal?.addEventListener('abort', abort, { once: true })
@@ -79,7 +79,8 @@ async function request(path, { signal, ...options } = {}) {
         message =
           typeof body?.detail === 'string'
             ? body.detail
-            : 'Check the configuration values and try again.'
+            : body?.detail?.map((item) => item.msg).join('; ') ||
+              'Check the configuration values and try again.'
       }
       throw new Error(message)
     }
@@ -171,37 +172,6 @@ export async function getDomainOptions(options) {
   } else {
     requireShape(
       !body.materials.length && !body.additives.length && !body.methods.length,
-    )
-  }
-  return body
-}
-export async function runDigitalTwin(inputs, options) {
-  const body = await request('/api/digital-twin/run', {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ inputs }),
-  })
-  requireShape(object(body))
-  validateInputs(body.inputs)
-  requireShape(inputsMatch(inputs, body.inputs))
-  validateItems(body.items)
-  if (body.status === 'matched') {
-    requireShape(
-      body.match_method === 'exact' &&
-        body.items.length > 0 &&
-        body.items.every((item) => inputsMatch(item.inputs, inputs)),
-    )
-  } else {
-    requireShape(
-      body.status === 'unavailable' &&
-        body.reason === 'no_exact_match' &&
-        body.items.length === 0,
-    )
-    requireShape(
-      Object.keys(body).every((key) =>
-        ['status', 'reason', 'inputs', 'items'].includes(key),
-      ),
     )
   }
   return body

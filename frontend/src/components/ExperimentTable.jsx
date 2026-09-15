@@ -9,8 +9,6 @@ export default function ExperimentTable({
   experiments,
   selectedIds,
   toggleComparison,
-  loadConfiguration,
-  optionsReady,
 }) {
   const [query, setQuery] = useState('')
   const [outcome, setOutcome] = useState('All outcomes')
@@ -38,7 +36,7 @@ export default function ExperimentTable({
   return (
     <section id="experiments" aria-labelledby="experiments-title">
       <div className="section-heading">
-        <h2 id="experiments-title">Experimental dataset</h2>
+        <h2 id="experiments-title">Synthetic/demo dataset</h2>
         <span className="secondary-text" role="status">
           {visible.length} of {experiments.length} experiments
         </span>
@@ -122,8 +120,6 @@ export default function ExperimentTable({
                   onExpand={() =>
                     setExpanded(expanded === item.id ? null : item.id)
                   }
-                  loadConfiguration={loadConfiguration}
-                  optionsReady={optionsReady}
                 />
               ))}
             </tbody>
@@ -161,8 +157,6 @@ function ExperimentRows({
   toggleComparison,
   expanded,
   onExpand,
-  loadConfiguration,
-  optionsReady,
 }) {
   return (
     <>
@@ -222,13 +216,10 @@ function ExperimentRows({
           <td colSpan={6}>
             <div className="experiment-detail">
               <MeasurementDetails item={item} />
-              <button
-                className="button secondary"
-                disabled={!optionsReady}
-                onClick={() => loadConfiguration(item)}
-              >
-                Use in Digital Twin <span aria-hidden="true">↑</span>
-              </button>
+              <p className="secondary-text">
+                Synthetic/demo record. Load verified configurations from the
+                Digital Twin’s literature selector.
+              </p>
             </div>
           </td>
         </tr>

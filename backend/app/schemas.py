@@ -66,24 +66,3 @@ class DomainOptions(Contract):
     methods: list[SelectOption]
     numeric_constraints: dict[str, NumericConstraint]
     default_inputs: Inputs | None
-
-
-class RunRequest(Contract):
-    inputs: Inputs
-
-
-class MatchedRun(Contract):
-    status: Literal["matched"] = "matched"
-    match_method: Literal["exact"] = "exact"
-    inputs: Inputs
-    items: list[Experiment] = Field(min_length=1)
-
-
-class UnavailableRun(Contract):
-    status: Literal["unavailable"] = "unavailable"
-    reason: Literal["no_exact_match"] = "no_exact_match"
-    inputs: Inputs
-    items: list[Experiment] = Field(default_factory=list, max_length=0)
-
-
-RunResponse = Annotated[MatchedRun | UnavailableRun, Field(discriminator="status")]

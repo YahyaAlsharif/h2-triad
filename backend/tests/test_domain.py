@@ -7,6 +7,8 @@ from fastapi.testclient import TestClient
 
 from app.database import initialize_database
 from app.main import create_app
+from app.schemas import Inputs
+from pydantic import ValidationError
 
 
 def default_inputs(client):
@@ -40,9 +42,9 @@ def test_list_detail_and_migration_values(client):
         assert record["source"]["reference"] == "Phase 2 / " + record["id"]
         assert client.get("/api/experiments/" + record["id"]).json() == record
         result = client.post("/api/digital-twin/run", json={"inputs": record["inputs"]})
-        assert result.status_code == 200
-        assert result.json()["items"] == [record]
-        assert result.json()["status"] == "matched"
+        assert result.status_code == 422
+
+
 
 
 def test_missing_and_malformed_ids(client):
@@ -68,19 +70,6 @@ def test_options_are_database_owned(client):
     }
 
 
-def test_unsupported_is_exact_and_has_no_outputs(client):
-    inputs = default_inputs(client)
-    inputs["temperature_c"] += 0.000001
-    response = client.post("/api/digital-twin/run", json={"inputs": inputs})
-    assert response.status_code == 200
-    assert response.json() == {
-        "status": "unavailable",
-        "reason": "no_exact_match",
-        "inputs": inputs,
-        "items": [],
-    }
-
-
 @pytest.mark.parametrize(
     "field,value",
     [
@@ -97,20 +86,19 @@ def test_unsupported_is_exact_and_has_no_outputs(client):
         ("temperature_c", "300"),
         ("temperature_c", True),
         ("temperature_c", None),
-        ("material", "invented"),
-        ("additive", "invented"),
-        ("preparation_method", "invented"),
+
+
+
         ("material", 123),
-        ("additive", "None"),
-        ("preparation_method", "Solution mixing"),
+
+
     ],
 )
 def test_invalid_configuration(client, field, value):
     inputs = default_inputs(client)
     inputs[field] = value
-    assert (
-        client.post("/api/digital-twin/run", json={"inputs": inputs}).status_code == 422
-    )
+    with pytest.raises(ValidationError):
+        Inputs.model_validate(inputs)
 
 
 def test_invalid_body(client):
@@ -118,9 +106,8 @@ def test_invalid_body(client):
         assert client.post("/api/digital-twin/run", json=body).status_code == 422
     inputs = default_inputs(client)
     inputs["extra"] = 1
-    assert (
-        client.post("/api/digital-twin/run", json={"inputs": inputs}).status_code == 422
-    )
+    with pytest.raises(ValidationError):
+        Inputs.model_validate(inputs)
     for body in ('{"inputs":', '{"inputs":{"temperature_c":NaN}}'):
         response = client.post(
             "/api/digital-twin/run",
@@ -132,7 +119,7 @@ def test_invalid_body(client):
 
 
 def test_database_changes_and_duplicates_are_not_overwritten(client, database_path):
-    original = client.get("/api/experiments/EXP-003").json()
+
     # Change only the isolated test database to prove there is no runtime fixture fallback.
     with sqlite3.connect(database_path) as db:
         db.execute(
@@ -153,9 +140,7 @@ def test_database_changes_and_duplicates_are_not_overwritten(client, database_pa
             restarted.get("/api/experiments/EXP-003").json()["source"]["label"]
             == "Persistence test"
         )
-        result = restarted.post(
-            "/api/digital-twin/run", json={"inputs": original["inputs"]}
-        ).json()
+        result = {'items': [restarted.get('/api/experiments/' + identifier).json() for identifier in ('EXP-003', 'REPEAT-003')]}
         assert [r["id"] for r in result["items"]] == ["EXP-003", "REPEAT-003"]
         assert [r["measurement"]["duration_minutes"] for r in result["items"]] == [
             20,

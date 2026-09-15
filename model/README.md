@@ -1,6 +1,6 @@
 # H2-TRIAD capacity model
 
-This directory contains the standalone Phase 4B hydrogen-capacity predictor. It is deliberately not connected to FastAPI or React. Phase 5 can import `predict_capacity` from `predict.py` and preserve the product order: exact literature measurement, supported AI prediction, unavailable.
+This directory contains the Phase 4B hydrogen-capacity predictor, now integrated into FastAPI/React by Phase 5. The standalone CLI and `predict_capacity` remain available. Application processes retain a `CapacityPredictor` and use `predict_many` for grids, preserving the product order: exact literature measurement, supported AI prediction, unavailable. The trained artifact and scientific support/uncertainty rules are unchanged.
 
 ## Reproducible environment
 
@@ -46,6 +46,18 @@ from model.predict import predict_capacity
 
 result = predict_capacity(payload)
 ```
+
+For repeated requests or grids, retain one session per process:
+
+```python
+from model.predict import CapacityPredictor
+
+predictor = CapacityPredictor()
+result = predictor.predict(payload)
+grid_results = predictor.predict_many(payloads)
+```
+
+Batch inference validates each row before estimation, predicts only supported rows, and returns one ordered result per input. It uses the same preprocessing and interval calculation as standalone inference. See [Phase 5](../docs/phase-5-ai-integration.md) for runtime, scientific matching, and landscape behavior.
 
 Successful calls return `status: predicted`, a capacity in wt.% H2, an empirical interval when enabled, and support warnings. Clearly unsupported or malformed inputs return `status: unavailable`, `prediction: null`, and auditable reasons.
 

@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test'
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 const venvPython = resolve(
-  '../backend/.venv',
+  '../model/.venv',
   process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python',
 )
 const python =

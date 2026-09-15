@@ -32,8 +32,8 @@ export default function Header({ theme, toggleTheme }) {
         </a>
         <nav aria-label="Main navigation">
           <a href="#workspace">Digital Twin</a>
-          <a href="#analysis">Analysis</a>
-          <a href="#experiments">Experiments</a>
+          <a href="#analysis">Demo analysis</a>
+          <a href="#experiments">Demo records</a>
         </nav>
         <div className="header-actions">
           <details className="health-details">
@@ -54,7 +54,7 @@ export default function Header({ theme, toggleTheme }) {
                   ? 'FastAPI and SQLite are connected.'
                   : health === 'checking'
                     ? 'Checking FastAPI and SQLite…'
-                    : 'Could not verify FastAPI and SQLite. Dataset loading and new lookups require the backend.'}
+                    : 'Could not verify FastAPI and SQLite. Dataset loading and new scientific runs require the backend.'}
               </p>
               <button
                 className="button secondary"

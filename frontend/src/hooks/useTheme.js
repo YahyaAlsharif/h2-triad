@@ -1,9 +1,9 @@
-﻿import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 export function useTheme() {
   const [theme, setTheme] = useState(
     () => document.documentElement.dataset.theme || 'light',
   )
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme
     try {
       localStorage.setItem('h2-triad-theme', theme)

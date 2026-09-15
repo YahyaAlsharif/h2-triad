@@ -3,7 +3,8 @@ import Header from './components/Header'
 import Overview from './components/Overview'
 import DigitalTwin from './components/DigitalTwin'
 import ExperimentTable from './components/ExperimentTable'
-import { getExperiments, getDomainOptions } from './data/dashboardService'
+import { getExperiments } from './data/dashboardService'
+import { getScientificOptions } from './data/scientificService'
 import { useTheme } from './hooks/useTheme'
 const Analysis = lazy(() => import('./components/Analysis'))
 function useResource(loader) {
@@ -32,9 +33,8 @@ function useResource(loader) {
 export default function App() {
   const [theme, toggleTheme] = useTheme()
   const [dataset, retryDataset] = useResource(getExperiments)
-  const [domain, retryOptions] = useResource(getDomainOptions)
+  const [domain, retryOptions] = useResource(getScientificOptions)
   const [selection, setSelection] = useState([])
-  const [configuration, setConfiguration] = useState(null)
   const experiments = dataset.data?.items || []
   const selectedIds = selection.filter((id) =>
     experiments.some((item) => item.id === id),
@@ -47,20 +47,6 @@ export default function App() {
           ? [...selectedIds, id]
           : selectedIds,
     )
-  function loadConfiguration(item) {
-    setConfiguration({ ...item, key: (configuration?.key || 0) + 1 })
-    document.getElementById('workspace').scrollIntoView({
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? 'instant'
-        : 'smooth',
-      block: 'start',
-    })
-    requestAnimationFrame(() =>
-      document
-        .querySelector('#workspace select')
-        ?.focus({ preventScroll: true }),
-    )
-  }
   return (
     <>
       <a className="skip-link" href="#main">
@@ -70,9 +56,9 @@ export default function App() {
       <main id="main" className="page-shell">
         <div className="page-heading">
           <h1>Hydrogen materials workspace</h1>
-          {experiments.some((item) => item.source.is_demo) && (
-            <span className="demo-label">Contains demo data</span>
-          )}
+          <span className="secondary-text">
+            Phase 5 · literature-backed exploration
+          </span>
         </div>
         {dataset.status === 'loading' && (
           <div className="dataset-loading" role="status">
@@ -96,13 +82,8 @@ export default function App() {
             </button>
           </div>
         )}
-        {experiments.length > 0 && <Overview experiments={experiments} />}
         {domain.status === 'ready' && domain.data.default_inputs ? (
-          <DigitalTwin
-            key={configuration?.key || 'default'}
-            configuration={configuration}
-            options={domain.data}
-          />
+          <DigitalTwin options={domain.data} theme={theme} />
         ) : (
           <section id="workspace" aria-labelledby="workspace-title">
             <h2 id="workspace-title">Digital Twin</h2>
@@ -119,13 +100,21 @@ export default function App() {
               </div>
             ) : (
               <p className="dataset-empty" role="status">
-                No stored configurations are available.
+                Scientific configuration options are unavailable.
               </p>
             )}
           </section>
         )}
         {experiments.length > 0 && (
           <>
+            <div className="demo-explorer-heading">
+              <h2>Synthetic/demo explorer</h2>
+              <p>
+                Historical Phase 3 examples. These records and outcome labels
+                are illustrative, not literature evidence or AI predictions.
+              </p>
+            </div>
+            <Overview experiments={experiments} />
             <Suspense
               fallback={
                 <div className="dataset-loading" role="status">
@@ -143,16 +132,14 @@ export default function App() {
               experiments={experiments}
               selectedIds={selectedIds}
               toggleComparison={toggleComparison}
-              loadConfiguration={loadConfiguration}
-              optionsReady={
-                domain.status === 'ready' && !!domain.data.default_inputs
-              }
             />
           </>
         )}
         <footer className="page-footer">
           <span>H2-Triad</span>
-          <p>Phase 3 · Dataset-backed exact lookup · No trained model</p>
+          <p>
+            Phase 5 · Literature evidence and supported AI capacity predictions
+          </p>
           <a href="#main">Back to top ↑</a>
         </footer>
       </main>

@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import math
 from pathlib import Path
 from typing import Any
 
@@ -31,24 +32,10 @@ else:
 DEFAULT_ARTIFACT = Path(__file__).resolve().parent / "artifacts" / "capacity_model.joblib"
 
 
-def predict_capacity(payload: dict[str, Any], artifact_path: Path = DEFAULT_ARTIFACT) -> dict[str, Any]:
-    if not isinstance(payload, dict):
-        return {
-            "status": "unavailable",
-            "reason": "malformed_input",
-            "prediction": None,
-            "support": {"supported": False, "reasons": ["input_must_be_an_object"]},
-        }
-    bundle = load_bundle(Path(artifact_path))
-    supported, reasons, warnings, normalized = validate_support(payload, bundle.support_profile)
-    if not supported:
-        return {
-            "status": "unavailable",
-            "reason": "outside_model_support",
-            "prediction": None,
-            "support": {"supported": False, "reasons": reasons, "warnings": warnings},
-        }
-    prediction = float(bundle.predict(pd.DataFrame([normalized]))[0])
+def _prediction_result(bundle, normalized, prediction, warnings):
+    prediction = float(prediction)
+    if not math.isfinite(prediction):
+        raise ValueError("The model returned a non-finite prediction")
     prediction_payload: dict[str, Any] = {"hydrogen_capacity_wt_pct": round(prediction, 4)}
     if bundle.interval_quantiles:
         mode = str(normalized["measurement_mode"])
@@ -63,6 +50,57 @@ def predict_capacity(payload: dict[str, Any], artifact_path: Path = DEFAULT_ARTI
         "prediction": prediction_payload,
         "support": {"supported": True, "warnings": warnings},
     }
+
+
+class CapacityPredictor:
+    """Reusable inference session. No fitting or artifact mutation occurs here."""
+
+    def __init__(self, artifact_path: Path = DEFAULT_ARTIFACT):
+        self.bundle = load_bundle(Path(artifact_path))
+
+    def predict_many(self, payloads: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        results = []
+        rows = []
+        positions = []
+        row_warnings = []
+        for payload in payloads:
+            if not isinstance(payload, dict):
+                results.append({
+                    "status": "unavailable", "reason": "malformed_input", "prediction": None,
+                    "support": {"supported": False, "reasons": ["input_must_be_an_object"]},
+                })
+                continue
+            supported, reasons, warnings, normalized = validate_support(payload, self.bundle.support_profile)
+            if not supported:
+                results.append({
+                    "status": "unavailable", "reason": "outside_model_support", "prediction": None,
+                    "support": {"supported": False, "reasons": reasons, "warnings": warnings},
+                })
+                continue
+            positions.append(len(results))
+            rows.append(normalized)
+            row_warnings.append(warnings)
+            results.append(None)
+        if rows:
+            predictions = self.bundle.predict(pd.DataFrame(rows))
+            if len(predictions) != len(rows):
+                raise ValueError("The model returned an unexpected row count")
+            for index, row, prediction, warnings in zip(positions, rows, predictions, row_warnings):
+                results[index] = _prediction_result(self.bundle, row, prediction, warnings)
+        return results
+
+    def predict(self, payload: dict[str, Any]) -> dict[str, Any]:
+        return self.predict_many([payload])[0]
+
+
+def predict_capacity(payload: dict[str, Any], artifact_path: Path = DEFAULT_ARTIFACT) -> dict[str, Any]:
+    # Preserve the standalone interface; applications retain a CapacityPredictor.
+    if not isinstance(payload, dict):
+        return {
+            "status": "unavailable", "reason": "malformed_input", "prediction": None,
+            "support": {"supported": False, "reasons": ["input_must_be_an_object"]},
+        }
+    return CapacityPredictor(artifact_path).predict(payload)
 
 
 def main() -> None:

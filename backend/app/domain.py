@@ -5,10 +5,6 @@ from app.schemas import (
     DomainOptions,
     Experiment,
     ExperimentList,
-    MatchedRun,
-    RunRequest,
-    RunResponse,
-    UnavailableRun,
 )
 
 router = APIRouter(prefix="/api", tags=["domain"])
@@ -42,35 +38,3 @@ def experiment_detail(
 @router.get("/domain/options", response_model=DomainOptions)
 def domain_options(request: Request):
     return get_options(database_path(request))
-
-
-@router.post("/digital-twin/run", response_model=RunResponse)
-def run_digital_twin(body: RunRequest, request: Request):
-    path = database_path(request)
-    options = get_options(path)
-    inputs = body.inputs
-    for name, allowed in (
-        ("material", options.materials),
-        ("additive", [item.value for item in options.additives]),
-        ("preparation_method", [item.value for item in options.methods]),
-    ):
-        if getattr(inputs, name) not in allowed:
-            raise HTTPException(422, f"Select an available {name.replace('_', ' ')}.")
-    additive = next(item for item in options.additives if item.value == inputs.additive)
-    method = next(
-        item for item in options.methods if item.value == inputs.preparation_method
-    )
-    if not additive.allows_loading and inputs.concentration_wt_pct != 0:
-        raise HTTPException(
-            422, "An additive-free configuration requires zero additive loading."
-        )
-    if not method.allows_milling and inputs.milling_hours != 0:
-        raise HTTPException(
-            422, "This preparation option requires zero ball milling time."
-        )
-    records = get_experiments(path, inputs=inputs)
-    return (
-        MatchedRun(inputs=inputs, items=records)
-        if records
-        else UnavailableRun(inputs=inputs)
-    )

@@ -4,59 +4,10 @@ import AxeBuilder from '@axe-core/playwright'
 async function openDashboard(page) {
   await page.goto('/')
   await expect(page.getByText('12 of 12 experiments')).toBeVisible()
-  await expect(page.getByLabel('Base material')).toBeVisible()
+  await expect(page.getByLabel('Measurement mode')).toBeVisible()
 }
 
-test('Digital Twin returns exact stored observations', async ({ page }) => {
-  const errors = []
-  page.on('pageerror', (error) => errors.push(error.message))
-  await openDashboard(page)
-  await expect(page.getByText('Your configuration, in context.')).toBeVisible()
-  let release
-  const held = new Promise((resolve) => {
-    release = resolve
-  })
-  await page.route('**/api/digital-twin/run', async (route) => {
-    await held
-    await route.continue()
-  })
-  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.getByText('Looking up stored experiments')).toBeVisible()
-  await expect(page.getByLabel('Base material')).toBeDisabled()
-  release()
-  await expect(page.locator('.capacity-result')).toContainText('6.1')
-  await expect(page.locator('.result-configuration')).toContainText(
-    '300 °C · 10 bar · Ball milling · 4 h milling · 100 nm',
-  )
-  await page.getByLabel('Hydrogen pressure (bar)').fill('20')
-  await expect(
-    page.getByText('Inputs changed.', { exact: false }),
-  ).toBeVisible()
-  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(
-    page.getByText('No stored result for these conditions'),
-  ).toBeVisible()
-  await expect(page.locator('.capacity-result')).toHaveCount(0)
-  await page.getByRole('button', { name: 'Reset', exact: true }).click()
-  await page.getByLabel('Additive / catalyst').selectOption('Fe–Ni / N-C')
-  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.locator('.capacity-result')).toContainText('6.4')
-  await page.getByLabel('Additive / catalyst').selectOption('None')
-  await expect(page.getByLabel('Additive concentration (wt%)')).toHaveValue('0')
-  await expect(page.getByLabel('Additive concentration (wt%)')).toBeDisabled()
-  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.locator('.result-outcome')).toContainText('Limited')
-  await page.getByLabel('Preparation method').selectOption('Solution mixing')
-  await expect(page.getByLabel('Ball milling time (h)')).toHaveValue('0')
-  await expect(page.getByLabel('Ball milling time (h)')).toBeDisabled()
-  await page.getByLabel('Base material').selectOption('NaAlH₄')
-  await page.getByLabel('Temperature (°C)').fill('')
-  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.getByLabel('Temperature (°C)')).toBeFocused()
-  expect(errors).toEqual([])
-})
-
-test('dataset search, filters, sorting, details and configuration handoff', async ({
+test('demo dataset search, filters, sorting and provenance', async ({
   page,
 }) => {
   await openDashboard(page)
@@ -66,14 +17,9 @@ test('dataset search, filters, sorting, details and configuration handoff', asyn
   await expect(page.locator('.experiment-detail')).toContainText(
     'Synthetic demo fixture',
   )
-  await page.getByRole('button', { name: 'Use in Digital Twin' }).click()
-  await expect(page.getByLabel('Hydrogen pressure (bar)')).toHaveValue('20')
-  await expect(page.getByLabel('Ball milling time (h)')).toHaveValue('8')
-  await expect(page.getByLabel('Particle size (nm)')).toHaveValue('80')
-  await expect(page.getByLabel('Base material')).toBeFocused()
-  await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.locator('.capacity-result')).toContainText('6.3')
-  await expect(page.locator('.fixture-reference')).toContainText('EXP-011')
+  await expect(
+    page.getByRole('button', { name: 'Use in Digital Twin' }),
+  ).toHaveCount(0)
   await page.getByLabel('Search experiments').fill('not a material')
   await expect(page.getByText('No matching experiments')).toBeVisible()
   await page.getByRole('button', { name: 'Clear filters' }).click()
@@ -142,9 +88,12 @@ test('health errors and retry have accurate connection messaging', async ({
   await openDashboard(page)
   await page.getByText('System offline', { exact: true }).click()
   await expect(
-    page.getByText('Dataset loading and new lookups require the backend.', {
-      exact: false,
-    }),
+    page.getByText(
+      'Dataset loading and new scientific runs require the backend.',
+      {
+        exact: false,
+      },
+    ),
   ).toBeVisible()
   await page.unroute('**/api/health')
   await page.getByRole('button', { name: 'Check again' }).click()
@@ -239,7 +188,7 @@ test('responsive screenshots and overflow checks in both themes', async ({
   await page.getByRole('button', { name: 'Show details for EXP-003' }).click()
   await expect(
     page.getByRole('button', { name: 'Use in Digital Twin' }),
-  ).toBeVisible()
+  ).toHaveCount(0)
   await page.getByText('Compare all conditions', { exact: true }).click()
   expect(
     await page.evaluate(
@@ -279,13 +228,13 @@ test('dataset and lookup HTTP failures recover through retry', async ({
   await expect(page.getByText('Could not retrieve a result')).toBeVisible()
   await page.unroute('**/api/digital-twin/run')
   await page.getByRole('button', { name: 'Run Digital Twin' }).click()
-  await expect(page.locator('.capacity-result')).toContainText('6.1')
+  await expect(page.locator('.capacity-result')).toContainText('AI prediction')
 })
 
 test('options failure is retryable without hiding the dataset', async ({
   page,
 }) => {
-  await page.route('**/api/domain/options', (route) =>
+  await page.route('**/api/digital-twin/options', (route) =>
     route.fulfill({ status: 503, json: {} }),
   )
   await page.goto('/')
@@ -296,41 +245,12 @@ test('options failure is retryable without hiding the dataset', async ({
   await page.getByRole('button', { name: 'Show details for EXP-003' }).click()
   await expect(
     page.getByRole('button', { name: 'Use in Digital Twin' }),
-  ).toBeDisabled()
-  await page.unroute('**/api/domain/options')
+  ).toHaveCount(0)
+  await page.unroute('**/api/digital-twin/options')
   await page.getByRole('button', { name: 'Retry options' }).click()
-  await expect(page.getByLabel('Base material')).toBeVisible()
+  await expect(page.getByLabel('Measurement mode')).toBeVisible()
   await expect(
     page.getByRole('button', { name: 'Use in Digital Twin' }),
-  ).toBeEnabled()
-})
-
-test('empty database has explicit dataset and configuration states', async ({
-  page,
-  request,
-}) => {
-  const options = await (await request.get('/api/domain/options')).json()
-  await page.route('**/api/experiments', (route) =>
-    route.fulfill({ json: { items: [] } }),
-  )
-  await page.route('**/api/domain/options', (route) =>
-    route.fulfill({
-      json: {
-        ...options,
-        materials: [],
-        additives: [],
-        methods: [],
-        default_inputs: null,
-      },
-    }),
-  )
-  await page.goto('/')
-  await expect(page.getByText('No experiments available')).toBeVisible()
-  await expect(
-    page.getByText('No stored configurations are available.'),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('button', { name: 'Run Digital Twin' }),
   ).toHaveCount(0)
 })
 
@@ -338,7 +258,7 @@ test('malformed API responses produce controlled errors', async ({ page }) => {
   await page.route('**/api/experiments', (route) =>
     route.fulfill({ json: { items: [{ id: 'broken' }] } }),
   )
-  await page.route('**/api/domain/options', (route) =>
+  await page.route('**/api/digital-twin/options', (route) =>
     route.fulfill({ json: { materials: ['bad'] } }),
   )
   await page.goto('/')
@@ -349,10 +269,10 @@ test('malformed API responses produce controlled errors', async ({ page }) => {
     page.getByText('Could not load configuration options.', { exact: false }),
   ).toBeVisible()
   await page.unroute('**/api/experiments')
-  await page.unroute('**/api/domain/options')
+  await page.unroute('**/api/digital-twin/options')
   await page.getByRole('button', { name: 'Retry dataset' }).click()
   await page.getByRole('button', { name: 'Retry options' }).click()
-  await expect(page.getByLabel('Base material')).toBeVisible()
+  await expect(page.getByLabel('Measurement mode')).toBeVisible()
   await page.route('**/api/digital-twin/run', (route) =>
     route.fulfill({
       json: {
