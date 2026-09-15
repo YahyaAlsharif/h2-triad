@@ -17,81 +17,159 @@
 \definecolor{HydraNavy}{HTML}{132536}
 \definecolor{HydraGray}{HTML}{58636D}
 \definecolor{RuleGray}{HTML}{D5DCE1}
+\definecolor{PanelBlue}{HTML}{EEF4F7}
 
 \hypersetup{
   colorlinks=true,
   linkcolor=HydraTeal,
+  citecolor=HydraTeal,
   urlcolor=HydraTeal,
   pdfborder={0 0 0},
-  pdftitle={HydraX Tri-Interface Catalyst},
-  pdfsubject={Technical project proposal for the HydraX Tri-Interface Catalyst}
+  pdftitle={H2-TRIAD: Interface-Engineered Catalyst and Literature-Grounded Digital Twin},
+  pdfsubject={Submission-ready technical proposal for H2-TRIAD}
 }
 
 \graphicspath{{../images/}}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.45em}
-\setlist[itemize]{leftmargin=1.5em,itemsep=0.2em,topsep=0.25em}
-\titlespacing*{\section}{0pt}{2.1ex plus 0.5ex minus 0.2ex}{0.8ex}
-\renewcommand{\arraystretch}{1.16}
-\setlength{\emergencystretch}{2em}
-
+\setlength{\parskip}{0.42em}
+\setlist[itemize]{leftmargin=1.45em,itemsep=0.18em,topsep=0.25em}
+\titlespacing*{\section}{0pt}{2.0ex plus 0.5ex minus 0.2ex}{0.7ex}
+\titlespacing*{\subsection}{0pt}{1.5ex plus 0.4ex minus 0.2ex}{0.45ex}
+\titleformat{\section}{\color{HydraNavy}\Large\bfseries}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\color{HydraNavy}\large\bfseries}{\thesubsection}{0.6em}{}
+\renewcommand{\arraystretch}{1.14}
+\setlength{\emergencystretch}{3em}
 \pagestyle{plain}
 
 \newcommand{\MgHtwo}{\ensuremath{\mathrm{MgH}_{2}}}
 \newcommand{\Htwo}{\ensuremath{\mathrm{H}_{2}}}
+\newcommand{\CaFtwo}{\ensuremath{\mathrm{CaF}_{2}}}
+\newcommand{\NC}{N-doped carbon}
 \newcommand{\wtpct}{wt.\%}
 \newcommand{\resultflow}{Exact literature measurement $\rightarrow$ supported AI prediction $\rightarrow$ unavailable}
+\newcommand{\evidencebox}[1]{%
+  \begin{center}
+  \fcolorbox{HydraTeal}{PanelBlue}{\begin{minipage}{0.92\linewidth}\color{HydraNavy}\bfseries #1\end{minipage}}
+  \end{center}}
 
 \begin{document}
 
 \begin{center}
-  {\color{HydraNavy}\LARGE\bfseries HydraX Tri-Interface Catalyst\par}
+  {\color{HydraNavy}\LARGE\bfseries H2-TRIAD\par}
+  \vspace{0.35em}
+  {\large Interface-Engineered Fe-Ni/N-C/\CaFtwo{} Catalysis for Reversible \MgHtwo{} Hydrogen Storage\par}
   \vspace{0.4em}
-  {\large H2-Triad: Literature-Grounded Digital Twin for \MgHtwo{} Hydrogen Storage Exploration\par}
-  \vspace{0.5em}
-  {\normalsize\color{HydraTeal}\bfseries Technical Project Proposal\par}
-  \vspace{0.8em}
+  {\normalsize\color{HydraTeal}\bfseries Integrated Catalyst Concept and Literature-Grounded Digital Twin\par}
+  \vspace{0.75em}
   {\small
-  \textbf{Live Demo:} \href{https://hydrax-h2-triad.up.railway.app}{\nolinkurl{https://hydrax-h2-triad.up.railway.app}}\\[0.25em]
-  \textbf{GitHub Repository:} \href{https://github.com/YahyaAlsharif/h2-triad}{\nolinkurl{https://github.com/YahyaAlsharif/h2-triad}}\par}
+  \textbf{Live Demo:} \href{https://hydrax-h2-triad.up.railway.app}{\nolinkurl{hydrax-h2-triad.up.railway.app}}\quad
+  \textbf{Repository:} \href{https://github.com/YahyaAlsharif/h2-triad}{\nolinkurl{github.com/YahyaAlsharif/h2-triad}}\par}
 \end{center}
 
-\vspace{0.5em}
+\vspace{0.45em}
 \hrule
-\vspace{0.8em}
+\vspace{0.75em}
 
 \section*{Executive Summary}
 
-H2-Triad is a literature-grounded predictive workspace for comparing hydrogen-storage behavior in \MgHtwo{} materials under condition-aware inputs. It unifies provenance-preserving literature retrieval, a bounded CatBoost capacity predictor, empirical uncertainty, and an interactive response landscape. The system enforces a clear scientific hierarchy: exact reported measurements take precedence over supported model estimates, while unsupported configurations return no numerical result. The current evidence base contains 119 accessible literature observations; 109 observations from 16 papers and 36 samples enter model training. Paper-held-out evaluation gives a mean absolute error of 1.1693 \wtpct{} \Htwo{} and an $R^{2}$ of 0.3314, indicating useful but data-limited predictive structure. The Digital Twin is therefore presented as an expert exploration and prioritization aid, not as a physical simulation, causal optimization system, or substitute for laboratory validation.
+H2-TRIAD combines a falsifiable catalyst-development concept with an implemented, evidence-conscious Digital Twin. The material hypothesis is a deliberately pre-assembled Fe-Ni/N-C/\CaFtwo{} interface: Fe-Ni nanoparticles and \CaFtwo{} nanodomains are spatially anchored on an N-doped porous-carbon scaffold before the catalyst is integrated with \MgHtwo{}. The novelty claim is therefore the engineered interface and its validation strategy, not the mere presence of familiar components.
 
-\section{Problem and Motivation}
+The decisive laboratory comparison is S4, the pre-assembled architecture, versus S3, an equal-composition physical mixture prepared and tested under identical conditions. Fe-Ni has strong precedent as a kinetic promoter, N-C can support dispersion and transport, and fluoride-containing systems motivate interfacial study. However, \CaFtwo{} is treated as a testable modifier, not as a proven route to lower the thermodynamic enthalpy of \MgHtwo{}. Any thermodynamic claim requires pressure-composition-temperature data and van't Hoff analysis.
 
-Comparing \MgHtwo{} hydrogen-storage results across publications is difficult because reported capacity depends on more than nominal catalyst identity. Catalyst chemistry and support, material preparation, test temperature, hydrogen pressure, measurement duration, and absorption or desorption mode can all differ between studies. Results may also be reported as approximate values, thresholds, or room-temperature descriptions rather than as fully normalized numerical conditions. Directly comparing isolated headline values can therefore conceal important experimental context.
+The software prototype supports this program by preserving literature provenance, returning exact measurements before model estimates, rejecting unsupported inputs, and exposing uncertainty. Its current evidence base contains 119 accessible literature observations; 109 observations from 16 papers and 36 samples enter a bounded CatBoost capacity model. Paper-held-out evaluation gives a mean absolute error of 1.1693 \wtpct{} \Htwo{} and $R^{2}=0.3314$. These are actual software-evaluation results, not measurements of S4. The proposed numerical catalyst thresholds are design targets to be accepted, revised, or rejected experimentally.
 
-H2-Triad addresses this problem as a structured Digital Twin workspace. It connects curated experimental records to a predictive model without erasing their source context or presenting unsupported interpolation as evidence. The goal is to make literature comparison and model-assisted exploration available through one interface while keeping provenance, uncertainty, and data limits visible to technical users.
+\evidencebox{Submission claim: H2-TRIAD is a working digital research aid and a proposed catalyst architecture. No laboratory performance is claimed for the Fe-Ni/N-C/\CaFtwo{} interface.}
 
-\section{Proposed Solution}
+\section{Challenge and Project Objective}
 
-The core decision rule is:
+\MgHtwo{} is attractive because magnesium is abundant and the hydride offers a theoretical material-level hydrogen capacity of about 7.6 \wtpct{}. Its practical limitations include strong Mg-H thermodynamics, slow molecular-hydrogen activation at the surface, slow solid-state transport, and poor heat transfer. Pure or lightly processed \MgHtwo{} therefore commonly requires elevated temperatures and long reaction times \cite{webb2015,jain2010}.
+
+The project objective is to develop and validate a noble-metal-free, interface-engineered Fe-Ni/N-C/\CaFtwo{} catalyst that accelerates reversible absorption and desorption, preserves useful composite capacity, and resists agglomeration over cycling. Kinetic improvement and any genuine thermodynamic change will be evaluated separately. Lower onset temperature by itself will not be interpreted as proof of a lower reaction enthalpy.
+
+\section{Concept and Candidate Novelty}
+
+The final candidate material is \MgHtwo{} combined with a \emph{pre-assembled Fe-Ni/N-C/\CaFtwo{} interface architecture}. The first comparison materials are controls, not competing project ideas. The central hypothesis is that co-locating the three functions creates persistent reaction boundaries and shorter transport paths that cannot be reproduced reliably by random contact after milling.
+
+\begin{center}
+\setlength{\fboxsep}{8pt}
+\fcolorbox{RuleGray}{PanelBlue}{%
+\begin{minipage}{0.92\linewidth}
+\centering
+\begin{tabularx}{0.88\linewidth}{>{\bfseries}p{0.16\linewidth} X}
+Fe-Ni & \Htwo{} activation and catalytic phase evolution \\
+N-C & particle dispersion and short transport paths \\
+\CaFtwo{} & testable interfacial modification and nanoscale spacing \\
+\end{tabularx}
+\vspace{0.35em}
+
+$\Downarrow$ \quad spatially co-located before integration \quad $\Downarrow$\\[0.35em]
+{\color{HydraNavy}\bfseries PRE-ASSEMBLED Fe-Ni/N-C/\CaFtwo{} INTERFACE}
+$\;\longrightarrow\;$ \textbf{\MgHtwo{}} storage phase\\[-0.1em]
+{\small Conceptual architecture, not to scale}
+\end{minipage}}
+\end{center}
+
+\subsection{Functional division and evidence status}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Proposed functions are separated from the evidence needed to establish them.}
+\label{tab:functions}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.21\linewidth} >{\raggedright\arraybackslash}p{0.31\linewidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Element} & \textbf{Primary proposed role} & \textbf{Evidence boundary and decisive check} \\
+\midrule
+Fe-Ni nanoparticles & Promote \Htwo{} dissociation/recombination and form catalytically active Fe- and Mg-Ni-containing phases during cycling. & Supported by Fe-Ni/carbon studies in Mg/\MgHtwo{} systems \cite{ding2020,zhang2024}. Verify phase evolution, apparent activation energy, and identical-condition isothermal rates. \\
+\NC{} (N-C) & Disperse nanoparticles, limit agglomeration, and provide short transport paths. & N-doped porous-carbon confinement has demonstrated kinetic and cycling benefits in a different \MgHtwo{} architecture \cite{ren2022}. Verify distribution, porosity, and post-cycle structure. \\
+\CaFtwo{} nanodomains & Hypothesized ionic/defect-interface modifier and nanoscale spacer at the catalyst-\MgHtwo{} boundary. & Fluoride-containing additives and other \CaFtwo{} chemistries provide adjacent precedent, not proof for this architecture \cite{deledda2005,jain2015,suarez2011}. Verify chemical state, interface persistence, kinetic barriers, and PCT behavior. \\
+Pre-assembled architecture & Place the three functions at the same reaction boundary before mixing with \MgHtwo{}. & Project's candidate novelty. Isolate its effect by comparing S4 with the equal-composition physical mixture S3. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The project does not claim that \MgHtwo{}, Fe-Ni catalysis, carbon supports, N-C, or fluoride additives are individually new. A preliminary scan not finding the identical architecture would support further investigation, but it would not constitute a legal patentability opinion.
+
+\section{Evidence Classes and Claim Discipline}
+
+\begin{center}
+\fcolorbox{RuleGray}{PanelBlue}{\begin{minipage}{0.92\linewidth}
+\small
+\textbf{Established literature evidence} retains the cited system's composition and conditions; it supports plausibility but does not prove the proposed architecture.\par
+\textbf{Proposed mechanisms} are falsifiable explanations, including co-location effects, defect or ionic modification near \CaFtwo{}, and stabilization of Fe-Ni sites.\par
+\textbf{Design targets} are go/no-go thresholds, not predictions or achieved values.\par
+\textbf{Actual project results} currently comprise Digital Twin implementation and evaluation only; H2-TRIAD has no laboratory measurements for S0--S4 and claims no optimized catalyst.
+\end{minipage}}
+\end{center}
+
+\section{Implemented Digital Twin}
+
+The Digital Twin is a literature-grounded predictive workspace for condition-aware comparison of \MgHtwo{} experiments. Its scientific decision rule is:
 
 \begin{center}
   \color{HydraTeal}\bfseries \resultflow
 \end{center}
 
-For a configuration tied to a verified sample and matching recorded conditions, the system returns the exact literature measurement with its qualifier and provenance. If no exact measurement is available, the request may be evaluated by the capacity model, but only after explicit numeric and chemistry support checks. A supported prediction includes an empirical interval, model identity, and any support warnings. If the combination lies outside the documented domain, the result is \emph{unavailable} and contains no fabricated capacity.
+For a verified sample at matching recorded conditions, the system returns the exact literature measurement with its qualifier and provenance. If no exact measurement exists, the request may be evaluated by the capacity model only after numeric and chemistry support checks. A supported prediction includes an empirical interval, model identity, and warnings. Outside the documented domain, the response is \emph{unavailable} and contains no fabricated capacity. Missing conditions are not wildcards, distinct measurements are not averaged into synthetic observations, and unavailable does not mean zero.
 
-This hierarchy separates observation, inference, and absence of support. Missing conditions are not treated as wildcards, distinct measurements are not averaged into a synthetic observation, and an unavailable response cannot be mistaken for a low or zero capacity.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\linewidth,height=0.30\textheight,keepaspectratio]{digital-twin.png}
+  \caption{Implemented H2-TRIAD workflow for a supported absorption estimate. Submitted conditions, model output, empirical interval, and support status remain visible together.}
+  \label{fig:digital-twin}
+\end{figure}
 
-\section{Scientific Data Foundation}
+\section{Scientific Data and Predictive Model}
 
-The read-only scientific index joins canonical source, sample, and measurement records. Its 119 accessible ordinary absorption/desorption observations retain source identity, title metadata, sample and preparation context, measurement conditions, capacity basis, qualifiers, and source locators. Approximate reported values remain marked as approximate; threshold observations remain thresholds; and reported room temperature is not converted into an invented numerical temperature.
+The read-only scientific index joins canonical source, sample, and measurement records. Its 119 accessible ordinary absorption/desorption observations retain source identity, sample and preparation context, conditions, capacity basis, qualifiers, and source locators. Approximate and threshold values remain qualified, and reported room temperature is not converted into an invented number. Historical synthetic/demo records remain in a separate SQLite dataset and do not enter literature lookup or model training.
 
-The model-training view contains 109 usable scalar observations from 16 independent core papers and 36 samples. All training targets are explicitly reported in the source material; none were graph-digitized for this release. Records used for the historical synthetic/demo explorer remain in a separate SQLite dataset and do not enter literature lookup or model training. Cycling, activation-energy, thermal-event, and extended reactive-composite observations are also outside the deployed capacity-training view.
+The capacity-training view contains 109 usable scalar observations from 16 independent papers and 36 samples. The compact CatBoost regressor uses measurement mode, temperature, duration, catalyst loading, catalyst presence and component count, and support context. Chemistry and pressure also participate in eligibility checks. Evaluation uses leave-one-paper-out grouping so correlated rows from one publication cannot enter both training and testing.
 
 \begin{table}[H]
 \centering
-\caption{Dataset and deployed model summary.}
-\label{tab:summary}
+\small
+\caption{Current data and software-evaluation results.}
+\label{tab:model-summary}
 \begin{tabularx}{0.82\linewidth}{>{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}p{0.30\linewidth}}
 \toprule
 \textbf{Item} & \textbf{Current value} \\
@@ -109,87 +187,142 @@ Mean interval width & 5.0876 \wtpct{} \Htwo{} \\
 \end{tabularx}
 \end{table}
 
-\section{AI Predictive Model}
+The signed-residual empirical interval is derived from grouped cross-validation. Its 86.2\% observed coverage is not a formal guarantee, confidence score, or laboratory uncertainty. The broad mean interval is itself evidence that the model is data-limited. Support rules reject out-of-range inputs and unseen chemistry, but being inside independent feature ranges does not establish dense joint experimental coverage.
 
-The deployed model is a compact CatBoost regressor for absorption or desorption capacity in \wtpct{} \Htwo{}. Its inputs describe measurement mode, temperature, duration, catalyst loading, catalyst presence and component count, and support context. Chemistry and pressure information also participate in support validation even where they are not retained as direct estimator features. The serialized preprocessing pipeline and fitted estimator are loaded once and reused for inference; no training occurs during application startup or request handling.
+\section{Material Route and Controlled Validation}
 
-Evaluation uses leave-one-paper-out grouping rather than random row splitting. For each fold, an entire source paper is withheld so that correlated measurements from that paper cannot appear in both training and evaluation. The resulting paper-held-out metrics are MAE 1.1693 \wtpct{} \Htwo{}, RMSE 1.5493 \wtpct{} \Htwo{}, and $R^{2}=0.3314$.
+Prepare an N-doped porous-carbon scaffold, anchor nanoscale Fe-Ni at its active sites, introduce spatially dispersed \CaFtwo{} domains, and integrate the pre-assembled catalyst with \MgHtwo{} by controlled milling under inert atmosphere. Fe:Ni ratio, total catalyst loading, \CaFtwo{} fraction, scaffold properties, and milling energy are optimization variables rather than fixed claims.
 
-Prediction uncertainty is represented by a signed-residual empirical 90\% interval derived from grouped cross-validation. Observed held-out coverage is 86.2\%, with a mean interval width of 5.0876 \wtpct{} \Htwo{}. This interval is not a confidence score, formal coverage guarantee, or certified laboratory uncertainty. Its breadth is an important indication that the model is data-limited.
+\subsection{S0--S4 control logic}
 
-Before prediction, mode-specific ranges, missingness rules, catalyst-family representation, and elemental/component checks define eligibility. These checks prevent numeric extrapolation outside documented ranges and reject entirely unseen chemistry. They do not establish that every combination inside independent feature ranges has been experimentally observed.
+\begin{table}[H]
+\centering
+\small
+\caption{Control matrix for isolating component and architecture effects.}
+\label{tab:controls}
+\begin{tabularx}{\linewidth}{>{\centering\arraybackslash}p{0.08\linewidth} >{\raggedright\arraybackslash}p{0.42\linewidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Code} & \textbf{Material} & \textbf{Question answered} \\
+\midrule
+S0 & Ball-milled \MgHtwo{} & What is the baseline under the same preparation and test conditions? \\
+S1 & \MgHtwo{} + \CaFtwo{} & Does \CaFtwo{} have an independent effect? \\
+S2 & \MgHtwo{} + Fe-Ni/N-C & What is achieved without \CaFtwo{}? \\
+S3 & \MgHtwo{} + Fe-Ni/N-C + \CaFtwo{} as a physical mixture & Does simple addition of all ingredients help? \\
+S4 & \MgHtwo{} + pre-assembled Fe-Ni/N-C/\CaFtwo{} & Does the engineered interface outperform the same composition? \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-\section{Digital Twin Interface}
+\evidencebox{Decisive validation: S4 must outperform S3 under identical composition, preparation history, sample mass, temperature, pressure, and analysis method. S4 versus S0 alone cannot establish interface synergy.}
 
-The implemented dashboard turns the result hierarchy into a single condition-aware workflow. A user can configure measurement mode, temperature, duration, catalyst loading and composition, support material, and hydrogen-pressure context. The service then retrieves an exact literature observation when available, otherwise evaluates supported AI inference, or returns an unavailable state without a number.
+\subsection{Measurements and decision logic}
 
-The result panel identifies the result type, echoes the evaluated conditions, and shows capacity, uncertainty, model identity, warnings, and result-health information. A literature loader exposes searchable evidence with provenance and preparation details. Comparison views and an explicitly labeled synthetic/demo explorer remain available without mixing demo records into the scientific workflow.
+\begin{table}[H]
+\centering
+\small
+\caption{Measurements needed to distinguish kinetics, thermodynamics, and durability.}
+\label{tab:measurements}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.29\linewidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Measurement} & \textbf{Decision supported} \\
+\midrule
+XRD, XPS, and TEM/EDS & Identify phases and chemical states, quantify dispersion, and determine whether the designed interface survives milling and cycling. \\
+Sieverts isothermal tests & Measure reversible capacity and time to 90\% absorption/desorption at identical temperature, pressure, and sample mass. \\
+DSC/TGA at multiple heating rates & Compare onset/peak temperature and estimate apparent activation energy with one consistent method. \\
+PCT at three or more temperatures & Determine equilibrium pressure and van't Hoff enthalpy/entropy, separating equilibrium thermodynamics from faster kinetics. \\
+Repeated cycling and replicates & Quantify capacity/rate retention, uncertainty, phase growth, and catalyst agglomeration. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-\begin{figure}[H]
+\subsection{Proposed go/no-go targets}
+
+These thresholds guide experimental design; none is a reported or model-predicted S4 result.
+
+\begin{itemize}
+  \item S4 reduces time to 90\% conversion by at least 50\% versus both S2 and S3 at identical conditions.
+  \item Desorption onset is at or below 250\,$^{\circ}$C, or at least 75\,$^{\circ}$C below S0 under the same heating protocol.
+  \item Reversible composite capacity is at least 5.5 \wtpct{} \Htwo{} with total catalyst loading at or below 10 \wtpct{}.
+  \item At least 90\% of initial reversible capacity remains after 50 cycles, with replicate testing and uncertainty reported.
+  \item A statistically significant architecture or component-interaction effect is observed; otherwise, the synergy claim is rejected.
+\end{itemize}
+
+\section{Computational and AI Support}
+
+Computational work is an experiment-guidance layer, not replacement evidence. DFT can compare hydrogen adsorption/dissociation, vacancy formation, charge transfer, and diffusion barriers in simplified \MgHtwo{}/Fe-Ni, \MgHtwo{}/N-C, \MgHtwo{}/\CaFtwo{}, and combined-interface models. Data-driven barrier models demonstrate how lower-cost descriptors can prioritize calculations, but their predictions still require experimental confrontation \cite{li2024}.
+
+After measured S0--S4 data exist, a small-data Bayesian optimizer can recommend the next Fe:Ni ratio, catalyst loading, \CaFtwo{} fraction, or milling condition. Each plotted curve must be labeled as a measured result, literature benchmark, or model prediction. The current CatBoost model explores capacity trends in the curated literature; it does not predict that the proposed S4 architecture will meet the targets above.
+
+For supported configurations, the deployed application can evaluate a temperature-by-loading grid while holding other inputs fixed. Every cell is screened before inference; unsupported cells remain null and are excluded from the surface.
+
+\begin{figure}[htbp]
   \centering
-  \includegraphics[width=\linewidth,height=0.43\textheight,keepaspectratio]{digital-twin.png}
-  \caption{The H2-Triad Digital Twin configured for a supported absorption estimate. The interface keeps the submitted conditions, model result, empirical interval, and support status visible together.}
-  \label{fig:digital-twin}
-\end{figure}
-
-\section{Response Landscape}
-
-For a supported configuration, the application can evaluate a two-dimensional grid of temperature and catalyst loading while keeping all other inputs fixed. The resulting three-dimensional view uses temperature ($^{\circ}$C) and loading (\wtpct{}) as horizontal axes and predicted capacity (\wtpct{} \Htwo{}) as the vertical response. A separate prediction marks the exact selected configuration rather than estimating its value from a nearby grid node.
-
-Every cell is validated before inference. Unsupported cells carry null capacity and interval values and remain excluded from the surface. The accessible grid table retains cell-level values, intervals, and masking reasons. This behavior preserves the boundary between learned response and unsupported space.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{prediction-landscape.png}
-  \caption{Implemented temperature $\times$ catalyst-loading response landscape with other conditions fixed. The surface visualizes the learned CatBoost response over supported grid cells; it is not a molecular model, physical simulation, causal result, or experimentally verified continuous surface.}
+  \includegraphics[width=0.92\linewidth,height=0.34\textheight,keepaspectratio]{prediction-landscape.png}
+  \caption{Implemented response landscape. It visualizes learned CatBoost behavior over supported cells; it is not a molecular simulation, causal result, or experimentally verified continuous surface.}
   \label{fig:landscape}
 \end{figure}
 
-\section{System Architecture and Deployment}
+\section{System Architecture and Current Validation}
 
-H2-Triad uses a React/Vite frontend and FastAPI backend. The backend connects the user-facing workflow to two deliberately distinct data paths: canonical literature tables and the cached CatBoost capacity predictor for scientific results, and a SQLite store for historical synthetic/demo exploration.
+H2-TRIAD uses a React/Vite frontend and FastAPI backend. The backend connects the interface to canonical literature tables and a cached CatBoost predictor for scientific results, while a separate SQLite store supports the explicitly labeled historical synthetic/demo explorer. A repository-root Dockerfile builds the frontend and serves the bundled application and \texttt{/api} routes through one Uvicorn process on Railway.
 
-The production flow is compact:
+Release validation currently records 22 model tests, 72 backend tests, and 26 browser tests, including the integrated container workflow. Checks cover exact-measurement precedence, qualified values, unavailable responses without numeric fields, landscape masking, scientific dataset integrity, and stable production artifacts. This establishes a working software prototype, not a validated physical catalyst.
 
-\begin{center}
-\small
-\textbf{React/Vite interface} $\rightarrow$ \textbf{FastAPI service} $\rightarrow$
-\begin{tabular}[t]{l}
-canonical literature index \\
-cached CatBoost predictor \\
-SQLite synthetic/demo explorer
-\end{tabular}
-\end{center}
+\section{Hackathon Demonstrator, Value, and Risk}
 
-The repository-root Dockerfile is the production deployment path. A Node 24 build stage compiles the React application; a Python 3.10 slim runtime then serves both the bundled single-page application and the \texttt{/api} routes through one Uvicorn process. The container is deployed as one Railway service with same-origin API requests. The public deployment is available at \href{https://hydrax-h2-triad.up.railway.app}{hydrax-h2-triad.up.railway.app}.
+The demonstration links the implemented software to the next experimental decision. A judge can configure a condition-aware \MgHtwo{} comparison, inspect an exact literature result or bounded model estimate, review its provenance and uncertainty, and then examine the S0--S4 validation plan. A physical display can use a sealed cartridge cutaway and non-reactive material mock-up; no live hydrogen is required.
 
-\section{Current Validation}
+The likely first application context is stationary storage, renewable buffering, or a heat-integrated system. The concept avoids noble metals and uses broadly available Fe, Ni, carbon, and \CaFtwo{}, but nanostructure processing, inert handling, oxidation control, and heat management still require technical and economic assessment. High heat demand may limit mobile use, so no vehicle-readiness claim is made.
 
-Release validation covers model behavior, backend contracts, browser workflows, scientific data integrity, and integrated container operation. Recorded checks include 22 model tests, 72 backend tests, and 26 browser tests, with the browser suite also passing against the integrated container. Scientific checks preserve the 119-observation literature index, exact-measurement precedence, qualified values, unavailable responses without numeric fields, batched landscape masking, and stable production artifacts. The current implementation is a functioning, publicly deployed prototype rather than a proposal represented only through mockups.
+Real powder synthesis and pressure testing must occur only in a qualified laboratory with inert handling, approved pressure equipment, ventilation, hydrogen detection, and documented risk review.
 
 \section{Limitations}
 
-The following limitations govern interpretation:
-
 \begin{itemize}
-  \item The evidence base is small at the independent-paper level and is concentrated in particular journals and catalyst families.
-  \item Paper-held-out performance is moderate, and the broad empirical intervals expose substantial uncertainty.
-  \item Support rules are conservative feature-wise checks, not proof of dense joint experimental coverage.
-  \item Generalization to unfamiliar chemistry is limited even when a warning-bearing prediction is permitted.
-  \item No independent laboratory campaign, temporal validation, or external material system validates the model.
-  \item Predictive associations and response plots do not establish causal optimization or physical mechanism.
+  \item The exact pre-assembled Fe-Ni/N-C/\CaFtwo{} architecture has not been synthesized or tested by this project.
+  \item Evidence for \CaFtwo{} is indirect and composition-dependent; inactivity, adverse phases, or capacity dilution remain plausible outcomes.
+  \item The literature dataset is small at the independent-paper level and concentrated in particular catalyst families.
+  \item Paper-held-out performance is moderate, and broad empirical intervals expose substantial uncertainty.
+  \item Feature-wise support checks do not prove joint experimental coverage, causal optimization, or mechanistic validity.
+  \item The exact combination's patentability is unconfirmed pending a formal prior-art review.
 \end{itemize}
-
-The system is intended to support expert comparison, hypothesis prioritization, and transparent exploration. Scientific conclusions still require source review and laboratory confirmation.
-
-\section{Expected Value for the Hackathon}
-
-The project is submitted for organizer review as an implemented technical concept that can be demonstrated at the October Energy Hackathon. It offers judges and participants a concrete way to inspect how evidence-grounded AI can support materials exploration while preserving a visible boundary between reported results, model estimates, and unsupported configurations.
-
-For a showcase or technical presentation, the live prototype supports a clear end-to-end demonstration: configure an \MgHtwo{} experiment, retrieve an exact literature result or obtain a bounded model estimate, inspect uncertainty and provenance, and explore a masked temperature--loading response landscape. The value is the integration of these functions into one transparent workflow, not a claim that the prototype has completed laboratory development or established an optimized catalyst.
 
 \section{Conclusion}
 
-HydraX Tri-Interface Catalyst, implemented through H2-Triad, creates a practical bridge between scattered \MgHtwo{} experimental literature and condition-aware predictive exploration. Its main contribution is not a claim of comprehensive materials simulation; it is an evidence-conscious workflow that keeps exact observations, supported estimates, uncertainty, provenance, and unsupported regions visibly distinct. Within the limits of the current dataset, the deployed prototype demonstrates how literature curation and bounded machine learning can support technical exploration without obscuring where experimental evidence ends. It is presented for hackathon approval and demonstration as a working project concept, not as a completed research publication.
+H2-TRIAD advances a coherent hackathon proposition: a deliberately pre-assembled Fe-Ni/N-C/\CaFtwo{} interface to be tested through a decisive S4-versus-S3 control, paired with a working Digital Twin that keeps literature observations, bounded predictions, uncertainty, and unsupported regions visibly distinct. The proposal is scientifically valuable precisely because it is falsifiable. If S4 does not outperform the equal-composition mixture, the interface-synergy claim is rejected; if equilibrium measurements do not change, the system remains correctly described as a kinetic catalyst. Computational and AI tools prioritize experiments, while laboratory measurements retain the final evidentiary authority.
+
+\begin{thebibliography}{9}
+\small
+\setlength{\itemsep}{0.1em}
+\setlength{\parskip}{0pt}
+
+\bibitem{webb2015}
+C. J. Webb, ``A review of catalyst-enhanced magnesium hydride as a hydrogen storage material,'' \emph{Journal of Physics and Chemistry of Solids}, vol. 84, pp. 96--106, 2015. \href{https://doi.org/10.1016/j.jpcs.2014.06.014}{doi:10.1016/j.jpcs.2014.06.014}.
+
+\bibitem{jain2010}
+I. P. Jain, C. Lal, and A. Jain, ``Hydrogen storage in Mg: A most promising material,'' \emph{International Journal of Hydrogen Energy}, vol. 35, no. 10, pp. 5133--5144, 2010. \href{https://doi.org/10.1016/j.ijhydene.2009.08.088}{doi:10.1016/j.ijhydene.2009.08.088}.
+
+\bibitem{ding2020}
+Z. Ding et al., ``Improve hydrogen sorption kinetics of \MgHtwo{} by doping carbon-encapsulated iron-nickel nanoparticles,'' \emph{Journal of Alloys and Compounds}, vol. 843, 156035, 2020. \href{https://doi.org/10.1016/j.jallcom.2020.156035}{doi:10.1016/j.jallcom.2020.156035}.
+
+\bibitem{zhang2024}
+H. Zhang et al., ``Boosting effect of Fe-Ni/carbon material catalysts on the hydrogen storage performance of magnesium,'' \emph{International Journal of Hydrogen Energy}, vol. 50, pp. 958--968, 2024. \href{https://doi.org/10.1016/j.ijhydene.2023.08.252}{doi:10.1016/j.ijhydene.2023.08.252}.
+
+\bibitem{ren2022}
+L. Ren et al., ``\MgHtwo{} confinement in MOF-derived N-doped porous carbon nanofibers for enhanced hydrogen storage,'' \emph{Chemical Engineering Journal}, vol. 434, 134701, 2022. \href{https://doi.org/10.1016/j.cej.2022.134701}{doi:10.1016/j.cej.2022.134701}.
+
+\bibitem{deledda2005}
+S. Deledda et al., ``H-sorption in \MgHtwo{} nanocomposites containing Fe or Ni with fluorine,'' \emph{Journal of Alloys and Compounds}, vols. 404--406, pp. 409--412, 2005. \href{https://doi.org/10.1016/j.jallcom.2005.01.115}{doi:10.1016/j.jallcom.2005.01.115}.
+
+\bibitem{jain2015}
+P. Jain, V. Dixit, A. Jain, O. N. Srivastava, and J. Huot, ``Effect of magnesium fluoride on hydrogenation properties of magnesium hydride,'' \emph{Energies}, vol. 8, no. 11, pp. 12546--12556, 2015. \href{https://doi.org/10.3390/en81112330}{doi:10.3390/en81112330}.
+
+\bibitem{suarez2011}
+K. Suarez-Alcantara et al., ``Sorption and desorption properties of a CaH$_2$/MgB$_2$/\CaFtwo{} reactive hydride composite as potential hydrogen storage material,'' \emph{Journal of Solid State Chemistry}, vol. 184, no. 11, pp. 3104--3109, 2011. \href{https://doi.org/10.1016/j.jssc.2011.09.019}{doi:10.1016/j.jssc.2011.09.019}.
+
+\bibitem{li2024}
+C. Li et al., ``Picturing the gap between the performance and US-DOE's hydrogen storage target: A data-driven model for \MgHtwo{} dehydrogenation,'' \emph{Angewandte Chemie International Edition}, vol. 63, no. 28, e202320151, 2024. \href{https://doi.org/10.1002/anie.202320151}{doi:10.1002/anie.202320151}.
+
+\end{thebibliography}
 
 \end{document}
