@@ -110,7 +110,25 @@ removes existing records. Keep Compose database overrides inside `/app/data`.
 Stop with `docker compose down` (without `--volumes` to retain data).
 
 Compose currently serves the frontend through Vite's development server.
-Production serving and hosting are Phase 6B work.
+
+### Production container
+
+The root `Dockerfile` is the production path: Node 24 builds the React app, then
+a Python 3.10 slim image runs one Uvicorn worker. FastAPI serves both the bundled
+SPA and `/api` routes on port 8000; the Vite development workflow above remains
+unchanged.
+
+```sh
+docker build -t h2-triad .
+docker run --rm -e PORT=8000 -p 8000:8000 h2-triad
+```
+
+Open **http://localhost:8000**. The default SQLite demo database is intentionally
+ephemeral in this container; scientific literature and prediction artifacts are
+read-only image assets and do not require persistent storage.
+
+For the one-service Railway setup and exact dashboard settings, see the
+[Phase 6B Railway deployment guide](docs/phase-6b-railway.md).
 
 ## Methodology and provenance
 

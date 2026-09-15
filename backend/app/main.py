@@ -2,10 +2,12 @@ import logging
 import os
 import sqlite3
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Literal
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ValidationError
 from app.database import (
     check_database_connection,
@@ -16,6 +18,7 @@ from app.domain import router
 from app.scientific import ScientificService, router as scientific_router
 
 logger = logging.getLogger(__name__)
+DEFAULT_STATIC_DIR = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 
 
 class HealthResponse(BaseModel):
@@ -24,7 +27,12 @@ class HealthResponse(BaseModel):
     database: Literal["connected", "disconnected"]
 
 
-def create_app(database_path=None, seed_demo=None, scientific_factory=ScientificService):
+def create_app(
+    database_path=None,
+    seed_demo=None,
+    scientific_factory=ScientificService,
+    static_dir=DEFAULT_STATIC_DIR,
+):
     @asynccontextmanager
     async def lifespan(application):
         application.state.scientific = scientific_factory()
@@ -104,6 +112,21 @@ def create_app(database_path=None, seed_demo=None, scientific_factory=Scientific
                 },
             )
         return HealthResponse(status="ok", api="connected", database="connected")
+
+    # The compiled frontend is optional so API-only local development and tests do
+    # not need a Node build. Register this last: concrete API/docs routes win first.
+    frontend = Path(static_dir) if static_dir is not None else None
+    if frontend and (frontend / "index.html").is_file():
+        assets = frontend / "assets"
+        if assets.is_dir():
+            application.mount("/assets", StaticFiles(directory=assets), name="assets")
+
+        @application.get("/{frontend_path:path}", include_in_schema=False)
+        def frontend_app(frontend_path: str):
+            # Unknown API paths remain API failures instead of becoming the SPA.
+            if frontend_path == "api" or frontend_path.startswith("api/"):
+                return JSONResponse(status_code=404, content={"detail": "Not Found"})
+            return FileResponse(frontend / "index.html")
 
     return application
 

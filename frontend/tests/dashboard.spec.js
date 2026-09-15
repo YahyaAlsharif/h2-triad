@@ -86,7 +86,9 @@ test('health errors and retry have accurate connection messaging', async ({
     }),
   )
   await openDashboard(page)
-  await page.getByText('System offline', { exact: true }).click()
+  await page
+    .getByText('Prediction service unavailable', { exact: true })
+    .click()
   await expect(
     page.getByText(
       'Dataset loading and new scientific runs require the backend.',
@@ -98,7 +100,7 @@ test('health errors and retry have accurate connection messaging', async ({
   await page.unroute('**/api/health')
   await page.getByRole('button', { name: 'Check again' }).click()
   await expect(
-    page.getByText('System connected', { exact: true }),
+    page.getByText('Prediction service ready', { exact: true }),
   ).toBeVisible()
 })
 

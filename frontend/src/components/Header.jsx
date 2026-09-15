@@ -5,19 +5,29 @@ export default function Header({ theme, toggleTheme }) {
   const [attempt, setAttempt] = useState(0)
   useEffect(() => {
     const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 5000)
     let mounted = true
-    getHealth({ signal: controller.signal })
-      .then(() => {
-        if (mounted) setHealth('connected')
-      })
-      .catch(() => {
-        if (mounted) setHealth('offline')
-      })
-      .finally(() => clearTimeout(timeout))
+    let retryTimer
+    const check = async () => {
+      for (const delay of [0, 1000, 2500]) {
+        if (delay)
+          await new Promise((resolve) => {
+            retryTimer = setTimeout(resolve, delay)
+          })
+        if (controller.signal.aborted) return
+        try {
+          await getHealth({ signal: controller.signal })
+          if (mounted) setHealth('connected')
+          return
+        } catch {
+          // A sleeping free instance can reject the first request while waking.
+        }
+      }
+      if (mounted) setHealth('offline')
+    }
+    check()
     return () => {
       mounted = false
-      clearTimeout(timeout)
+      clearTimeout(retryTimer)
       controller.abort()
     }
   }, [attempt])
@@ -41,20 +51,20 @@ export default function Header({ theme, toggleTheme }) {
               <span className={'status-dot ' + health} aria-hidden="true" />
               <span>
                 {health === 'checking'
-                  ? 'Connecting'
+                  ? 'Starting prediction service…'
                   : health === 'connected'
-                    ? 'System connected'
-                    : 'System offline'}
+                    ? 'Prediction service ready'
+                    : 'Prediction service unavailable'}
               </span>
             </summary>
             <div className="health-popover">
               <strong>System connection</strong>
               <p>
                 {health === 'connected'
-                  ? 'FastAPI and SQLite are connected.'
+                  ? 'FastAPI, the scientific model, and demo data are available.'
                   : health === 'checking'
-                    ? 'Checking FastAPI and SQLite…'
-                    : 'Could not verify FastAPI and SQLite. Dataset loading and new scientific runs require the backend.'}
+                    ? 'Waking and checking the prediction service…'
+                    : 'Could not verify the prediction service. Dataset loading and new scientific runs require the backend.'}
               </p>
               <button
                 className="button secondary"

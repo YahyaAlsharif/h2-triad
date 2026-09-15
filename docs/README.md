@@ -7,6 +7,7 @@
 - [Source provenance and obtaining papers](../data/phase4_data_sources/README.md)
 - [Licensing and data boundaries](licensing-and-data.md)
 - [Release validation](phase-6a-release.md)
+- [Railway production deployment](phase-6b-railway.md)
 
 ## Historical delivery records
 
