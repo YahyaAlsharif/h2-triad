@@ -1,5 +1,12 @@
 # Phase 6B: Railway production deployment
 
+## Deployment status
+
+Production deployment is complete and publicly available at
+[https://hydrax-h2-triad.up.railway.app](https://hydrax-h2-triad.up.railway.app).
+Railway builds the repository-root `Dockerfile` from `main` and serves the React
+application and same-origin FastAPI routes from this single service.
+
 ## Architecture
 
 Railway runs one Web Service from the repository-root `Dockerfile`. A Node 24
@@ -26,7 +33,8 @@ call.
 - Builder: Dockerfile (repository-root `Dockerfile`)
 - Start command: leave unset; use the image `CMD`
 - Health-check path: `/api/health`
-- Public networking: generate one Railway domain after a healthy deployment
+- Public networking: Railway domain
+  `https://hydrax-h2-triad.up.railway.app`
 - Database and volume: none
 
 Railway [injects `PORT`](https://docs.railway.com/deployments/healthchecks). The
@@ -70,5 +78,6 @@ display requires a larger asset download. The production image uses one worker
 to avoid duplicating the in-memory model. SQLite changes do not survive a
 restart, by design for the demo explorer.
 
-External deployment is intentionally pending manual GitHub connection and
-Railway domain creation. This preparation creates no Railway resource.
+The GitHub connection, production deployment, health check, and Railway domain
+creation are complete. The public service uses the configuration documented
+above.

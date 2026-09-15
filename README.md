@@ -1,6 +1,14 @@
 # H2-Triad
 
-**A literature-first workspace for exploring hydrogen storage in MgH2 materials.**
+**Digital Twin for the HydraX Tri-Interface Catalyst project**
+
+**Live Demo:** [https://hydrax-h2-triad.up.railway.app](https://hydrax-h2-triad.up.railway.app)
+
+**GitHub Repository:** [https://github.com/YahyaAlsharif/h2-triad](https://github.com/YahyaAlsharif/h2-triad)
+
+H2-Triad is a literature-first workspace for exploring hydrogen storage in MgH₂
+materials. **HydraX Tri-Interface Catalyst** is the registered hackathon project
+title.
 
 Hydrogen-storage results depend on catalyst chemistry, preparation, temperature,
 pressure, and measurement time. H2-Triad brings reported evidence and a small,
@@ -10,13 +18,13 @@ visible uncertainty and provenance.
 
 ## What it does
 
-**Exact literature measurement ? supported AI prediction ? unavailable.**
+**Exact literature measurement → supported AI prediction → unavailable.**
 
 - Retrieves verified sample observations with DOI, source locators, and original
   approximate/threshold qualifiers. Missing conditions are never wildcards.
 - Predicts absorption/desorption capacity inside explicit support boundaries.
 - Shows empirical 90% intervals, support warnings, and model identity.
-- Maps predicted capacity across **temperature ? catalyst loading** in an
+- Maps predicted capacity across **temperature × catalyst loading** in an
   interactive 3D landscape. Other conditions stay fixed; unsupported cells stay
   empty. An accessible data table accompanies the plot.
 - Keeps the **Synthetic/demo explorer** separate from scientific evidence and
@@ -32,14 +40,14 @@ simulation, laboratory validation, or proof of causal optimization.
 | Accessible core literature observations | **119** |
 | Model-training observations | **109** |
 | Independent training papers / samples | **16 / 36** |
-| Paper-held-out MAE | **1.1693 wt.% H2** |
-| Paper-held-out RMSE | **1.5493 wt.% H2** |
-| Paper-held-out R? | **0.3314** |
+| Paper-held-out MAE | **1.1693 wt.% H₂** |
+| Paper-held-out RMSE | **1.5493 wt.% H₂** |
+| Paper-held-out R² | **0.3314** |
 | Empirical 90% interval: observed held-out coverage | **86.2%** |
 
 Evaluation holds out entire papers rather than randomly splitting correlated
 rows. The dataset is small and concentrated in particular journals and catalyst
-families. Intervals are broad (mean width **5.0876 wt.% H2**); unfamiliar chemistry
+families. Intervals are broad (mean width **5.0876 wt.% H₂**); unfamiliar chemistry
 and combinations within numeric ranges remain uncertain. There is **no independent
 laboratory validation**. Reported room temperature is not assigned an invented
 number. Activation-energy prediction is deferred.
@@ -49,7 +57,9 @@ support rules, and failure modes.
 
 ## Application
 
-Actual local application captures; no deployed demo is currently advertised.
+The Railway production deployment is complete. Open the
+[public demo](https://hydrax-h2-triad.up.railway.app); the images below are actual
+application captures.
 
 ![Digital Twin showing a supported capacity prediction and uncertainty](docs/images/digital-twin.png)
 
@@ -117,6 +127,9 @@ The root `Dockerfile` is the production path: Node 24 builds the React app, then
 a Python 3.10 slim image runs one Uvicorn worker. FastAPI serves both the bundled
 SPA and `/api` routes on port 8000; the Vite development workflow above remains
 unchanged.
+
+This container is deployed as the public Railway service at
+[https://hydrax-h2-triad.up.railway.app](https://hydrax-h2-triad.up.railway.app).
 
 ```sh
 docker build -t h2-triad .
