@@ -1,0 +1,117 @@
+{
+  "activation_energy_model": "DEFERRED",
+  "algorithm": "CatBoostRegressor",
+  "algorithm_key": "catboost",
+  "augmentation_decision": "NOT USED: no defensible measurement-precision scale is available",
+  "catalyst_family_decision": "granular family category removed; catalyst_family is used only to derive the catalyst-present indicator and enforce support",
+  "champion_experiment_id": "B9_catboost_champion_contract",
+  "dataset_sha256": "c2dcf229718217bafead375164a8053eab61091ff86352c027776d9825d550e4",
+  "dependency_versions": {
+    "catboost": "1.2.8",
+    "joblib": "1.5.2",
+    "matplotlib": "3.10.6",
+    "numpy": "2.2.6",
+    "pandas": "2.3.2",
+    "pyarrow": "21.0.0",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.15.3"
+  },
+  "derived_predictive_features": [
+    "log_duration_seconds",
+    "loading_missing",
+    "support_reported",
+    "catalyst_present",
+    "explicit_component_count"
+  ],
+  "ensemble_decision": "not retained",
+  "ensemble_weights": null,
+  "exact_identity_decision": "not retained: identity-aware improvement was not clear and robust across metrics",
+  "excluded_metadata_fields": [
+    "measurement_id",
+    "sample_id",
+    "source_id",
+    "paper_id",
+    "experiment_group_id",
+    "catalyst_system_group",
+    "source_pdf_page",
+    "source_locator",
+    "extraction_type"
+  ],
+  "feature_set": "feature_a_deployment_no_family",
+  "final_hyperparameters": {
+    "depth": 4,
+    "iterations": 350,
+    "l2_leaf_reg": 10.0,
+    "learning_rate": 0.03
+  },
+  "model_id": "h2-triad-capacity-v1",
+  "official_grouped_metrics": {
+    "absorption_mae": 1.2477751491255882,
+    "absorption_rmse": 1.5871211433426178,
+    "desorption_mae": 1.1028682856233567,
+    "desorption_rmse": 1.5165337513680082,
+    "grouped_mae": 1.1693393239271328,
+    "grouped_r2": 0.33138591818899765,
+    "grouped_rmse": 1.549312598996226,
+    "median_source_mae": 0.9458946033762974,
+    "worst_source_mae": 1.849644032221931
+  },
+  "official_performance_source": "paper-held-out out-of-fold predictions; final full-data fit metrics are not evidence",
+  "paper_count": 16,
+  "predictive_features": [
+    "catalyst_loading_wt_pct",
+    "catalyst_present",
+    "duration_seconds",
+    "explicit_component_count",
+    "loading_missing",
+    "log_duration_seconds",
+    "measurement_mode",
+    "support_material",
+    "support_reported",
+    "temperature_c"
+  ],
+  "predictive_raw_inputs": [
+    "measurement_mode",
+    "temperature_c",
+    "duration_seconds",
+    "catalyst_loading_wt_pct",
+    "catalyst_family",
+    "support_material",
+    "catalyst_components"
+  ],
+  "random_seeds": [
+    42
+  ],
+  "required_inference_inputs": [
+    "measurement_mode",
+    "temperature_c",
+    "duration_seconds",
+    "catalyst_family",
+    "catalyst_elements",
+    "catalyst_components"
+  ],
+  "support_only_inputs": [
+    "pressure_bar",
+    "catalyst_elements",
+    "preparation_method",
+    "milling_time_h",
+    "milling_speed_rpm",
+    "ball_to_powder_ratio"
+  ],
+  "support_profile_version": "1.0",
+  "target": "hydrogen_capacity_wt_pct",
+  "training_row_count": 109,
+  "tuning_decision": "Nested grouped tuning improved the Random Forest candidate; the fixed conservative CatBoost comparison subsequently won on the locked contract",
+  "uncertainty_evaluation": {
+    "absorption_coverage": 0.86,
+    "absorption_mean_width_wt_pct": 5.239509144379693,
+    "coverage": 0.8623853211009175,
+    "desorption_coverage": 0.864406779661017,
+    "desorption_mean_width_wt_pct": 4.958809394033895,
+    "mean_width_wt_pct": 5.087570747403527,
+    "method": "cross-fitted signed 5th/95th grouped-CV residual quantiles, calibrated without the outer paper",
+    "retained": true,
+    "retention_rule": "overall coverage >= 0.75 and each mode coverage >= 0.70"
+  },
+  "uncertainty_method": "cross-fitted signed 5th/95th grouped-CV residual quantiles, calibrated without the outer paper"
+}

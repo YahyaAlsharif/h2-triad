@@ -2,7 +2,7 @@
 
 Hydrogen materials workspace. Phase 4A provides a verified literature-derived scientific dataset; the running React/FastAPI/SQLite application remains the separate Phase 3 demonstration system.
 
-**All current records are synthetic/demo data. No trained model exists.** The Digital Twin performs an exact lookup of stored experiments. Unsupported configurations return no invented values. No interpolation, extrapolation, chemistry formulas, training, or inference is implemented.
+**The Phase 3 application/SQLite records are synthetic demonstration records.** The separate `data/phase4_dataset/` files contain real literature-derived scientific observations. The Digital Twin currently performs an exact lookup of the Phase 3 records; Phase 4B model artifacts are standalone and are not yet integrated into the application.
 
 ## Phase 4A scientific dataset
 
@@ -47,14 +47,15 @@ data/
   phase4_data_sources/       # Verified literature corpus and acquisition records
   phase4_dataset/            # Canonical scientific tables and derived capacity data
 scripts/phase4/              # Deterministic builder and validation suite
+model/                       # Standalone Phase 4B training, evaluation and inference
 ```
 
-See [Phase 4A scientific dataset](docs/phase-4a-scientific-dataset.md) for extraction scope, normalized schema, validation, limitations, and the Phase 4B handoff. [Phase 3 implementation and validation](docs/phase-3-domain-backend.md) remains the historical application delivery record. The standalone HTML prototype, research report, and STYLE.md remain historical references; the dashboard retains the Phase 2 teal design.
+See [Phase 4A scientific dataset](docs/phase-4a-scientific-dataset.md) for extraction scope and [Phase 4B capacity model](docs/phase-4b-capacity-model.md) for the leakage-safe model evaluation. [Phase 3 implementation and validation](docs/phase-3-domain-backend.md) remains the historical application delivery record. The standalone HTML prototype, research report, and STYLE.md remain historical references; the dashboard retains the Phase 2 teal design.
 
 ## Prerequisites
 
 - Node.js 24+ and npm
-- Python 3.11+
+- Python 3.10+ (the Phase 4B reference environment uses 3.10)
 - Docker Desktop with Compose for the container workflow
 - Google Chrome for the default browser tests, or installed Playwright Chromium
 
@@ -130,6 +131,17 @@ npm test --prefix scripts/phase4
 
 This regenerates both processed formats from canonical tables and verifies IDs, foreign keys, provenance, source PDFs, synthetic-data exclusion, leakage metadata, deterministic output, and CSV/Parquet equivalence.
 
+Phase 4B model, from the repository root using Python 3.10:
+
+```powershell
+model/.venv/Scripts/python.exe -m pip install -r model/requirements.txt
+model/.venv/Scripts/python.exe model/train.py
+model/.venv/Scripts/python.exe -m pytest model/tests -q
+model/.venv/Scripts/python.exe model/predict.py --help
+```
+
+The model package is standalone and offline. Its paper-held-out evaluation, model card, support profile, and machine-readable feature contract are under `model/`; it has not been integrated into the application.
+
 Backend, from `backend/`:
 
 ```bash
@@ -176,4 +188,4 @@ Cohorts match material, loading, pressure, preparation, milling, particle size, 
 
 Input bounds and form applicability flags are illustrative application conventions, not laboratory operating limits. Stored outcome labels are synthetic categories, not calculated judgments. No configuration or comparison establishes scientific superiority.
 
-Phase 4A is complete. Phase 4B owns model development: the mandatory H2 Capacity Predictor must benchmark suitable tabular regressors with paper-grouped validation, while the Activation Energy Predictor is deferred by the Phase 4A evidence. Phase 5 owns AI/application integration and the approved 3D prediction landscape plus educational material schematic. Phase 6 owns release, licensing, deployment, reproducibility/security audit, and submission packaging. None of Phase 4B through Phase 6 is implemented here.
+Phase 4A and the standalone Phase 4B H2 Capacity Predictor are complete. The predictor uses paper-grouped validation and has not changed the Phase 3 application. The Activation Energy Predictor remains deferred by the available evidence. Phase 5 owns AI/application integration and the approved 3D prediction landscape plus educational material schematic. Phase 6 owns release, licensing, deployment, reproducibility/security audit, and submission packaging. Phase 5 and Phase 6 are not implemented here.

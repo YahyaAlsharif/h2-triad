@@ -1,0 +1,3 @@
+ensemble,grouped_mae,grouped_rmse,grouped_r2,absorption_mae,absorption_rmse,desorption_mae,desorption_rmse,median_source_mae,worst_source_mae,retained,decision_reason
+simple_mean_catboost_random_forest,1.164457299205106,1.5568113662073244,0.3248979894647772,1.2705361840528508,1.619068955301278,1.0745599391646448,1.5020319771573158,0.9040555471650387,1.8734369353366986,False,not retained: improvement did not satisfy the predeclared clear/distributed benefit rule
+nested_weighted_catboost_random_forest,1.164555738391995,1.5570662280689858,0.32467693270410214,1.2708798504033343,1.6195903593932226,1.0744505587213689,1.5020436608938992,0.9039257978202486,1.8751331651515575,False,not retained: improvement did not satisfy the predeclared clear/distributed benefit rule

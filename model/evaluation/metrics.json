@@ -1,0 +1,159 @@
+{
+  "artifact_size_bytes": 49470,
+  "best_single_model": {
+    "absorption_mae": 1.2477751491255882,
+    "absorption_rmse": 1.5871211433426178,
+    "augmentation": "not_used",
+    "desorption_mae": 1.1028682856233567,
+    "desorption_rmse": 1.5165337513680082,
+    "experiment_id": "B9_catboost_champion_contract",
+    "feature_set": "feature_a_deployment_no_family",
+    "grouped_mae": 1.1693393239271328,
+    "grouped_r2": 0.33138591818899765,
+    "grouped_rmse": 1.549312598996226,
+    "grouping_strategy": "LeaveOneGroupOut(source_id)",
+    "hyperparameters": "{\"depth\": 4, \"iterations\": 350, \"l2_leaf_reg\": 10.0, \"learning_rate\": 0.03}",
+    "median_source_mae": 0.9458946033762974,
+    "model": "catboost",
+    "notes": "CatBoost comparison on the exact final Random Forest feature contract",
+    "preprocessing": "fold-local median/OHE and deterministic derived features; element multi-hot where enabled",
+    "regularization": "fixed conservative configuration",
+    "seed": 42,
+    "worst_source_mae": 1.849644032221931
+  },
+  "champion_algorithm": "CatBoostRegressor",
+  "champion_experiment_id": "B9_catboost_champion_contract",
+  "dataset_sha256": "c2dcf229718217bafead375164a8053eab61091ff86352c027776d9825d550e4",
+  "ensemble_retained": false,
+  "learning_curve_summary": [
+    {
+      "evaluations": 20,
+      "mae_mean": 1.3622672939218088,
+      "mae_median": 1.3303837698670216,
+      "mae_std": 0.5072107465027001,
+      "rmse_mean": 1.685183433707484,
+      "training_papers": 3
+    },
+    {
+      "evaluations": 20,
+      "mae_mean": 1.254594471695078,
+      "mae_median": 1.0959331619411739,
+      "mae_std": 0.47497604188366116,
+      "rmse_mean": 1.508479400645685,
+      "training_papers": 5
+    },
+    {
+      "evaluations": 20,
+      "mae_mean": 1.2624102636218542,
+      "mae_median": 1.2122637098556481,
+      "mae_std": 0.5458090211117902,
+      "rmse_mean": 1.5502484062262996,
+      "training_papers": 8
+    },
+    {
+      "evaluations": 20,
+      "mae_mean": 1.1099982108488298,
+      "mae_median": 0.9958200917684088,
+      "mae_std": 0.4442466249626861,
+      "rmse_mean": 1.3747117232790134,
+      "training_papers": 11
+    },
+    {
+      "evaluations": 20,
+      "mae_mean": 1.0730793365448208,
+      "mae_median": 0.8904769474128902,
+      "mae_std": 0.44001690849427744,
+      "rmse_mean": 1.3293224791194076,
+      "training_papers": 14
+    }
+  ],
+  "model_id": "h2-triad-capacity-v1",
+  "official_logo_metrics": {
+    "absorption_mae": 1.2477751491255882,
+    "absorption_rmse": 1.5871211433426178,
+    "desorption_mae": 1.1028682856233567,
+    "desorption_rmse": 1.5165337513680082,
+    "grouped_mae": 1.1693393239271328,
+    "grouped_r2": 0.33138591818899765,
+    "grouped_rmse": 1.549312598996226,
+    "median_source_mae": 0.9458946033762974,
+    "worst_source_mae": 1.849644032221931
+  },
+  "sensitivity": {
+    "approximate_primary_oof": {
+      "mae": 1.5319689287273017,
+      "r2": -1.308564228353712,
+      "rmse": 1.9769777736026761,
+      "rows": 21
+    },
+    "catalyst_system_group_caveat": "Secondary only: another catalyst system from the same paper may remain in training.",
+    "catalyst_system_group_logo_secondary": {
+      "absorption_mae": 1.377777066675051,
+      "absorption_rmse": 1.7938652879607717,
+      "desorption_mae": 1.4659832290298749,
+      "desorption_rmse": 2.0937605337991303,
+      "grouped_mae": 1.4255216866652767,
+      "grouped_r2": -0.07213188975307316,
+      "grouped_rmse": 1.9618933720717635,
+      "median_source_mae": 1.4052513014465862,
+      "worst_source_mae": 1.9976861162203137
+    },
+    "pressure_known_primary_oof": {
+      "mae": 1.1073681828952655,
+      "r2": 0.357557697858389,
+      "rmse": 1.4776194238588345,
+      "rows": 70
+    },
+    "pressure_known_retrained": {
+      "absorption_mae": 1.3233957520461257,
+      "absorption_rmse": 1.6584592706887242,
+      "desorption_mae": 1.2097415248692955,
+      "desorption_rmse": 1.6996414577893686,
+      "grouped_mae": 1.2730631657249578,
+      "grouped_r2": 0.1726623090190682,
+      "grouped_rmse": 1.6768218773489718,
+      "median_source_mae": 1.0050076296936188,
+      "worst_source_mae": 2.203391464763821
+    },
+    "pressure_missing_primary_oof": {
+      "mae": 1.2805695770612535,
+      "r2": 0.2876055466675801,
+      "rmse": 1.6702919856978793,
+      "rows": 39
+    },
+    "reported_only_retrained": {
+      "absorption_mae": 1.1544507003700433,
+      "absorption_rmse": 1.4437792238329008,
+      "desorption_mae": 1.0092623403263785,
+      "desorption_rmse": 1.3941423186807145,
+      "grouped_mae": 1.0736071817093664,
+      "grouped_r2": 0.45715756092590043,
+      "grouped_rmse": 1.4163551448242682,
+      "median_source_mae": 0.9137889557023555,
+      "worst_source_mae": 1.8706437927750441
+    },
+    "reported_primary_oof": {
+      "mae": 1.0828027136907288,
+      "r2": 0.4478416023215688,
+      "rmse": 1.4284567930344094,
+      "rows": 88
+    },
+    "source_held_out_catalyst_system_unseen": {
+      "mae": 1.0028755107236127,
+      "r2": 0.2341931361432582,
+      "rmse": 1.3353797341783835,
+      "rows": 88
+    }
+  },
+  "uncertainty": {
+    "absorption_coverage": 0.86,
+    "absorption_mean_width_wt_pct": 5.239509144379693,
+    "coverage": 0.8623853211009175,
+    "desorption_coverage": 0.864406779661017,
+    "desorption_mean_width_wt_pct": 4.958809394033895,
+    "mean_width_wt_pct": 5.087570747403527,
+    "method": "cross-fitted signed 5th/95th grouped-CV residual quantiles, calibrated without the outer paper",
+    "retained": true,
+    "retention_rule": "overall coverage >= 0.75 and each mode coverage >= 0.70"
+  }
+}

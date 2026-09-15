@@ -1,0 +1,142 @@
+{
+  "champion_feature_contract": [
+    "catalyst_loading_wt_pct",
+    "catalyst_present",
+    "duration_seconds",
+    "explicit_component_count",
+    "loading_missing",
+    "log_duration_seconds",
+    "measurement_mode",
+    "support_material",
+    "support_reported",
+    "temperature_c"
+  ],
+  "constant_columns_removed": [
+    "base_material",
+    "material_class",
+    "experimental_method",
+    "capacity_basis",
+    "extraction_type"
+  ],
+  "element_vocabulary": [
+    "Bi",
+    "C",
+    "Co",
+    "Cu",
+    "Fe",
+    "H",
+    "La",
+    "Mg",
+    "Mn",
+    "N",
+    "Na",
+    "Nb",
+    "Ni",
+    "O",
+    "S",
+    "Ti",
+    "V",
+    "Zn"
+  ],
+  "feature_set_a": [
+    "ball_to_powder_ratio_numeric",
+    "catalyst_elements",
+    "catalyst_family",
+    "catalyst_loading_wt_pct",
+    "catalyst_present",
+    "duration_seconds",
+    "explicit_component_count",
+    "explicit_element_count",
+    "loading_missing",
+    "log_duration_seconds",
+    "measurement_mode",
+    "milling_speed_rpm",
+    "milling_time_h",
+    "preparation_method",
+    "pressure_bar",
+    "pressure_missing",
+    "pressure_relation",
+    "support_material",
+    "support_reported",
+    "temperature_c"
+  ],
+  "feature_set_b_additions": [
+    "catalyst_additive",
+    "catalyst_composition"
+  ],
+  "importance_interpretation": "Importance to this predictive model; not scientific causal importance.",
+  "top_model_importance": [
+    {
+      "feature": "numeric__catalyst_loading_wt_pct",
+      "importance": 20.455576587813386
+    },
+    {
+      "feature": "numeric__temperature_c",
+      "importance": 18.958052764807256
+    },
+    {
+      "feature": "numeric__explicit_component_count",
+      "importance": 16.316316404230808
+    },
+    {
+      "feature": "numeric__catalyst_present",
+      "importance": 10.393241597972777
+    },
+    {
+      "feature": "numeric__log_duration_seconds",
+      "importance": 9.539877231257062
+    },
+    {
+      "feature": "numeric__duration_seconds",
+      "importance": 7.713292095533781
+    },
+    {
+      "feature": "categorical__measurement_mode_absorption",
+      "importance": 4.505340835442472
+    },
+    {
+      "feature": "categorical__measurement_mode_desorption",
+      "importance": 3.9211408138112533
+    },
+    {
+      "feature": "categorical__support_material_porous petroleum coke carbon",
+      "importance": 2.9067617257708664
+    },
+    {
+      "feature": "categorical__support_material___missing__",
+      "importance": 1.9018826136797702
+    },
+    {
+      "feature": "numeric__support_reported",
+      "importance": 1.763095515303602
+    },
+    {
+      "feature": "categorical__support_material_graphene oxide",
+      "importance": 0.42033564375570054
+    },
+    {
+      "feature": "numeric__loading_missing",
+      "importance": 0.404804891502739
+    },
+    {
+      "feature": "categorical__support_material_VN",
+      "importance": 0.34159091912812467
+    },
+    {
+      "feature": "categorical__support_material_MgO",
+      "importance": 0.23462524762842002
+    },
+    {
+      "feature": "categorical__support_material_carbon",
+      "importance": 0.12164022286136307
+    },
+    {
+      "feature": "categorical__support_material_carbon nanotubes",
+      "importance": 0.09598162331081952
+    },
+    {
+      "feature": "categorical__support_material_mesoporous carbon",
+      "importance": 0.006443266189820615
+    }
+  ]
+}

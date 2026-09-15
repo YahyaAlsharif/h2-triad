@@ -27,6 +27,17 @@ function check(condition, message) {
   checks += 1;
 }
 
+for (const [tableName, rows] of Object.entries(tables)) {
+  for (const [rowIndex, row] of rows.entries()) {
+    for (const [field, value] of Object.entries(row)) {
+      check(
+        value === "" || value.trim().length > 0,
+        `${tableName} CSV row ${rowIndex + 2} field ${field} must not contain only whitespace`
+      );
+    }
+  }
+}
+
 function unique(rows, field) {
   const values = rows.map((row) => row[field]);
   check(values.every(Boolean), `${field} must be populated`);

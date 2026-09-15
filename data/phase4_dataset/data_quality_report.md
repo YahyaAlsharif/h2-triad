@@ -40,9 +40,11 @@ The most represented catalyst-family labels by observation are: no additive/cont
 | `milling_time_h` | 13 | 11.9% |
 | `milling_speed_rpm` | 27 | 24.8% |
 | `mgh2_particle_size_raw` | 102 | 93.6% |
-| `catalyst_particle_size_raw` | 93 | 85.3% |
+| `catalyst_particle_size_raw` | 98 | 89.9% |
 
 Blank support fields combine unsupported/not-applicable configurations and cases where no separate support was recoverable; Phase 4B should derive an explicit support-presence feature from the chemistry fields rather than equate blank with zero. Particle-size fields are too sparse for a default mandatory feature and should initially be optional or excluded from baseline models.
+
+Whitespace-only canonical cells found during the Phase 4B preflight were normalized to empty CSV fields before model development. This corrected five derived catalyst-particle-size values from literal spaces to nulls without changing eligible rows or scientific measurements.
 
 ## Duplicates, normalization, and provenance
 

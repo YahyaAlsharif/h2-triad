@@ -1,0 +1,360 @@
+{
+  "champion": {
+    "absolute_error_log_duration_correlation": 0.147981490859608,
+    "absolute_error_temperature_correlation": 0.021887566413548786,
+    "by_catalyst_family": [
+      {
+        "catalyst_family": "alkali_modified_oxide",
+        "mae": 1.5068554499613624,
+        "r2": -1.5282814355013876,
+        "rmse": 1.7203596155880068,
+        "rows": 7
+      },
+      {
+        "catalyst_family": "bimetallic_alloy",
+        "mae": 0.4151141464754867,
+        "r2": 0.5037129048406863,
+        "rmse": 0.4908690750636863,
+        "rows": 7
+      },
+      {
+        "catalyst_family": "bimetallic_oxide",
+        "mae": 0.6717398251102739,
+        "r2": 0.4529142618997568,
+        "rmse": 0.7807373258212036,
+        "rows": 9
+      },
+      {
+        "catalyst_family": "bimetallic_oxide_precursor",
+        "mae": 0.43723922677060534,
+        "r2": 0.37234468314200764,
+        "rmse": 0.5981464887399883,
+        "rows": 2
+      },
+      {
+        "catalyst_family": "carbon_supported_bimetal",
+        "mae": 0.9161292086535109,
+        "r2": 0.042222556970124225,
+        "rmse": 1.1540339351250712,
+        "rows": 10
+      },
+      {
+        "catalyst_family": "carbon_supported_bimetal_sulfide",
+        "mae": 0.1503889739964166,
+        "r2": 0.9075447201357445,
+        "rmse": 0.1915606968512148,
+        "rows": 2
+      },
+      {
+        "catalyst_family": "carbon_supported_carbide_metal",
+        "mae": 0.6746479996731711,
+        "r2": 0.5471085199091692,
+        "rmse": 0.7296232125151159,
+        "rows": 6
+      },
+      {
+        "catalyst_family": "carbon_supported_iron_oxide_sulfide",
+        "mae": 3.6924582161590482,
+        "r2": -110.7879424276845,
+        "rmse": 3.8591383273897124,
+        "rows": 2
+      },
+      {
+        "catalyst_family": "carbon_supported_metal",
+        "mae": 0.8163279963261239,
+        "r2": -0.4486535642361813,
+        "rmse": 1.0829887780079506,
+        "rows": 5
+      },
+      {
+        "catalyst_family": "carbon_supported_metal_oxide",
+        "mae": 1.0139912565671334,
+        "r2": 0.22983888023932741,
+        "rmse": 1.266371960496549,
+        "rows": 6
+      },
+      {
+        "catalyst_family": "carbon_supported_oxide",
+        "mae": 1.239262676249071,
+        "r2": -0.002790597072458656,
+        "rmse": 1.491809391722007,
+        "rows": 12
+      },
+      {
+        "catalyst_family": "metal_nitride_composite",
+        "mae": 1.1438601134846036,
+        "r2": -5.651087307564918,
+        "rmse": 1.197122160976848,
+        "rows": 4
+      },
+      {
+        "catalyst_family": "mof_derived_bimetallic_oxide",
+        "mae": 0.6340784216227755,
+        "r2": -0.5526656149024864,
+        "rmse": 0.7333780532591778,
+        "rows": 5
+      },
+      {
+        "catalyst_family": "multiphase_oxide",
+        "mae": 1.5978295551961117,
+        "r2": 0.33686757661829214,
+        "rmse": 2.069698792971915,
+        "rows": 4
+      },
+      {
+        "catalyst_family": "nitride",
+        "mae": 0.1497181810269943,
+        "r2": null,
+        "rmse": 0.1497181810269943,
+        "rows": 1
+      },
+      {
+        "catalyst_family": "none",
+        "mae": 1.8669019697323588,
+        "r2": -0.1816672463774185,
+        "rmse": 2.2330338499293796,
+        "rows": 21
+      },
+      {
+        "catalyst_family": "oxide",
+        "mae": 1.0458669663284557,
+        "r2": null,
+        "rmse": 1.0458669663284557,
+        "rows": 1
+      },
+      {
+        "catalyst_family": "sulfide",
+        "mae": 1.3229541715973547,
+        "r2": -0.17392969661259916,
+        "rmse": 1.6175980816279651,
+        "rows": 5
+      }
+    ],
+    "by_measurement_mode": [
+      {
+        "mae": 1.2477751491255882,
+        "measurement_mode": "absorption",
+        "r2": 0.17547230150372295,
+        "rmse": 1.5871211433426178,
+        "rows": 50
+      },
+      {
+        "mae": 1.1028682856233567,
+        "measurement_mode": "desorption",
+        "r2": 0.4245104122639881,
+        "rmse": 1.5165337513680082,
+        "rows": 59
+      }
+    ],
+    "by_value_qualifier": [
+      {
+        "mae": 1.5319689287273017,
+        "r2": -1.308564228353712,
+        "rmse": 1.9769777736026761,
+        "rows": 21,
+        "value_qualifier": "approximately"
+      },
+      {
+        "mae": 1.0828027136907288,
+        "r2": 0.4478416023215688,
+        "rmse": 1.4284567930344094,
+        "rows": 88,
+        "value_qualifier": "reported"
+      }
+    ],
+    "mean_signed_residual_actual_minus_predicted": -0.05232669724184415,
+    "pressure_known": {
+      "mae": 1.1073681828952655,
+      "r2": 0.357557697858389,
+      "rmse": 1.4776194238588345,
+      "rows": 70
+    },
+    "pressure_missing": {
+      "mae": 1.2805695770612535,
+      "r2": 0.2876055466675801,
+      "rmse": 1.6702919856978793,
+      "rows": 39
+    },
+    "residual_prediction_correlation": -0.060280390336547154,
+    "underprediction_share": 0.5596330275229358
+  },
+  "linear_baseline": {
+    "absolute_error_log_duration_correlation": -0.013168937003930252,
+    "absolute_error_temperature_correlation": 0.07878060623445413,
+    "by_catalyst_family": [
+      {
+        "catalyst_family": "alkali_modified_oxide",
+        "mae": 2.283917622467148,
+        "r2": -3.7893306311623913,
+        "rmse": 2.3677941383708947,
+        "rows": 7
+      },
+      {
+        "catalyst_family": "bimetallic_alloy",
+        "mae": 0.4116709785084288,
+        "r2": 0.43334487028595303,
+        "rmse": 0.5245158221363497,
+        "rows": 7
+      },
+      {
+        "catalyst_family": "bimetallic_oxide",
+        "mae": 0.869928285081644,
+        "r2": -0.2767244927574597,
+        "rmse": 1.192685230131977,
+        "rows": 9
+      },
+      {
+        "catalyst_family": "bimetallic_oxide_precursor",
+        "mae": 0.8120385226906146,
+        "r2": -0.6089804131466949,
+        "rmse": 0.9576842172678552,
+        "rows": 2
+      },
+      {
+        "catalyst_family": "carbon_supported_bimetal",
+        "mae": 0.945536373335844,
+        "r2": -0.20241594034500698,
+        "rmse": 1.2930450019738038,
+        "rows": 10
+      },
+      {
+        "catalyst_family": "carbon_supported_bimetal_sulfide",
+        "mae": 0.4140058456350526,
+        "r2": 0.5562175393417406,
+        "rmse": 0.4196870961028742,
+        "rows": 2
+      },
+      {
+        "catalyst_family": "carbon_supported_carbide_metal",
+        "mae": 0.7518910402881461,
+        "r2": 0.2374288677191856,
+        "rmse": 0.9467640250803461,
+        "rows": 6
+      },
+      {
+        "catalyst_family": "carbon_supported_iron_oxide_sulfide",
+        "mae": 4.009005845635052,
+        "r2": -126.07775733578592,
+        "rmse": 4.114600128938422,
+        "rows": 2
+      },
+      {
+        "catalyst_family": "carbon_supported_metal",
+        "mae": 0.9937306516771477,
+        "r2": -0.6163159950931354,
+        "rmse": 1.143944151264075,
+        "rows": 5
+      },
+      {
+        "catalyst_family": "carbon_supported_metal_oxide",
+        "mae": 0.9925528135378389,
+        "r2": 0.39248820458841915,
+        "rmse": 1.1247288835334828,
+        "rows": 6
+      },
+      {
+        "catalyst_family": "carbon_supported_oxide",
+        "mae": 1.4087624932957945,
+        "r2": -0.08020851992856226,
+        "rmse": 1.548324584417581,
+        "rows": 12
+      },
+      {
+        "catalyst_family": "metal_nitride_composite",
+        "mae": 1.738707560111843,
+        "r2": -13.178279112661615,
+        "rmse": 1.7478489859127726,
+        "rows": 4
+      },
+      {
+        "catalyst_family": "mof_derived_bimetallic_oxide",
+        "mae": 1.4010974714649067,
+        "r2": -5.04084610042172,
+        "rmse": 1.4465645817543313,
+        "rows": 5
+      },
+      {
+        "catalyst_family": "multiphase_oxide",
+        "mae": 2.0479878849528212,
+        "r2": 0.23842414981829763,
+        "rmse": 2.218010495650324,
+        "rows": 4
+      },
+      {
+        "catalyst_family": "nitride",
+        "mae": 0.9300847338070293,
+        "r2": null,
+        "rmse": 0.9300847338070293,
+        "rows": 1
+      },
+      {
+        "catalyst_family": "none",
+        "mae": 2.1900743734425028,
+        "r2": -0.41235251296409947,
+        "rmse": 2.4412893752952987,
+        "rows": 21
+      },
+      {
+        "catalyst_family": "oxide",
+        "mae": 1.186542968822546,
+        "r2": null,
+        "rmse": 1.186542968822546,
+        "rows": 1
+      },
+      {
+        "catalyst_family": "sulfide",
+        "mae": 0.9963441477815355,
+        "r2": -4.773226641940909e-06,
+        "rmse": 1.4929683986122693,
+        "rows": 5
+      }
+    ],
+    "by_measurement_mode": [
+      {
+        "mae": 1.385918094830003,
+        "measurement_mode": "absorption",
+        "r2": 0.1275420625596877,
+        "rmse": 1.6325996594046592,
+        "rows": 50
+      },
+      {
+        "mae": 1.439164066349962,
+        "measurement_mode": "desorption",
+        "r2": 0.1403832904667015,
+        "rmse": 1.8534708897462224,
+        "rows": 59
+      }
+    ],
+    "by_value_qualifier": [
+      {
+        "mae": 1.7347065236487706,
+        "r2": -1.3992065045627609,
+        "rmse": 2.015415623449725,
+        "rows": 21,
+        "value_qualifier": "approximately"
+      },
+      {
+        "mae": 1.3383834961309513,
+        "r2": 0.22923264443846303,
+        "rmse": 1.6877065044129447,
+        "rows": 88,
+        "value_qualifier": "reported"
+      }
+    ],
+    "mean_signed_residual_actual_minus_predicted": 0.0004907939967900078,
+    "pressure_known": {
+      "mae": 1.2850722844769993,
+      "r2": 0.20848840703454818,
+      "rmse": 1.6401144944245882,
+      "rows": 70
+    },
+    "pressure_missing": {
+      "mae": 1.64747499340405,
+      "r2": 0.03322750837695121,
+      "rmse": 1.9457824183705605,
+      "rows": 39
+    },
+    "residual_prediction_correlation": -0.11488159431005934,
+    "underprediction_share": 0.5504587155963303
+  }
+}

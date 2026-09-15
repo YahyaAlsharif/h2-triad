@@ -1,0 +1,178 @@
+[
+  {
+    "inner_grouped_mae": 1.179759693930539,
+    "outer_source": "SRC-0001",
+    "parameters": {
+      "max_depth": 8,
+      "max_features": 0.7,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.1969787972778765,
+    "outer_source": "SRC-0002",
+    "parameters": {
+      "max_depth": 4,
+      "max_features": 0.7,
+      "min_samples_leaf": 3,
+      "min_samples_split": 6,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.2041455787784319,
+    "outer_source": "SRC-0003",
+    "parameters": {
+      "max_depth": 8,
+      "max_features": 0.7,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.2182036848811775,
+    "outer_source": "SRC-0004",
+    "parameters": {
+      "max_depth": 6,
+      "max_features": 0.7,
+      "min_samples_leaf": 2,
+      "min_samples_split": 4,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.182035915195415,
+    "outer_source": "SRC-0005",
+    "parameters": {
+      "max_depth": 6,
+      "max_features": 0.7,
+      "min_samples_leaf": 2,
+      "min_samples_split": 4,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.2349052261329743,
+    "outer_source": "SRC-0006",
+    "parameters": {
+      "max_depth": 6,
+      "max_features": 0.7,
+      "min_samples_leaf": 2,
+      "min_samples_split": 4,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.2337690639396837,
+    "outer_source": "SRC-0007",
+    "parameters": {
+      "max_depth": 6,
+      "max_features": 0.5,
+      "min_samples_leaf": 3,
+      "min_samples_split": 6,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.1291795831506881,
+    "outer_source": "SRC-0008",
+    "parameters": {
+      "max_depth": 8,
+      "max_features": 0.7,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.211767166754756,
+    "outer_source": "SRC-0009",
+    "parameters": {
+      "max_depth": 6,
+      "max_features": 0.7,
+      "min_samples_leaf": 2,
+      "min_samples_split": 4,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.1603638193733092,
+    "outer_source": "SRC-0010",
+    "parameters": {
+      "max_depth": 6,
+      "max_features": 0.7,
+      "min_samples_leaf": 2,
+      "min_samples_split": 4,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.1920919190703836,
+    "outer_source": "SRC-0011",
+    "parameters": {
+      "max_depth": 4,
+      "max_features": 0.7,
+      "min_samples_leaf": 3,
+      "min_samples_split": 6,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.257910387837035,
+    "outer_source": "SRC-0012",
+    "parameters": {
+      "max_depth": 6,
+      "max_features": 0.7,
+      "min_samples_leaf": 2,
+      "min_samples_split": 4,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.1549978703216082,
+    "outer_source": "SRC-0013",
+    "parameters": {
+      "max_depth": 8,
+      "max_features": 0.7,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.1329965848959436,
+    "outer_source": "SRC-0014",
+    "parameters": {
+      "max_depth": 8,
+      "max_features": 0.7,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.1907540959519334,
+    "outer_source": "SRC-0015",
+    "parameters": {
+      "max_depth": 8,
+      "max_features": 0.7,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "n_estimators": 400
+    }
+  },
+  {
+    "inner_grouped_mae": 1.2023412293304183,
+    "outer_source": "SRC-0016",
+    "parameters": {
+      "max_depth": 8,
+      "max_features": 0.7,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "n_estimators": 400
+    }
+  }
+]

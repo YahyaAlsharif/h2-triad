@@ -1,0 +1,7 @@
+grid_index,parameters,mae,rmse,r2
+5,"{'n_estimators': 400, 'max_depth': 8, 'min_samples_leaf': 5, 'min_samples_split': 10, 'max_features': 0.7}",1.1769091722299834,1.6005125489045962,0.28646450647280763
+2,"{'n_estimators': 400, 'max_depth': 6, 'min_samples_leaf': 3, 'min_samples_split': 6, 'max_features': 0.5}",1.1890916358185535,1.6191127093698903,0.26978360832045156
+1,"{'n_estimators': 400, 'max_depth': 6, 'min_samples_leaf': 2, 'min_samples_split': 4, 'max_features': 0.7}",1.1978387803923445,1.6444248613916992,0.24677368873542527
+0,"{'n_estimators': 400, 'max_depth': 4, 'min_samples_leaf': 3, 'min_samples_split': 6, 'max_features': 0.7}",1.1980509344797223,1.6219388263756944,0.2672322380589839
+4,"{'n_estimators': 400, 'max_depth': None, 'min_samples_leaf': 3, 'min_samples_split': 6, 'max_features': 0.7}",1.201100997120622,1.6351156150381323,0.2552777216547133
+3,"{'n_estimators': 400, 'max_depth': 6, 'min_samples_leaf': 3, 'min_samples_split': 6, 'max_features': 1.0}",1.2121224042683398,1.6430487465631205,0.248033815870638

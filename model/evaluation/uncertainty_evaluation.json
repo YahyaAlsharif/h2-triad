@@ -1,0 +1,223 @@
+{
+  "absorption_coverage": 0.86,
+  "absorption_mean_width_wt_pct": 5.239509144379693,
+  "coverage": 0.8623853211009175,
+  "desorption_coverage": 0.864406779661017,
+  "desorption_mean_width_wt_pct": 4.958809394033895,
+  "folds": [
+    {
+      "calibration_rows": 48,
+      "mode": "absorption",
+      "outer_source": "SRC-0001",
+      "q05": -2.605157493459173,
+      "q95": 3.113138915385837
+    },
+    {
+      "calibration_rows": 57,
+      "mode": "desorption",
+      "outer_source": "SRC-0001",
+      "q05": -3.3654443516800265,
+      "q95": 1.8042716285601321
+    },
+    {
+      "calibration_rows": 48,
+      "mode": "absorption",
+      "outer_source": "SRC-0002",
+      "q05": -2.6197570175661924,
+      "q95": 3.039068559248224
+    },
+    {
+      "calibration_rows": 55,
+      "mode": "desorption",
+      "outer_source": "SRC-0002",
+      "q05": -3.731624583623016,
+      "q95": 1.9624729877384541
+    },
+    {
+      "calibration_rows": 56,
+      "mode": "desorption",
+      "outer_source": "SRC-0003",
+      "q05": -3.3753183590378693,
+      "q95": 1.9265133298655017
+    },
+    {
+      "calibration_rows": 46,
+      "mode": "absorption",
+      "outer_source": "SRC-0004",
+      "q05": -2.4149499563580994,
+      "q95": 3.306551066050636
+    },
+    {
+      "calibration_rows": 55,
+      "mode": "desorption",
+      "outer_source": "SRC-0004",
+      "q05": -3.24631559268206,
+      "q95": 1.790527422142247
+    },
+    {
+      "calibration_rows": 47,
+      "mode": "absorption",
+      "outer_source": "SRC-0005",
+      "q05": -2.24659854323112,
+      "q95": 2.3152467692307757
+    },
+    {
+      "calibration_rows": 52,
+      "mode": "desorption",
+      "outer_source": "SRC-0005",
+      "q05": -3.1348995125436083,
+      "q95": 1.484253114731662
+    },
+    {
+      "calibration_rows": 46,
+      "mode": "absorption",
+      "outer_source": "SRC-0006",
+      "q05": -2.4067704615552596,
+      "q95": 2.8652585888081092
+    },
+    {
+      "calibration_rows": 56,
+      "mode": "desorption",
+      "outer_source": "SRC-0006",
+      "q05": -3.4168866559902247,
+      "q95": 1.8362924080324419
+    },
+    {
+      "calibration_rows": 45,
+      "mode": "absorption",
+      "outer_source": "SRC-0007",
+      "q05": -2.471636205346273,
+      "q95": 3.1341844478095586
+    },
+    {
+      "calibration_rows": 54,
+      "mode": "desorption",
+      "outer_source": "SRC-0007",
+      "q05": -3.392103929841804,
+      "q95": 1.75162322876041
+    },
+    {
+      "calibration_rows": 43,
+      "mode": "absorption",
+      "outer_source": "SRC-0008",
+      "q05": -2.744889092429777,
+      "q95": 1.7326833021774217
+    },
+    {
+      "calibration_rows": 56,
+      "mode": "desorption",
+      "outer_source": "SRC-0008",
+      "q05": -3.299835389807353,
+      "q95": 1.6423076138036241
+    },
+    {
+      "calibration_rows": 47,
+      "mode": "absorption",
+      "outer_source": "SRC-0009",
+      "q05": -2.224941104833498,
+      "q95": 2.926899475347822
+    },
+    {
+      "calibration_rows": 55,
+      "mode": "desorption",
+      "outer_source": "SRC-0009",
+      "q05": -3.245920383682445,
+      "q95": 2.2358354525251327
+    },
+    {
+      "calibration_rows": 47,
+      "mode": "absorption",
+      "outer_source": "SRC-0010",
+      "q05": -1.9399111441832904,
+      "q95": 3.0652478780994272
+    },
+    {
+      "calibration_rows": 51,
+      "mode": "desorption",
+      "outer_source": "SRC-0010",
+      "q05": -3.7254963060689565,
+      "q95": 1.7383485270997596
+    },
+    {
+      "calibration_rows": 46,
+      "mode": "absorption",
+      "outer_source": "SRC-0011",
+      "q05": -2.4389382742602796,
+      "q95": 2.968760252329793
+    },
+    {
+      "calibration_rows": 57,
+      "mode": "desorption",
+      "outer_source": "SRC-0011",
+      "q05": -3.364450232821397,
+      "q95": 2.145873037003005
+    },
+    {
+      "calibration_rows": 47,
+      "mode": "absorption",
+      "outer_source": "SRC-0012",
+      "q05": -2.2991756792021536,
+      "q95": 3.262846098925563
+    },
+    {
+      "calibration_rows": 54,
+      "mode": "desorption",
+      "outer_source": "SRC-0012",
+      "q05": -3.3543384906996936,
+      "q95": 1.8790887714220157
+    },
+    {
+      "calibration_rows": 55,
+      "mode": "desorption",
+      "outer_source": "SRC-0013",
+      "q05": -2.621812288720777,
+      "q95": 1.7716531995077165
+    },
+    {
+      "calibration_rows": 47,
+      "mode": "absorption",
+      "outer_source": "SRC-0014",
+      "q05": -2.4118137552422954,
+      "q95": 3.0743554718844868
+    },
+    {
+      "calibration_rows": 56,
+      "mode": "desorption",
+      "outer_source": "SRC-0014",
+      "q05": -3.2044824444322706,
+      "q95": 1.6033781167196195
+    },
+    {
+      "calibration_rows": 49,
+      "mode": "absorption",
+      "outer_source": "SRC-0015",
+      "q05": -2.5318514677742825,
+      "q95": 2.97840883616301
+    },
+    {
+      "calibration_rows": 58,
+      "mode": "desorption",
+      "outer_source": "SRC-0015",
+      "q05": -3.3138534657100194,
+      "q95": 1.8654484375032092
+    },
+    {
+      "calibration_rows": 44,
+      "mode": "absorption",
+      "outer_source": "SRC-0016",
+      "q05": -2.6062821794052673,
+      "q95": 3.3335739157116353
+    },
+    {
+      "calibration_rows": 58,
+      "mode": "desorption",
+      "outer_source": "SRC-0016",
+      "q05": -2.7464721449811007,
+      "q95": 1.4740896107806398
+    }
+  ],
+  "mean_width_wt_pct": 5.087570747403527,
+  "method": "cross-fitted signed 5th/95th grouped-CV residual quantiles, calibrated without the outer paper",
+  "retained": true,
+  "retention_rule": "overall coverage >= 0.75 and each mode coverage >= 0.70"
+}

@@ -1,0 +1,130 @@
+{
+  "catalyst_families": [
+    "alkali_modified_oxide",
+    "bimetallic_alloy",
+    "bimetallic_oxide",
+    "bimetallic_oxide_precursor",
+    "carbon_supported_bimetal",
+    "carbon_supported_bimetal_sulfide",
+    "carbon_supported_carbide_metal",
+    "carbon_supported_iron_oxide_sulfide",
+    "carbon_supported_metal",
+    "carbon_supported_metal_oxide",
+    "carbon_supported_oxide",
+    "metal_nitride_composite",
+    "mof_derived_bimetallic_oxide",
+    "multiphase_oxide",
+    "nitride",
+    "none",
+    "oxide",
+    "sulfide"
+  ],
+  "known_elements": [
+    "Bi",
+    "C",
+    "Co",
+    "Cu",
+    "Fe",
+    "H",
+    "La",
+    "Mg",
+    "Mn",
+    "N",
+    "Na",
+    "Nb",
+    "Ni",
+    "O",
+    "S",
+    "Ti",
+    "V",
+    "Zn"
+  ],
+  "measurement_modes": {
+    "absorption": {
+      "ranges": {
+        "catalyst_loading_wt_pct": {
+          "known_rows": 50,
+          "max": 15.0,
+          "min": 0.0,
+          "missing_allowed": false
+        },
+        "duration_seconds": {
+          "known_rows": 50,
+          "max": 12000.0,
+          "min": 60.0,
+          "missing_allowed": false
+        },
+        "pressure_bar": {
+          "known_rows": 39,
+          "max": 50.0,
+          "min": 20.0,
+          "missing_allowed": true
+        },
+        "temperature_c": {
+          "known_rows": 50,
+          "max": 299.85,
+          "min": 50.0,
+          "missing_allowed": false
+        }
+      },
+      "rows": 50
+    },
+    "desorption": {
+      "ranges": {
+        "catalyst_loading_wt_pct": {
+          "known_rows": 55,
+          "max": 15.0,
+          "min": 0.0,
+          "missing_allowed": true
+        },
+        "duration_seconds": {
+          "known_rows": 59,
+          "max": 27000.0,
+          "min": 180.0,
+          "missing_allowed": false
+        },
+        "pressure_bar": {
+          "known_rows": 31,
+          "max": 0.05,
+          "min": 0.0,
+          "missing_allowed": true
+        },
+        "temperature_c": {
+          "known_rows": 59,
+          "max": 374.85,
+          "min": 180.0,
+          "missing_allowed": false
+        }
+      },
+      "rows": 59
+    }
+  },
+  "missing_policy": {
+    "loading": "allowed with warning only for modes with missing-loading training examples",
+    "pressure": "allowed with warning only for modes with missing-pressure training examples",
+    "zero_loading": "preserved as a reported control value and never treated as missing"
+  },
+  "model_id": "h2-triad-capacity-v1",
+  "preparation_methods": [
+    "ball milling",
+    "ball milling after hydrogenation",
+    "high-energy ball milling",
+    "high-energy ball milling after MgH2 premilling",
+    "parallel ball-milled control",
+    "planetary ball milling"
+  ],
+  "pressure_relations": [
+    "<",
+    "="
+  ],
+  "support_materials": [
+    "MgO",
+    "VN",
+    "carbon",
+    "carbon nanotubes",
+    "graphene oxide",
+    "mesoporous carbon",
+    "porous petroleum coke carbon"
+  ],
+  "version": "1.0"
+}

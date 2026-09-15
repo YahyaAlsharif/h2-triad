@@ -1,0 +1,66 @@
+{
+  "approximate_primary_oof": {
+    "mae": 1.5319689287273017,
+    "r2": -1.308564228353712,
+    "rmse": 1.9769777736026761,
+    "rows": 21
+  },
+  "catalyst_system_group_caveat": "Secondary only: another catalyst system from the same paper may remain in training.",
+  "catalyst_system_group_logo_secondary": {
+    "absorption_mae": 1.377777066675051,
+    "absorption_rmse": 1.7938652879607717,
+    "desorption_mae": 1.4659832290298749,
+    "desorption_rmse": 2.0937605337991303,
+    "grouped_mae": 1.4255216866652767,
+    "grouped_r2": -0.07213188975307316,
+    "grouped_rmse": 1.9618933720717635,
+    "median_source_mae": 1.4052513014465862,
+    "worst_source_mae": 1.9976861162203137
+  },
+  "pressure_known_primary_oof": {
+    "mae": 1.1073681828952655,
+    "r2": 0.357557697858389,
+    "rmse": 1.4776194238588345,
+    "rows": 70
+  },
+  "pressure_known_retrained": {
+    "absorption_mae": 1.3233957520461257,
+    "absorption_rmse": 1.6584592706887242,
+    "desorption_mae": 1.2097415248692955,
+    "desorption_rmse": 1.6996414577893686,
+    "grouped_mae": 1.2730631657249578,
+    "grouped_r2": 0.1726623090190682,
+    "grouped_rmse": 1.6768218773489718,
+    "median_source_mae": 1.0050076296936188,
+    "worst_source_mae": 2.203391464763821
+  },
+  "pressure_missing_primary_oof": {
+    "mae": 1.2805695770612535,
+    "r2": 0.2876055466675801,
+    "rmse": 1.6702919856978793,
+    "rows": 39
+  },
+  "reported_only_retrained": {
+    "absorption_mae": 1.1544507003700433,
+    "absorption_rmse": 1.4437792238329008,
+    "desorption_mae": 1.0092623403263785,
+    "desorption_rmse": 1.3941423186807145,
+    "grouped_mae": 1.0736071817093664,
+    "grouped_r2": 0.45715756092590043,
+    "grouped_rmse": 1.4163551448242682,
+    "median_source_mae": 0.9137889557023555,
+    "worst_source_mae": 1.8706437927750441
+  },
+  "reported_primary_oof": {
+    "mae": 1.0828027136907288,
+    "r2": 0.4478416023215688,
+    "rmse": 1.4284567930344094,
+    "rows": 88
+  },
+  "source_held_out_catalyst_system_unseen": {
+    "mae": 1.0028755107236127,
+    "r2": 0.2341931361432582,
+    "rmse": 1.3353797341783835,
+    "rows": 88
+  }
+}
