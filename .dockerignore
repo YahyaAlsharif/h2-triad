@@ -11,3 +11,12 @@ frontend/dist
 data/phase4_data_sources
 model/evaluation
 .env
+**/.env
+**/.env.*
+**/*.sqlite
+**/*.sqlite3
+**/*.sqlite-*
+**/*.sqlite3-*
+private-sources
+tmp
+docs

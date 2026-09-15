@@ -7,6 +7,7 @@ const apiProxyTarget =
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  build: { license: { fileName: 'THIRD-PARTY-LICENSES.md' } },
   server: {
     host: '0.0.0.0',
     port: 5173,

@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from predict import predict_capacity
 from src.data import TARGET, load_capacity_data, prediction_input_from_row, sha256_file
@@ -26,6 +27,7 @@ def supported_payload() -> dict[str, object]:
     return prediction_input_from_row(row)
 
 
+@pytest.mark.refit
 def test_saved_artifact_reload_matches_retrained_in_memory_model():
     frame = load_capacity_data()
     bundle = load_bundle(ARTIFACT)

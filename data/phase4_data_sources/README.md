@@ -1,23 +1,35 @@
-# Phase 4 literature source pool
+# Literature provenance
 
-Verified literature source corpus. The normalized Phase 4A scientific dataset is maintained separately in `../phase4_dataset/`.
+This public-release tree contains source records, not raw publications.
+[release_manifest.csv](release_manifest.csv) inventories all 26 omitted PDFs
+with original paths, hashes, identities, source URLs, licenses, and reasons.
 
-- `core_primary/`: 16 verified experimental Mg/MgH2 catalyst/additive articles.
-- `extended_primary/reactive_hydride_composites/`: 2 verified reactive-composite articles; keep separate from core.
-- `reviews_indexes/`: 2 reviews and 1 machine-learning methodology article; reference only.
-- `notes_nontraining/`: 3 existing project documents; no measured training records may be inferred from them.
-- `supplementary/`: 2 official ACS supplements, grouped by parent paper ID. Their main articles are still missing.
-- `unresolved/`: notes about 2 unresolved original links; no unverified article is placed in core.
-- `acquisition/acquisition_log.csv`: one row per unique identified paper, plus clearly marked notes, unresolved links, and excluded source.
-- `acquisition/supplementary_manifest.csv`: parent DOI, file, and download provenance for supplements.
-- `acquisition/verification_report.json`: final path, hash, and PDF-opening reconciliation.
-- `acquisition/acquisition_report.md`: acquisition results, limitations, and classifications.
-- `acquisition/uqu_access_priorities.md`: ranked manual-access recommendations based on existing records.
+- [Canonical source table](../phase4_dataset/sources.csv): 18 primary papers,
+  including 16 core training sources and 2 excluded extended composites.
+- [Bibliographic citations](citations.json): 23 article/parent identities with
+  author lists, journal details, and DOI links preserved from saved Crossref records.
+- [Acquisition log](acquisition/acquisition_log.csv): 58 identified records,
+  including unavailable candidates and excluded/project material.
+- [Supplement manifest](acquisition/supplementary_manifest.csv): two ACS
+  supplement records, their parent DOIs, download URLs, and licenses.
+- [Verification report](acquisition/verification_report.json): historical
+  full-text integrity and opening checks, not current file availability.
+- [Acquisition report](acquisition/acquisition_report.md): dated decisions.
+- [Research priorities](acquisition/research_priorities.md) and
+  [missing-paper queue](acquisition/papers_no_pdf.txt): historical research leads.
+- [Unresolved links](unresolved/README.md): identities not established.
 
-The single active missing-paper queue is `acquisition/papers_no_pdf.txt`. Supplements do not substitute for missing parent articles. Historical file moves are recorded in the acquisition report; Git preserves the original queue and session bookkeeping.
+Historical `downloaded`, `local_filename`, `local_pdf_path`, and verification
+fields describe the original acquisition. They are preserved for reproducibility;
+they do not promise that a PDF exists in this checkout. The missing-paper queue
+tracks acquisition gaps, not intentional public-release omissions.
 
-`downloaded=true` means the full article/document is locally present, including previously supplied files. New downloads are counted separately in the report. `has_supplement=true` can mean a supplement is cited or advertised; only the supplementary manifest proves local availability. `unknown` is deliberately different from false. An unavailable candidate is not full-text verified and its final experimental scope must be confirmed when obtained.
+The model is already trained and uses the 109-row processed capacity table.
+All 119 accessible core observations remain available to literature lookup.
+Reviews, supplements without verified parent full text, and project notes do not
+supply training observations.
 
-Scratch acquisition work in `acquisition/work/` is ignored and is not part of the durable corpus. The acquisition log retains source URLs and access/identity decisions; the supplementary manifest retains parent links and recorded supplement provenance, and the verification report retains PDF hashes and page counts. Project documents use the non-training `project_note` scope.
-
-Each article has one primary folder, even when it spans several catalyst categories. Unrepresented catalyst/alloy categories may have no tracked directory. Phase 4A extracted only verified primary evidence into the separate normalized dataset; no model training has occurred.
+See [source rights and independent acquisition](../../docs/licensing-and-data.md).
+Free-to-read is not equivalent to permission to redistribute. Raw files are
+excluded even where conditional sharing is permitted, to keep this repository
+small and its licensing boundaries clear. History sanitization is still pending.

@@ -1,3 +1,5 @@
+> Historical project context, not current application behavior or independent scientific validation. See [current documentation](../README.md).
+
 # H₂-TRIAD visual system · V0.1
 
 ## Direction

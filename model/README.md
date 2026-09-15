@@ -7,13 +7,16 @@ This directory contains the Phase 4B hydrogen-capacity predictor, now integrated
 The evaluated environment is Python 3.10 with exact dependencies in `requirements.txt`. Runtime-only dependencies are in `requirements-inference.txt`.
 
 ```powershell
-python -m venv model/.venv
+py -3.10 -m venv model/.venv
 model/.venv/Scripts/python.exe -m pip install -r model/requirements.txt
-model/.venv/Scripts/python.exe model/train.py
 model/.venv/Scripts/python.exe -m pytest model/tests -q
 ```
 
-`train.py` repeats the leakage-safe leave-one-source-out progression, nested grouped tuning, sensitivity tests, ablations, learning curve, ensemble experiment, uncertainty calibration, final full-data fit, and plot generation. It overwrites generated files under `model/evaluation/` and `model/artifacts/`; it does not alter application data.
+Ordinary inference and release validation do not train. The historical in-memory
+refit test is skipped by default; `--run-refit` explicitly opts into fitting and
+is not part of release checks.
+
+For a separately intended research retraining run, `train.py` repeats the leakage-safe leave-one-source-out progression, nested grouped tuning, sensitivity tests, ablations, learning curve, ensemble experiment, uncertainty calibration, final full-data fit, and plot generation. It overwrites generated files under `model/evaluation/` and `model/artifacts/`; it does not alter application data.
 
 For the fixed initial ladder only:
 
@@ -72,3 +75,8 @@ Successful calls return `status: predicted`, a capacity in wt.% H2, an empirical
 - `evaluation/plots/`: diagnostic figures generated without interactive dependencies.
 
 The model needs no network access. Official performance always refers to paper-held-out out-of-fold predictions; the final fit on all 109 rows is only the deployment artifact.
+
+## Release rights
+
+Model code is MIT; no blanket license is asserted for trained weights or curated
+data. See [licensing boundaries](../docs/licensing-and-data.md).

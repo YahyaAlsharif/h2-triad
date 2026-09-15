@@ -86,3 +86,11 @@ Onset and peak temperatures from TPD/DSC/non-isothermal experiments are stored s
 `processed/capacity_training.csv` and `.parquet` are deterministic joins of eligible `measurements.csv` rows to `samples.csv` and `sources.csv`. They contain 109 rows and 33 fields. Their target is `hydrogen_capacity_wt_pct`; `source_id` and `paper_id` are grouping metadata and must not be predictive features. `experiment_group_id` and `catalyst_system_group` permit stricter sensitivity analyses.
 
 The builder requires a finite, nonnegative target, numeric temperature, numeric duration, core MgH2 scope, and an explicit eligibility flag. Pressure may be null because it is not consistently reported. No split or fold assignment is stored.
+
+## Public checkout
+
+Source path/hash fields describe the original verified source versions. Raw PDFs
+are intentionally omitted. Default validation verifies data and provenance and
+rebuilds processed files in a temporary directory without changing this dataset.
+Use `--source-root DIRECTORY` for strict optional private PDF verification; see
+[licensing and acquisition](../../docs/licensing-and-data.md).

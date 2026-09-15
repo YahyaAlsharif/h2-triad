@@ -7,7 +7,11 @@ import { readCsv, stringifyCsv } from "./csv.mjs";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..", "..");
 const datasetDir = path.join(repoRoot, "data", "phase4_dataset");
-const processedDir = path.join(datasetDir, "processed");
+const args = process.argv.slice(2);
+if (args.length && (args.length !== 2 || args[0] !== "--output-dir")) {
+  throw new Error("Usage: node build_capacity_dataset.mjs [--output-dir DIRECTORY]");
+}
+const processedDir = args.length ? path.resolve(args[1]) : path.join(datasetDir, "processed");
 
 const sources = readCsv(path.join(datasetDir, "sources.csv"));
 const samples = readCsv(path.join(datasetDir, "samples.csv"));

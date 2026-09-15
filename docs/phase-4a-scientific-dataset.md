@@ -1,5 +1,7 @@
 # Phase 4A: literature extraction and ML-ready dataset
 
+> Historical delivery record. See the [current project README](../README.md) and [release/source rights](licensing-and-data.md) for the current checkout.
+
 ## Delivered outcome
 
 Phase 4A converts the verified local primary-literature corpus into normalized, provenance-preserving scientific tables and a deterministic capacity-model input table. It does not train a model and does not integrate literature records into the Phase 3 SQLite application.

@@ -1,0 +1,6 @@
+# Reproducible text checkouts on Windows and Linux; no scientific value changes.
+* text=auto eol=lf
+*.png binary
+*.pdf binary
+*.parquet binary
+*.joblib binary

@@ -1,157 +1,163 @@
-# H2-TRIAD
+# H2-Triad
 
-A literature-backed hydrogen materials workspace. **Phase 5 integrates the completed Phase 4B capacity model into the React/FastAPI Digital Twin.**
+**A literature-first workspace for exploring hydrogen storage in MgH2 materials.**
 
-The scientific result hierarchy is:
+Hydrogen-storage results depend on catalyst chemistry, preparation, temperature,
+pressure, and measurement time. H2-Triad brings reported evidence and a small,
+validated predictive model into one Digital Twin: configure an experiment,
+retrieve matching literature, or estimate supported hydrogen capacity with
+visible uncertainty and provenance.
 
-**Exact literature measurement → supported AI prediction → unavailable.**
+## What it does
 
-Literature values retain provenance and qualifiers such as approximately or greater than. AI results display the model identity, support warnings, and empirical 90% interval when available. Unsupported configurations receive no fabricated capacity.
+**Exact literature measurement ? supported AI prediction ? unavailable.**
 
-## Digital Twin
+- Retrieves verified sample observations with DOI, source locators, and original
+  approximate/threshold qualifiers. Missing conditions are never wildcards.
+- Predicts absorption/desorption capacity inside explicit support boundaries.
+- Shows empirical 90% intervals, support warnings, and model identity.
+- Maps predicted capacity across **temperature ? catalyst loading** in an
+  interactive 3D landscape. Other conditions stay fixed; unsupported cells stay
+  empty. An accessible data table accompanies the plot.
+- Keeps the **Synthetic/demo explorer** separate from scientific evidence and
+  training data.
 
-Configure an MgH2 absorption/desorption experiment using temperature, duration, catalyst loading, chemistry, support material, and pressure. An optional collapsed literature selector loads a verified sample and its reported conditions. Custom inputs remain the default experience.
+This Digital Twin is a predictive response workspace, not a physical or molecular
+simulation, laboratory validation, or proof of causal optimization.
 
-The interactive 3D landscape sweeps **temperature × catalyst loading**, with **predicted H2 capacity** on the vertical axis. Other inputs stay fixed. A single backend request validates the grid and batches supported nodes through the existing model. Unsupported cells stay empty. The selected prediction, intervals, support notes, reset-view control, and accessible data table remain visible.
+## Evidence and limitations
 
-This is a **model response landscape**, not a molecular/physical simulation, causal result, or experimentally verified continuous surface. Predictions support research prioritization and educational exploration; they are not certified laboratory results.
+| Evidence | Current result |
+| --- | ---: |
+| Accessible core literature observations | **119** |
+| Model-training observations | **109** |
+| Independent training papers / samples | **16 / 36** |
+| Paper-held-out MAE | **1.1693 wt.% H2** |
+| Paper-held-out RMSE | **1.5493 wt.% H2** |
+| Paper-held-out R? | **0.3314** |
+| Empirical 90% interval: observed held-out coverage | **86.2%** |
 
-The historical Phase 3 SQLite records remain in a separately labeled **Synthetic/demo explorer**. They never supply scientific Twin results or model training data.
+Evaluation holds out entire papers rather than randomly splitting correlated
+rows. The dataset is small and concentrated in particular journals and catalyst
+families. Intervals are broad (mean width **5.0876 wt.% H2**); unfamiliar chemistry
+and combinations within numeric ranges remain uncertain. There is **no independent
+laboratory validation**. Reported room temperature is not assigned an invented
+number. Activation-energy prediction is deferred.
+
+See the [model card](model/MODEL_CARD.md) for per-mode metrics, exclusions,
+support rules, and failure modes.
+
+## Application
+
+Actual local application captures; no deployed demo is currently advertised.
+
+![Digital Twin showing a supported capacity prediction and uncertainty](docs/images/digital-twin.png)
+
+![Scientific 3D response landscape with support coverage and selected point](docs/images/prediction-landscape.png)
 
 ## Architecture
 
-```text
-React → /api (Vite proxy) → FastAPI
-                            ├─ Canonical Phase 4 literature index
-                            ├─ Cached Phase 4B predictor → batched landscape
-                            └─ SQLite synthetic/demo explorer
+```mermaid
+flowchart LR
+    UI[React / Vite dashboard] --> API[FastAPI]
+    API --> L[Canonical literature index]
+    API --> P[Cached capacity predictor]
+    P --> M[Frozen CatBoost artifact]
+    P --> G[Batched landscape predictions]
+    API --> D[SQLite synthetic/demo records]
 ```
 
-The model's checked-in artifact serializes preprocessing and estimation together. Application startup loads one reusable predictor per process; it does not train or duplicate the artifact. The standalone `model/predict.py` API and CLI remain supported.
+`frontend/` contains the UI; `backend/` serves scientific and demo APIs;
+`data/phase4_dataset/` contains canonical/processed evidence; `model/` contains
+inference, the trained artifact, and evaluation records. Raw papers are not
+needed to run the application. [Documentation index](docs/README.md).
 
-### Scientific evidence
+## Quick start
 
-- 119 core literature capacity observations are accessible, including approximate/threshold values and nine observations with only a reported room temperature.
-- The model was trained on 109 scalar observations from 16 papers and 36 samples.
-- Exact matching preserves sample identity, conditions, pressure qualifiers, missingness, and source provenance. Missing values never act as wildcards.
-- Room temperature is not assigned an invented numeric value. Such literature can be retrieved as reported; numerical exploration requires new numeric conditions.
-- Model support uses the existing mode-specific ranges and chemistry checks. It does not establish experimental coverage of every combination inside those ranges.
-- Empirical 90% intervals achieved 86.2% observed paper-held-out coverage and are broad. They are not confidence scores or guarantees.
+Use **Python 3.10** and **Node.js 24**. The model uses a pinned inference stack.
+From the repository root:
 
-See [Phase 5 architecture and scientific boundaries](docs/phase-5-ai-integration.md), the [model card](model/MODEL_CARD.md), and the historical [Phase 4B evaluation](docs/phase-4b-capacity-model.md).
-
-## Structure
-
-```text
-backend/app/
-  main.py                 # Lifecycle, safe errors, existing health contract
-  scientific.py           # Literature-first runs, model readiness, batched grids
-  scientific_schemas.py   # Scientific request/result contracts
-  literature.py           # Read-only canonical literature index
-  database.py             # Persistent historical SQLite demo data
-  domain.py, repository.py # Demo records and options
-frontend/src/
-  components/DigitalTwin.jsx         # Custom form and scientific results
-  components/PredictionLandscape.jsx # Grid requests, status and data table
-  components/SurfaceView.jsx         # Lazy graphics loading and retry
-  components/PlotSurface.jsx         # Plotly surface and selected prediction
-  data/scientificService.js          # Scientific HTTP response validation
-model/
-  predict.py              # Standalone and reusable batch inference
-  src/                    # Existing preprocessing, support and training modules
-  artifacts/              # One fitted model, metadata and support profile
-data/phase4_dataset/       # Canonical and processed literature-derived tables
+```sh
+python3.10 -m venv model/.venv
+model/.venv/bin/python -m pip install -r backend/requirements.txt
+model/.venv/bin/python -m uvicorn app.main:app --app-dir backend --reload
 ```
 
-Historical [Phase 2](docs/phase-2-frontend.md), [Phase 3](docs/phase-3-domain-backend.md), and [Phase 4A](docs/phase-4a-scientific-dataset.md) documents remain delivery records for those phases.
-
-## Local development
-
-Prerequisites: Python **3.10**, Node.js 24+, npm, and Google Chrome for the default browser tests. The evaluated model environment is Python 3.10.11. Do not reuse a Python 3.13/3.14 backend environment for the pinned model runtime.
-
-From the repository root, create an integrated environment if needed:
-
-```powershell
-py -3.10 -m venv model/.venv
-model/.venv/Scripts/python.exe -m pip install -r model/requirements.txt
-model/.venv/Scripts/python.exe -m pip install -r backend/requirements.txt
-model/.venv/Scripts/python.exe -m uvicorn app.main:app --app-dir backend --reload
-```
-
-The development requirements use different pytest pins; install them in the order above for the integrated test environment. Inference dependency versions agree.
-
-For runtime only, install `backend/requirements.txt`, which includes `model/requirements-inference.txt`. On macOS/Linux use a Python 3.10 executable and `model/.venv/bin/python`.
-
+Windows PowerShell: use `py -3.10 -m venv model/.venv`, then
+`model/.venv/Scripts/python.exe` in place of `model/.venv/bin/python`.
 In a second terminal:
 
-```powershell
-npm.cmd ci --prefix frontend
-npm.cmd run dev --prefix frontend
+```sh
+npm ci --prefix frontend
+npm run dev --prefix frontend
 ```
 
-Use `npm` instead of `npm.cmd` outside Windows. The frontend proxy defaults to `http://localhost:8000`; `VITE_API_PROXY_TARGET` overrides it. No environment file is required for defaults.
+On Windows, `npm.cmd` can be used when PowerShell blocks `npm.ps1`.
+Open **http://localhost:5173**; API documentation is at
+**http://localhost:8000/docs**. Defaults need no `.env` file. `.env.example`
+contains only optional database/seed settings, never credentials.
 
-Local `DATABASE_PATH` overrides the SQLite path; relative paths still resolve from `backend/`. The scientific CSVs are read from the repository independently of the database.
+### Docker: local integration
 
-## Docker — local integration
-
-```powershell
+```sh
 docker compose config --quiet
 docker compose up --build -d
 ```
 
-The backend image uses Python 3.10 and includes the model code, inference dependencies, artifact, support metadata, and scientific CSVs under `/opt/h2-triad`. The existing `backend_data` volume remains mounted at `/app/data` and preserves SQLite records. Source PDFs and local virtual environments are excluded from the build.
+Use the same URLs. The `backend_data` volume preserves demo SQLite data.
+`SEED_DEMO_DATA=false` affects only initialization of a new database; it never
+removes existing records. Keep Compose database overrides inside `/app/data`.
+Stop with `docker compose down` (without `--volumes` to retain data).
 
-`SEED_DEMO_DATA=false` disables demo seeding only when a new database is initialized; it never removes existing records. Rebuilds/restarts do not reseed or overwrite the database. Keep any Compose `DATABASE_PATH` override inside `/app/data` for persistence.
+Compose currently serves the frontend through Vite's development server.
+Production serving and hosting are Phase 6B work.
 
-The frontend still uses the existing Vite container workflow. Hosting, production static serving, public-release cleanup, licensing, and deployment remain Phase 6 concerns.
+## Methodology and provenance
 
-## URLs and API
+- [Phase 4A extraction and eligibility](docs/phase-4a-scientific-dataset.md)
+- [Dataset schema and units](data/phase4_dataset/schema.md)
+- [Phase 4B paper-held-out evaluation](docs/phase-4b-capacity-model.md)
+- [Model card](model/MODEL_CARD.md)
+- [Phase 5 result hierarchy and architecture](docs/phase-5-ai-integration.md)
+- [Source records and independent PDF acquisition](data/phase4_data_sources/README.md)
 
-| URL | Purpose |
-| --- | --- |
-| <http://localhost:5173> | Dashboard |
-| <http://localhost:8000/docs> | Interactive API contracts |
-| <http://localhost:8000/api/health> | Existing API/SQLite connectivity |
-| <http://localhost:8000/api/scientific/readiness> | Model and literature readiness |
-| <http://localhost:8000/api/digital-twin/options> | Scientific defaults, support profile and model metadata |
-| <http://localhost:8000/api/literature/measurements> | Verified core capacity evidence |
-| <http://localhost:8000/api/experiments> | Historical synthetic/demo records |
-
-`POST /api/digital-twin/run` accepts `{ "inputs": { ... } }` and returns `literature`, `predicted`, or `unavailable`. Exact evidence requires matching verified sample context; matching model features alone cannot establish that a custom specimen is the literature sample. All malformed requests fail before inference. Service failures remain distinguishable from unsupported-domain results.
-
-`POST /api/digital-twin/landscape` accepts the fixed inputs, X/Y variable names, and grid resolution. The default is 20 × 20; each axis permits 2–40 points. Responses include predictions, empirical intervals, masks, reasons/warnings, model metadata, and the actual selected-point prediction.
+Scientific tables and the production model retain their Phase 5 fingerprints.
+Provenance identifiers are not model features. Synthetic/demo, cycling,
+activation-energy, thermal-event, and extended-composite observations do not
+enter the capacity training view.
 
 ## Validation
 
-From the repository root:
+Phase 5 recorded **22 model, 72 backend, and 26 browser tests**, with all
+26 browser tests also passing against Compose. [Phase 6A release validation](docs/phase-6a-release.md)
+records the current checks and the deliberately skipped, opt-in refitting test.
 
-```powershell
-model/.venv/Scripts/python.exe -m pytest model/tests -q
-model/.venv/Scripts/python.exe -m pytest backend -q
-model/.venv/Scripts/python.exe model/predict.py --help
-npm.cmd run lint --prefix frontend
-npm.cmd run format:check --prefix frontend
-npm.cmd run build --prefix frontend
-npm.cmd test --prefix frontend
+```sh
+model/.venv/bin/python -m pip install -r model/requirements.txt -r backend/requirements.txt
+model/.venv/bin/python -m pytest model/tests -q
+model/.venv/bin/python -m pytest backend -q
+model/.venv/bin/python scripts/release/inference_smoke.py
+npm ci --prefix scripts/phase4
+npm test --prefix scripts/phase4
+npm run lint --prefix frontend
+npm run format:check --prefix frontend
+npm run build --prefix frontend
+npm test --prefix frontend
 ```
 
-The model tests include in-memory artifact reproducibility checks. Do not run `model/train.py` for ordinary integration validation: it regenerates evaluation/artifact files and is unnecessary for Phase 5.
+Browser tests use installed Chrome by default and an isolated temporary database
+on ports 8001/5174. For Playwright Chromium, run `npx playwright install chromium`
+from `frontend/` and set `PLAYWRIGHT_CHANNEL=chromium`. `PLAYWRIGHT_PYTHON`
+can select the interpreter. Screenshots/traces from tests are ignored.
 
-Browser tests launch an isolated temporary-database backend on port **8001** and Vite on **5174**. They use `model/.venv` by default; `PLAYWRIGHT_PYTHON` overrides the interpreter. The default browser is installed Chrome; use `PLAYWRIGHT_CHANNEL=chromium` with an installed Playwright Chromium if needed. Only theme preference uses localStorage.
+Ordinary validation performs no model training and does not overwrite scientific
+outputs. Dataset validation regenerates CSV/Parquet in a temporary directory and
+compares bytes. Optional private PDF verification is documented with source rights.
 
-To exercise the running Compose application:
+## License and source rights
 
-```powershell
-$env:PLAYWRIGHT_BASE_URL='http://localhost:5173'
-npm.cmd test --prefix frontend -- --output=test-results/compose
-Remove-Item Env:PLAYWRIGHT_BASE_URL
-```
-
-Tests never edit the running demo database. Browser screenshots/traces remain in ignored `frontend/test-results/`. See [Phase 5 validation](docs/phase-5-ai-integration.md#validation) for results and known limitations.
-
-Phase 4A dataset regeneration/validation remains available under `scripts/phase4`; its historical workflow and lineage checks are documented in the Phase 4A delivery record.
-
-## Remaining work
-
-The Activation Energy Predictor remains deferred. Phase 6 owns release and licensing decisions, reproducibility/security audit, hosting and production serving, deployment, and submission packaging. Phase 5 does not claim external laboratory validation or establish scientific superiority between configurations.
+Original H2-Triad software and original documentation are [MIT licensed](LICENSE).
+**The MIT license does not cover curated scientific datasets, trained weights,
+research publications, publisher supplements, or dependencies.** Dataset/model
+licensing decisions and removal of historical source copies remain release gates.
+Read [licensing, data, and provenance boundaries](docs/licensing-and-data.md).

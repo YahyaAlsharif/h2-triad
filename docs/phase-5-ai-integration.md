@@ -1,5 +1,7 @@
 # Phase 5: AI integration and scientific prediction landscape
 
+> Historical delivery record. See the [current project README](../README.md) and [release/source rights](licensing-and-data.md) for the current checkout.
+
 ## Result hierarchy
 
 The Digital Twin implements **exact literature measurement → supported AI prediction → unavailable**. It never searches the Phase 3 synthetic SQLite table for a scientific result.

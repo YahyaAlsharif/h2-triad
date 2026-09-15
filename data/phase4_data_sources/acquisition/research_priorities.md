@@ -1,6 +1,6 @@
-# UQU manual-access priorities
+# Research acquisition priorities
 
-Prepared 2026-09-13 from the [acquisition log](acquisition_log.csv), [active missing-paper queue](papers_no_pdf.txt), [original acquisition guide](../../../info/phase4_dataset_acquisition_guide.md), and [acquisition report](acquisition_report.md). No new literature research, authentication, downloads, scientific extraction, or access-status changes were performed.
+Prepared 2026-09-13 from the [acquisition log](acquisition_log.csv), [active missing-paper queue](papers_no_pdf.txt), [original acquisition guide](../../../docs/archive/phase4_dataset_acquisition_guide.md), and [acquisition report](acquisition_report.md). No new literature research, authentication, downloads, scientific extraction, or access-status changes were performed.
 
 This is an editorial ranking of the existing candidates, not a second active queue. Titles, DOIs and journals come from the log; design descriptions come from the guide. FREE-17, originally ranked 9, was subsequently acquired and verified and is therefore removed from the active recommendations without renumbering the historical ranks. All remaining ranked parent articles are missing locally and not full-text verified. Treat the described controls, variation and measurement coverage as acquisition leads requiring confirmation against the eventual full text; comparability across separate papers is not established.
 
@@ -43,7 +43,7 @@ The first five prioritize Fe/Ni/carbon comparisons, a broad sulfide comparison, 
 | 32 | R2 | Hydrogen Storage Performance of Mg/MgH2 and Its Improvement Measures: Research Progress and Trends | [10.3390/ma16041587](https://doi.org/10.3390/ma16041587) | Materials | General Mg/MgH2 improvement review for source discovery only. | Broad reference coverage; lower manual-access return than missing primary experiments and overlaps retained reviews. | USEFUL |
 ## MUST GET DOI links
 
-Copy these into your normal UQU library access workflow manually; no UQU subscription entitlement has been checked.
+Use these DOI links through the publisher, a lawful repository, or your own library. Access entitlement is not established by this list.
 
 ```text
 https://doi.org/10.1016/j.ijhydene.2024.08.449

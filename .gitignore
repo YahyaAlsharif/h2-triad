@@ -27,6 +27,9 @@ venv/
 *.db-wal
 *.sqlite
 *.sqlite3
+*.db-journal
+*.sqlite-*
+*.sqlite3-*
 
 # Editors and operating systems
 .idea/
@@ -37,3 +40,10 @@ Desktop.ini
 
 # Temporary Phase 4 acquisition work
 data/phase4_data_sources/acquisition/work/
+
+# Privately restored publications are never release assets
+private-sources/
+data/phase4_data_sources/**/*.pdf
+
+# Release validation scratch outputs
+tmp/

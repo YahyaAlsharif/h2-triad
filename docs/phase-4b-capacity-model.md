@@ -1,5 +1,7 @@
 # Phase 4B: H2 capacity model
 
+> Historical delivery record. See the [current project README](../README.md) and [release/source rights](licensing-and-data.md) for the current checkout.
+
 Phase 4B is a standalone, leakage-aware model package for the literature-derived Phase 4A dataset. It does not alter the Phase 3 FastAPI/React behavior and does not begin Phase 5.
 
 ## Data verification and hygiene

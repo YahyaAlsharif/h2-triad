@@ -1,5 +1,7 @@
 # Phase 3: persistent domain backend
 
+> Historical delivery record. See the [current project README](../README.md) and [release/source rights](licensing-and-data.md) for the current checkout.
+
 ## Goal and delivered architecture
 
 Phase 3 replaces the frontend-owned mock dashboard with React → HTTP → FastAPI → SQLite. The working branch started at Phase 2 commit `34fda1f`, with a clean working tree. Phase 1 is its parent `593b0af`.

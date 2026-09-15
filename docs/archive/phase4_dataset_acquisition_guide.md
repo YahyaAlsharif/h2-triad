@@ -1,3 +1,5 @@
+> Historical project context, not current application behavior or independent scientific validation. See [current documentation](../README.md).
+
 # H2-Triad Phase 4 — Dataset Acquisition and Extraction Guide
 
 > Acquisition status: completed on 2026-09-13 for the currently identified public source pool; some full articles remain unavailable.

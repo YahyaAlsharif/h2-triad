@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import parquet from "parquetjs-lite";
@@ -70,8 +71,17 @@ check(tables.sources.every((row) => row.source_type === "primary_experimental_ar
 check(tables.sources.every((row) => row.full_text_verified === "true" && row.readable === "true"), "all sources verified/readable");
 check(tables.sources.every((row) => row.doi && row.title && row.local_pdf_path && row.sha256 && row.page_count), "source provenance populated");
 
+const args = process.argv.slice(2);
+if (args.length && (args.length !== 2 || args[0] !== "--source-root")) {
+  throw new Error("Usage: node validate_phase4_dataset.mjs [--source-root DIRECTORY]");
+}
+const sourceRoot = args.length ? path.resolve(args[1]) : null;
 for (const source of tables.sources) {
-  const pdfPath = path.join(repoRoot, source.local_pdf_path);
+  check(/^[a-f0-9]{64}$/.test(source.sha256), `${source.paper_id} source hash recorded`);
+  if (!sourceRoot) continue;
+  const pdfPath = path.resolve(sourceRoot, source.local_pdf_path);
+  const relative = path.relative(sourceRoot, pdfPath);
+  check(!relative.startsWith("..") && !path.isAbsolute(relative), "source path stays inside source root");
   check(fs.existsSync(pdfPath), `${source.paper_id} local PDF exists`);
   const bytes = fs.readFileSync(pdfPath);
   check(bytes.subarray(0, 5).toString() === "%PDF-", `${source.paper_id} PDF signature`);
@@ -164,14 +174,22 @@ for (let index = 0; index < processed.length; index += 1) {
 function sha256(filePath) {
   return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
 }
-const build = () => spawnSync(process.execPath, [path.join(scriptDir, "build_capacity_dataset.mjs")], { cwd: repoRoot, encoding: "utf8" });
-const first = build();
-check(first.status === 0, `first deterministic rebuild: ${first.stderr}`);
-const firstHashes = [sha256(processedCsvPath), sha256(processedParquetPath)];
-const second = build();
-check(second.status === 0, `second deterministic rebuild: ${second.stderr}`);
-const secondHashes = [sha256(processedCsvPath), sha256(processedParquetPath)];
-check(JSON.stringify(firstHashes) === JSON.stringify(secondHashes), "CSV/Parquet regeneration is byte-deterministic");
+const temporaryDir = fs.mkdtempSync(path.join(os.tmpdir(), "h2-triad-dataset-"));
+try {
+  const baselineHashes = [sha256(processedCsvPath), sha256(processedParquetPath)];
+  const build = () => spawnSync(process.execPath, [path.join(scriptDir, "build_capacity_dataset.mjs"), "--output-dir", temporaryDir], { cwd: repoRoot, encoding: "utf8" });
+  const generatedHashes = () => ["capacity_training.csv", "capacity_training.parquet"].map((name) => sha256(path.join(temporaryDir, name)));
+  const first = build();
+  check(first.status === 0, `first deterministic rebuild: ${first.stderr}`);
+  const firstHashes = generatedHashes();
+  check(JSON.stringify(firstHashes) === JSON.stringify(baselineHashes), "regeneration matches checked-in CSV/Parquet bytes");
+  const second = build();
+  check(second.status === 0, `second deterministic rebuild: ${second.stderr}`);
+  check(JSON.stringify(firstHashes) === JSON.stringify(generatedHashes()), "CSV/Parquet regeneration is byte-deterministic");
+} finally {
+  fs.rmSync(temporaryDir, { recursive: true, force: true });
+}
+console.log(sourceRoot ? "Source PDF hashes verified locally (18 primary papers)." : "Source PDFs not verified locally: omitted from public checkout; historical verification is recorded in provenance.");
 
 for (const documentation of ["schema.md", "extraction_notes.md", "data_quality_report.md", "model_target_assessment.md"]) {
   check(fs.existsSync(path.join(datasetDir, documentation)), `${documentation} exists`);
